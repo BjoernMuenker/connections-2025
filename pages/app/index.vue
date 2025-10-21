@@ -1,0 +1,1 @@
+<template>secured area</template>
