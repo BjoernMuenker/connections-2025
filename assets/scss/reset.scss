@@ -10,6 +10,7 @@ body {
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
 }
 
 #__nuxt,
@@ -71,6 +72,13 @@ input {
   font-size: inherit;
   border: 2px solid black;
   border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    outline: 0;
+    border-color: rgb(48, 48, 255);
+    box-shadow: 0 0 0 4px rgb(174, 174, 255);
+  }
 }
 
 .select-wrapper {

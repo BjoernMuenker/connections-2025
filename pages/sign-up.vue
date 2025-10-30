@@ -1,5 +1,6 @@
 <script setup>
   import AppButton from '~/components/AppButton.vue';
+  import MessageBox from '~/components/MessageBox.vue';
 
   const supabase = useSupabaseClient();
 
@@ -9,15 +10,21 @@
   const password = ref('');
   const passwordRepeat = ref('');
 
+  const errorMessage = ref('');
+  const successMessage = ref('');
+
   const createUser = async () => {
     try {
+      errorMessage.value = '';
+      successMessage.value = '';
       loading.value = true;
-      const response = await supabase.auth.signUp({ email: email.value, password: password.value, options: { data: { name: name.value } } });
+      const response = await supabase.auth.signUp({ email: email.value, password: password.value, options: { data: { display_name: name.value } } });
       console.log(response);
-      if (response.error) throw error;
-      //   navigateTo('/app');
+      if (response.error) throw response.error;
+
+      successMessage.value = 'Fast geschafft! Wir haben dir einen Bestätigungslink an deine Mailadresse geschickt.';
     } catch (error) {
-      alert(error.error_description || error.message);
+      errorMessage.value = error.error_description || error.message;
     } finally {
       loading.value = false;
     }
@@ -31,6 +38,8 @@
         <h1>Willkommen.</h1>
         <p class="description">Erstelle dir jetzt einen Account.</p>
       </div>
+      <MessageBox v-if="errorMessage" type="error">{{ errorMessage }}</MessageBox>
+      <MessageBox v-if="successMessage" type="success">{{ successMessage }}</MessageBox>
       <div class="input-wrapper">
         <label>Name</label>
         <input class="inputField" type="text" placeholder="Dein Nutzername" v-model="name" />
@@ -51,14 +60,17 @@
         <AppButton type="submit" class="button block">Anmelden</AppButton>
       </div>
     </form>
+    <div class="account-exists">Du hast schon einen Account?<br /><NuxtLink to="/sign-in">Melde dich jetzt an.</NuxtLink></div>
   </div>
 </template>
 
 <style lang="scss" scoped>
   .wrapper {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin: 0 auto;
+    max-width: 400px;
   }
 
   .header {
@@ -66,7 +78,7 @@
   }
 
   form {
-    max-width: 400px;
+    width: 100%;
     padding: spacing('xl');
     border: 1px solid #949494;
     border-radius: 10px;
@@ -78,7 +90,7 @@
 
   label {
     display: block;
-    margin-bottom: spacing('xxs');
+    margin-bottom: spacing('xs');
   }
 
   input {
@@ -90,5 +102,20 @@
   button {
     width: 100%;
     margin-top: spacing('l');
+  }
+
+  .message-box {
+    margin: spacing('l') 0;
+  }
+
+  .account-exists {
+    padding: 0 spacing('xl');
+    margin-top: spacing('l');
+    width: 100%;
+  }
+
+  a {
+    color: blue;
+    text-decoration: underline;
   }
 </style>

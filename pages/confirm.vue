@@ -1,15 +1,7 @@
 <script setup lang="ts">
-  const user = useSupabaseUser();
+  const supabase = useSupabaseClient();
 
-  watch(
-    user,
-    () => {
-      if (user.value) {
-        return navigateTo('/');
-      }
-    },
-    { immediate: true }
-  );
+  supabase.auth.exchangeCodeForSession('');
 </script>
 
 <template>
