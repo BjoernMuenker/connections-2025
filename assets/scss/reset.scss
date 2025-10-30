@@ -27,12 +27,14 @@ main {
 }
 
 body {
-  font-family: Franklin, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Satoshi, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: color('black');
+  font-size: 18px;
+  @include var-font-weight(500);
 }
 
 *,
@@ -62,6 +64,13 @@ button {
   &:disabled {
     cursor: not-allowed;
   }
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  border: 2px solid black;
+  border-radius: 8px;
 }
 
 .select-wrapper {

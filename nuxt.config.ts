@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   components: { global: false },
-  modules: ['@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
+  modules: ['@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@nuxtjs/supabase'],
   app: {
     head: {
       htmlAttrs: {
@@ -97,12 +97,20 @@ export default defineNuxtConfig({
     },
   },
   css: ['@/assets/scss/global-once.scss'],
-  runtimeConfig: {
-    STACK_PROJECT_ID: process.env.STACK_PROJECT_ID,
-    STACK_SECRET_SERVER_KEY: process.env.STACK_SECRET_SERVER_KEY,
-    DATABASE_URL: process.env.DATABASE_URL,
-    public: {
-      NUXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY: process.env.NUXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY,
+  supabase: {
+    redirectOptions: {
+      login: '/sign-in',
+      callback: '/app',
+      include: ['/app(/*)?'],
+      saveRedirectToCookie: true,
     },
   },
+  // runtimeConfig: {
+  //   STACK_PROJECT_ID: process.env.STACK_PROJECT_ID,
+  //   STACK_SECRET_SERVER_KEY: process.env.STACK_SECRET_SERVER_KEY,
+  //   DATABASE_URL: process.env.DATABASE_URL,
+  //   public: {
+  //     NUXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY: process.env.NUXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY,
+  //   },
+  // },
 });
