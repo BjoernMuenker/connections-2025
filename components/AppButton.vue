@@ -19,12 +19,12 @@
     border-radius: 8px;
     transition: transform 0.2s;
 
-    &.disabled {
+    &:disabled {
       cursor: not-allowed;
       background: #cdcdcd;
     }
 
-    &:active {
+    &:active:not(:disabled) {
       transform: scale(0.95);
     }
   }

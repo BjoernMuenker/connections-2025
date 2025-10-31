@@ -1,3 +1,4 @@
+import type { Puzzle } from './Puzzle';
 import type { PuzzleGroup } from './PuzzleGroup';
 import type { PuzzleGroupItem } from './PuzzleGroupItem';
 import type { PuzzlePersistedState } from './PuzzlePersistedState';
