@@ -1,9 +1,10 @@
 <script setup lang="ts">
+  import AppButton from '~/components/AppButton.vue';
   import Puzzle from '~/components/Puzzle.vue';
   import { puzzles } from '~/content/puzzles';
 
   const user = useSupabaseUser();
-  const supabase = useSupabaseClient();
+  const client = useSupabaseClient();
   const route = useRoute();
   const router = useRouter();
 
@@ -11,9 +12,40 @@
 
   const puzzleId = route.params.day as string;
 
+  // await client.from('savegames').select('*').eq('user', user.value!.id).order('created_at');
+
   definePageMeta({
     layout: 'app',
   });
+
+  const { data } = await useAsyncData(
+    'tasks',
+    async () => {
+      // const { data } = await client.from('profiles').select('*');
+      const { data } = await client.from('savegames').select('*').eq('user_id', 'fe557dc4-28d7-40d7-8bc1-84684c26ea1e');
+      await client.from('savegames');
+      console.log(data);
+      // .eq('user_id', 'fe557dc4-28d7-40d7-8bc1-84684c26ea1e');
+
+      return data ?? [];
+    },
+    { default: () => [] }
+  );
+
+  async function saveGame() {
+    const { data, error } = await client.from('savegames').upsert(
+      {
+        user_id: 'fe557dc4-28d7-40d7-8bc1-84684c26ea16',
+        puzzle_id: '1',
+        data: {
+          remainingMistakes: 2,
+        },
+      },
+      {
+        onConflict: 'puzzle_id,user_id',
+      }
+    );
+  }
 
   // use middleware instead?
   if (!puzzles[puzzleId]) {
@@ -22,6 +54,12 @@
 </script>
 
 <template>
+  <!-- <pre>
+      {{ user }}
+  </pre> -->
+
+  loaded savegames: {{ data }}
+  <AppButton @click="saveGame">save game</AppButton>
   <div>{{ puzzleId }}</div>
   <Puzzle :puzzle-id="puzzleId" />
 </template>

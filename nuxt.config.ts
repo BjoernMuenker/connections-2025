@@ -104,6 +104,7 @@ export default defineNuxtConfig({
       include: ['/app(/*)?'],
       saveRedirectToCookie: true,
     },
+    types: './types/database.types.ts'
   },
   // runtimeConfig: {
   //   STACK_PROJECT_ID: process.env.STACK_PROJECT_ID,

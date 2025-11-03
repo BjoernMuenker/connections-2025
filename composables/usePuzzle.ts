@@ -4,6 +4,9 @@ import type { PuzzleGroup } from '~/types/PuzzleGroup';
 import type { PuzzleState } from '~/types/PuzzleState';
 
 export const usePuzzle = () => {
+  const user = useSupabaseUser();
+  const client = useSupabaseClient();
+
   function getColorByGroupId(id: string) {
     const idToColor: { [key: string]: string } = {
       a: 'yellow',
@@ -45,6 +48,10 @@ export const usePuzzle = () => {
       won: false,
     };
   }
+
+  function loadSavegame() {}
+
+  function save() {}
 
   return { getColorByGroupId, initPuzzleById };
 };
