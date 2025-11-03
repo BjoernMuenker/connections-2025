@@ -5,9 +5,15 @@ export const useAppStore = defineStore(
     const fullscreen = ref(false);
     const supportsFullscreen = ref(false);
 
+    function pushToast(text: string) {
+      // TODO implement toasts
+      return;
+    }
+
     return {
       debug,
       fullscreen,
+      pushToast,
       supportsFullscreen,
     };
   },

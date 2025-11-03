@@ -10,6 +10,7 @@ body {
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
 }
 
 #__nuxt,
@@ -23,16 +24,18 @@ main {
   overflow: auto;
   overscroll-behavior: contain;
   height: 100%;
-  padding: spacing('l') 0 calc(#{spacing('l')} + 50px);
+  // padding: spacing('l') 0 calc(#{spacing('l')} + 50px);
 }
 
 body {
-  font-family: Franklin, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Satoshi, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: color('black');
+  font-size: 18px;
+  @include var-font-weight(500);
 }
 
 *,
@@ -61,6 +64,20 @@ button {
 
   &:disabled {
     cursor: not-allowed;
+  }
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  border: 2px solid black;
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    outline: 0;
+    border-color: rgb(48, 48, 255);
+    box-shadow: 0 0 0 4px rgb(174, 174, 255);
   }
 }
 

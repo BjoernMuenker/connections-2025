@@ -1,7 +1,54 @@
-<script setup lang="ts">
-  const { data } = await useFetch('/api/auth/users/59317a6a-2b4b-40d4-afd4-17e3d7405738');
-</script>
-
 <template>
-  <pre>DATA: {{ data }}</pre>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
+    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
+  </div>
 </template>
