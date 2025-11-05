@@ -18,7 +18,12 @@
     "pinia": "^2.2.6",
     "pinia-plugin-persistedstate": "^4.1.2",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "@formkit/addons": "^1.6.9",
+    "@formkit/core": "^1.6.9",
+    "@formkit/nuxt": "^1.6.9",
+    "@formkit/vue": "^1.6.9",
+    "@formkit/i18n": "^1.6.9"
   },
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
   "devDependencies": {

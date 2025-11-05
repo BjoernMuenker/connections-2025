@@ -33,33 +33,27 @@
 
 <template>
   <div class="wrapper">
-    <form @submit.prevent="createUser">
+    <FormKit type="form" @submit="createUser">
       <div class="header">
         <h1>Willkommen.</h1>
         <p class="description">Erstelle dir jetzt einen Account.</p>
       </div>
       <MessageBox v-if="errorMessage" type="error">{{ errorMessage }}</MessageBox>
       <MessageBox v-if="successMessage" type="success">{{ successMessage }}</MessageBox>
-      <div class="input-wrapper">
-        <label>Name</label>
-        <input class="inputField" type="text" placeholder="Dein Nutzername" v-model="name" />
-      </div>
-      <div class="input-wrapper">
-        <label>Email</label>
-        <input class="inputField" type="email" placeholder="Deine E-Mail" v-model="email" />
-      </div>
-      <div class="input-wrapper">
-        <label>Password</label>
-        <input class="inputField" type="password" placeholder="Dein Passwort" v-model="password" />
-      </div>
-      <div class="input-wrapper">
-        <label>Passwort wiederholen</label>
-        <input class="inputField" type="password" placeholder="Bestätige dein Passwort" v-model="passwordRepeat" />
-      </div>
+      <FormKit validation="required" label="Nutzername" v-model="email" placeholder="Dein Nutzername" type="email" />
+      <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" />
+      <FormKit validation="required|user_password" name="password" label="Passwort" v-model="password" placeholder="Dein Passwort" type="text" />
+      <FormKit
+        validation="required|confirm:password"
+        label="Passwort wiederholen"
+        v-model="passwordRepeat"
+        placeholder="Bestätige dein Passwort"
+        type="text"
+      />
       <div>
         <AppButton type="submit" class="button block">Anmelden</AppButton>
       </div>
-    </form>
+    </FormKit>
     <div class="account-exists">Du hast schon einen Account?<br /><NuxtLink to="/sign-in">Melde dich jetzt an.</NuxtLink></div>
   </div>
 </template>
@@ -82,21 +76,6 @@
     padding: spacing('xl');
     border: 1px solid #949494;
     border-radius: 10px;
-  }
-
-  .input-wrapper + .input-wrapper {
-    margin-top: spacing('m');
-  }
-
-  label {
-    display: block;
-    margin-bottom: spacing('xs');
-  }
-
-  input {
-    padding: 10px;
-    display: block;
-    width: 100%;
   }
 
   button {

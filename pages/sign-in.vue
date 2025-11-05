@@ -10,10 +10,13 @@
 
   const errorMessage = ref('');
 
-  const handleLogin = async () => {
+  async function handleLogin() {
+    errorMessage.value = '';
+    submitting.value = true;
+
+    await nextTick();
+
     try {
-      errorMessage.value = '';
-      submitting.value = true;
       const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
       console.log(error);
       if (error) throw error;
@@ -23,12 +26,12 @@
     } finally {
       submitting.value = false;
     }
-  };
+  }
 </script>
 
 <template>
   <div class="wrapper">
-    <form @submit.prevent="handleLogin">
+    <FormKit type="form" @submit="handleLogin">
       <div class="header">
         <h1>Wieder da?</h1>
         <p class="description">Melde dich mit Mail und Passwort an.</p>
@@ -36,19 +39,12 @@
       <MessageBox v-if="errorMessage" type="error">
         {{ errorMessage }}
       </MessageBox>
-
-      <div class="input-wrapper">
-        <label>E-Mail</label>
-        <input class="inputField" type="email" placeholder="Deine E-Mail" v-model="email" />
-      </div>
-      <div class="input-wrapper">
-        <label>Passwort</label>
-        <input class="inputField" type="password" placeholder="Dein Passwort" v-model="password" />
-      </div>
+      <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" />
+      <FormKit validation="required" label="Passwort" v-model="password" placeholder="Dein Passwort" type="text" />
       <div>
         <AppButton type="submit" class="button block" :loading="submitting">Anmelden</AppButton>
       </div>
-    </form>
+    </FormKit>
     <div class="no-account">Du hast noch keinen Account?<br /><NuxtLink to="/sign-up">Erstell dir jetzt einen.</NuxtLink></div>
   </div>
 </template>
@@ -77,21 +73,6 @@
     border: 1px solid #949494;
     border-radius: 8px;
     margin-bottom: spacing('l');
-  }
-
-  .input-wrapper + .input-wrapper {
-    margin-top: spacing('m');
-  }
-
-  label {
-    display: block;
-    margin-bottom: spacing('xs');
-  }
-
-  input {
-    padding: 10px;
-    display: block;
-    width: 100%;
   }
 
   button {
