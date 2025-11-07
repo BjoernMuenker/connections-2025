@@ -94,30 +94,6 @@ input[type='email'] {
   width: 100%;
 }
 
-.formkit-outer + .formkit-outer {
-  margin-top: spacing('m');
-}
-
-.formkit-outer[data-invalid='true'] {
-  input {
-    border-color: rgb(224, 0, 0);
-    box-shadow: 0 0 0 4px rgb(242, 166, 166);
-  }
-}
-
-.formkit-messages {
-  padding: 0;
-  margin-top: spacing('xs');
-}
-
-.formkit-message {
-  list-style-type: none;
-
-  &[data-message-type='validation'] {
-    color: rgb(224, 0, 0);
-  }
-}
-
 .select-wrapper {
   position: relative;
 
