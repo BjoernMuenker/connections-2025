@@ -37,28 +37,26 @@
 </script>
 
 <template>
-  <ClientOnly>
-    <header class="header">
-      <h1>
-        <template v-if="route.name === 'app-day'">
-          <NuxtLink to="/app"><</NuxtLink>
-          {{ route.params.day + '.Dezember' }}
-        </template>
-        <template v-else>Hello Björn</template>
-      </h1>
-      <div class="avatar" @click="showOffCanvas">
-        {{ user?.user_metadata.name.slice(0, 1) ?? 'B' }}
-      </div>
-    </header>
-    <main>
-      <div class="page-content">
-        <slot />
-      </div>
-    </main>
-    <div class="off-canvas" ref="offCanvasRef">
-      <AppButton @click="signOut">Abmelden</AppButton>
+  <header class="header">
+    <h1>
+      <template v-if="route.name === 'app-day'">
+        <NuxtLink to="/app"><</NuxtLink>
+        {{ route.params.day + '.Dezember' }}
+      </template>
+      <template v-else>Hello Björn</template>
+    </h1>
+    <div class="avatar" @click="showOffCanvas">
+      {{ user?.user_metadata.name.slice(0, 1) ?? 'B' }}
     </div>
-  </ClientOnly>
+  </header>
+  <main>
+    <div class="page-content">
+      <slot />
+    </div>
+  </main>
+  <div class="off-canvas" ref="offCanvasRef">
+    <AppButton @click="signOut">Abmelden</AppButton>
+  </div>
 </template>
 
 <style lang="scss" scoped>

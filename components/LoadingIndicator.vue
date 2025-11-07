@@ -7,7 +7,7 @@
   const dRef = ref<HTMLElement>();
 
   onMounted(() => {
-    const timeline = $gsap.timeline({ repeat: -1, ease: '' });
+    const timeline = $gsap.timeline({ repeat: -1 });
 
     if (!aRef.value || !bRef.value || !cRef.value || !dRef.value) return;
 

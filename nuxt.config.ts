@@ -101,7 +101,7 @@ export default defineNuxtConfig({
     redirectOptions: {
       login: '/sign-in',
       callback: '/app',
-      include: ['/app(/*)?'],
+      exclude: ['*'],
       saveRedirectToCookie: true,
     },
     types: './types/database.types.ts'
