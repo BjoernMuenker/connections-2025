@@ -3,7 +3,7 @@
   import AppButton from '~/components/AppButton.vue';
 
   const route = useRoute();
-
+  const { routes } = useRoutes();
   const supabase = useSupabaseClient();
   const user = useSupabaseUser();
 
@@ -11,7 +11,7 @@
 
   async function signOut() {
     await supabase.auth.signOut();
-    navigateTo('/');
+    navigateTo(routes.login);
   }
 
   const offCanvasVisible = ref(false);

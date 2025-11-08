@@ -10,13 +10,18 @@
 
 <style lang="scss" scoped>
   .message-box {
-    padding: spacing('m');
+    padding: spacing('s');
     border: 1px solid black;
     border-radius: 8px;
 
     &.error {
-      background: rgb(255, 200, 200);
-      border-color: rgb(210, 0, 0);
+      border-color: color('red');
+      background: color('red-light');
+    }
+
+    &.success {
+      border-color: color('green-dark');
+      background: color('green-light');
     }
   }
 </style>

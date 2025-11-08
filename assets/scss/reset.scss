@@ -67,33 +67,6 @@ button {
   }
 }
 
-input {
-  font-family: inherit;
-  font-size: inherit;
-  border: 2px solid black;
-  border-radius: 8px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-
-  &:focus {
-    outline: 0;
-    border-color: rgb(48, 48, 255);
-    box-shadow: 0 0 0 4px rgb(174, 174, 255);
-  }
-}
-
-label {
-  display: block;
-  margin-bottom: spacing('xs');
-}
-
-input[type='text'],
-input[type='password'],
-input[type='email'] {
-  padding: 10px;
-  display: block;
-  width: 100%;
-}
-
 .select-wrapper {
   position: relative;
 
@@ -125,4 +98,13 @@ select {
     outline: none;
     box-shadow: 0 0 0 2px color('black');
   }
+}
+
+.text-link {
+  color: blue;
+  text-decoration: underline;
+}
+
+h1 {
+  line-height: 1.2em;
 }

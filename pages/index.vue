@@ -1,8 +1,12 @@
 <script setup lang="ts">
   import LoadingIndicator from '~/components/LoadingIndicator.vue';
+
+  const { data } = await useFetch<{ now: number }>('/api/time', { server: true });
+  const now = data.value?.now ?? 0;
 </script>
 
 <template>
+  <div>server_timestamp: {{ now }} / {{ new Date(now) }}</div>
   <div class="wrapper">
     <LoadingIndicator />
   </div>

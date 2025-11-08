@@ -1,5 +1,6 @@
 <script setup>
   import AppButton from '~/components/AppButton.vue';
+  import FormkitPassword from '~/components/FormkitPassword.vue';
   import MessageBox from '~/components/MessageBox.vue';
 
   const supabase = useSupabaseClient();
@@ -40,12 +41,12 @@
         {{ errorMessage }}
       </MessageBox>
       <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" />
-      <FormKit validation="required" label="Passwort" v-model="password" placeholder="Dein Passwort" type="text" />
+      <FormkitPassword v-model="password" validation="required" :include-reset-password="true" />
       <div>
         <AppButton type="submit" class="button block" :loading="submitting">Anmelden</AppButton>
       </div>
     </FormKit>
-    <div class="no-account">Du hast noch keinen Account?<br /><NuxtLink to="/sign-up">Erstell dir jetzt einen.</NuxtLink></div>
+    <div class="no-account">Du hast noch keinen Account?<br /><NuxtLink to="/sign-up" class="text-link">Erstell dir jetzt einen.</NuxtLink></div>
   </div>
 </template>
 
@@ -82,10 +83,5 @@
 
   .message-box {
     margin: spacing('l') 0;
-  }
-
-  a {
-    color: blue;
-    text-decoration: underline;
   }
 </style>

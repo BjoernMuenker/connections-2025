@@ -1,5 +1,6 @@
 <script setup>
   import AppButton from '~/components/AppButton.vue';
+  import FormkitPassword from '~/components/FormkitPassword.vue';
   import MessageBox from '~/components/MessageBox.vue';
 
   const supabase = useSupabaseClient();
@@ -15,8 +16,6 @@
 
   const createUser = async () => {
     try {
-      errorMessage.value = '';
-      successMessage.value = '';
       loading.value = true;
       const response = await supabase.auth.signUp({ email: email.value, password: password.value, options: { data: { display_name: name.value } } });
       console.log(response);
@@ -29,6 +28,11 @@
       loading.value = false;
     }
   };
+
+  function resetMessages() {
+    errorMessage.value = '';
+    successMessage.value = '';
+  }
 </script>
 
 <template>
@@ -40,18 +44,17 @@
       </div>
       <MessageBox v-if="errorMessage" type="error">{{ errorMessage }}</MessageBox>
       <MessageBox v-if="successMessage" type="success">{{ successMessage }}</MessageBox>
-      <FormKit validation="required" label="Nutzername" v-model="email" placeholder="Dein Nutzername" type="email" />
+      <FormKit validation="required" label="Nutzername" v-model="name" placeholder="Dein Nutzername" type="text" />
       <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" />
-      <FormKit validation="required|user_password" name="password" label="Passwort" v-model="password" placeholder="Dein Passwort" type="text" />
-      <FormKit
+      <FormkitPassword validation="required|user_password" name="password" label="Passwort" v-model="password" placeholder="Dein Passwort" />
+      <FormkitPassword
         validation="required|confirm:password"
         label="Passwort wiederholen"
         v-model="passwordRepeat"
         placeholder="Bestätige dein Passwort"
-        type="text"
       />
       <div>
-        <AppButton type="submit" class="button block">Anmelden</AppButton>
+        <AppButton type="submit" class="button block" @click="resetMessages">Anmelden</AppButton>
       </div>
     </FormKit>
     <div class="account-exists">Du hast schon einen Account?<br /><NuxtLink to="/sign-in">Melde dich jetzt an.</NuxtLink></div>
