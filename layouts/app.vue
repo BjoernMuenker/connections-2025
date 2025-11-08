@@ -24,7 +24,6 @@
 
   function hideOffCanvas() {
     offCanvasVisible.value = false;
-    console.log('hello');
     $gsap.to('.off-canvas', { translateY: '100%', duration: 0.3 });
     $gsap.to('.wrapper', { scale: 1, duration: 0.3 });
   }
@@ -43,7 +42,7 @@
         <NuxtLink to="/app"><</NuxtLink>
         {{ route.params.day + '.Dezember' }}
       </template>
-      <template v-else>Hello Björn</template>
+      <template v-else>Hello {{ user?.user_metadata.name }}</template>
     </h1>
     <div class="avatar" @click="showOffCanvas">
       {{ user?.user_metadata.name.slice(0, 1) ?? 'B' }}

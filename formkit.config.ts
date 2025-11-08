@@ -1,7 +1,7 @@
 import { defaultConfig, defineFormKitConfig } from '@formkit/vue';
 import { createAutoAnimatePlugin } from '@formkit/addons';
 import type { FormKitNode } from '@formkit/core';
-import { de } from '@formkit/i18n'
+import { de } from '@formkit/i18n';
 
 export type FormKitRuleArraySyntax = [rule: string, ...args: any[]][];
 
@@ -44,13 +44,10 @@ export default defineFormKitConfig(() => {
     ...defaultConfig(),
     plugins: [
       addAsteriskPlugin,
-      createAutoAnimatePlugin(
-        {
-          duration: 250,
-          easing: 'ease-in-out',
-        },
-       
-      ),
+      createAutoAnimatePlugin({
+        duration: 250,
+        easing: 'ease-in-out',
+      }),
     ],
     locales: { de },
     locale: 'de',
@@ -62,7 +59,7 @@ export default defineFormKitConfig(() => {
       de: {
         validation: {
           user_name: 'Nutzernamen müssen mindestens 6 Zeichen lang sein.',
-          user_password: 'Passwörter müssen mindestens 6 Zeichen lang sein.'
+          user_password: 'Passwörter müssen mindestens 6 Zeichen lang sein.',
         },
       },
     },

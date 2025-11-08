@@ -1,3 +1,4 @@
 export default defineEventHandler(() => {
-  return { now: Date.now() }
-})
+  // UTC
+  return { now: Date.now() };
+});

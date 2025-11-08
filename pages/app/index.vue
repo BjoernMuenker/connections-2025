@@ -3,10 +3,14 @@
 
   const user = useSupabaseUser();
   const { $gsap } = useNuxtApp();
+  const { getServerTime, isEqualOrLaterThan } = useServerTime();
+  const router = useRouter();
 
   definePageMeta({
     layout: 'app',
   });
+
+  const { data: serverTime } = useAsyncData('serverTime', () => getServerTime());
 
   onMounted(() => {
     // use KeenSlider instead, does not feel great on mobile
@@ -16,8 +20,20 @@
 
 <template>
   <div class="wrapper">
+    serverTime: {{ serverTime }}
+    <div v-if="serverTime">
+      <ClientOnly>{{ new Date(serverTime) }}</ClientOnly>
+    </div>
     <div class="puzzles">
-      <NuxtLink v-for="puzzle in puzzles" class="puzzle" :to="`/app/${puzzle.id}`">{{ puzzle.id }}</NuxtLink>
+      <button
+        v-for="puzzle in puzzles"
+        class="puzzle"
+        @click="router.push(`/app/${puzzle.id}`)"
+        :disabled="!serverTime || serverTime < puzzle.unlocksAt"
+      >
+        {{ puzzle.id }}
+        <div class="debug">unlocksAt: {{ new Date(puzzle.unlocksAt) }}</div>
+      </button>
     </div>
     <div class="stats">
       <div class="heading-medium">Dein Fortschritt</div>
@@ -58,5 +74,9 @@
 
   .stats {
     margin-top: spacing('xl');
+  }
+
+  .debug {
+    font-size: 14px;
   }
 </style>

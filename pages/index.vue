@@ -1,12 +1,15 @@
 <script setup lang="ts">
   import LoadingIndicator from '~/components/LoadingIndicator.vue';
 
-  const { data } = await useFetch<{ now: number }>('/api/time', { server: true });
-  const now = data.value?.now ?? 0;
+  const { data: serverTime, error } = await useAsyncData('server-time', async () => $fetch<{ now: number }>('/api/time'));
 </script>
 
 <template>
-  <div>server_timestamp: {{ now }} / {{ new Date(now) }}</div>
+  <div v-if="serverTime">
+    server_timestamp: {{ serverTime.now }}
+    <ClientOnly>{{ new Date(serverTime.now) }}</ClientOnly>
+  </div>
+
   <div class="wrapper">
     <LoadingIndicator />
   </div>
