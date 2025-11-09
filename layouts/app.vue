@@ -14,6 +14,15 @@
     navigateTo(routes.login);
   }
 
+  async function deleteAccount() {
+    console.log(user.value?.sub);
+
+    await $fetch('/api/delete-user', {
+      method: 'POST',
+      body: { id: user.value?.sub },
+    });
+  }
+
   const offCanvasVisible = ref(false);
 
   function showOffCanvas() {
@@ -42,10 +51,10 @@
         <NuxtLink to="/app"><</NuxtLink>
         {{ route.params.day + '.Dezember' }}
       </template>
-      <template v-else>Hello {{ user?.user_metadata.name }}</template>
+      <template v-else>Hello {{ user?.user_metadata.display_name }}</template>
     </h1>
     <div class="avatar" @click="showOffCanvas">
-      {{ user?.user_metadata.name.slice(0, 1) ?? 'B' }}
+      {{ user?.user_metadata?.name?.slice(0, 1) ?? 'B' }}
     </div>
   </header>
   <main>
@@ -55,6 +64,7 @@
   </main>
   <div class="off-canvas" ref="offCanvasRef">
     <AppButton @click="signOut">Abmelden</AppButton>
+    <AppButton @click="deleteAccount">Account löschen</AppButton>
   </div>
 </template>
 

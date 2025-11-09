@@ -37,13 +37,11 @@
     //   console.error('no code');
     //   return;
     // }
-
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-
-    if (error) {
-      errorMessage.value = error.message;
-      return;
-    }
+    // const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    // if (error) {
+    //   errorMessage.value = error.message;
+    //   return;
+    // }
   });
 </script>
 

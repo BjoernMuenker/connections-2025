@@ -5,6 +5,7 @@ export function useRoutes() {
     login: '/sign-in',
     resetPassword: '/passwort-zuruecksetzen',
     changePassword: '/passwort-aendern',
+    confirmEmail: '/email-bestaetigen',
     signup: '/signup',
   };
 

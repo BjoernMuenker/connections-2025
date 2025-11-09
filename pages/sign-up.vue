@@ -5,7 +5,7 @@
 
   const supabase = useSupabaseClient();
 
-  const loading = ref(false);
+  const submitting = ref(false);
   const name = ref('');
   const email = ref('');
   const password = ref('');
@@ -16,8 +16,14 @@
 
   const createUser = async () => {
     try {
-      loading.value = true;
-      const response = await supabase.auth.signUp({ email: email.value, password: password.value, options: { data: { display_name: name.value } } });
+      submitting.value = true;
+
+      const response = await supabase.auth.signUp({
+        email: email.value,
+        password: password.value,
+        options: { data: { display_name: name.value }, emailRedirectTo: `${window.location.host}/email-bestaetigen` },
+      });
+
       console.log(response);
       if (response.error) throw response.error;
 
@@ -25,7 +31,7 @@
     } catch (error) {
       errorMessage.value = error.error_description || error.message;
     } finally {
-      loading.value = false;
+      submitting.value = false;
     }
   };
 
@@ -54,7 +60,7 @@
         placeholder="Bestätige dein Passwort"
       />
       <div>
-        <AppButton type="submit" class="button block" @click="resetMessages">Anmelden</AppButton>
+        <AppButton type="submit" class="button block" @click="resetMessages" :disabled="submitting">Anmelden</AppButton>
       </div>
     </FormKit>
     <div class="account-exists">Du hast schon einen Account?<br /><NuxtLink to="/sign-in">Melde dich jetzt an.</NuxtLink></div>

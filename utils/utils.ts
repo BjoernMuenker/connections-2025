@@ -213,3 +213,7 @@ export function sleep(ms: number) {
 export function clamp(min: number, max: number, valueToClamp: number) {
   return Math.min(Math.max(valueToClamp, min), max);
 }
+
+export function formatNumber(number: number) {
+  return new Intl.NumberFormat('de-DE').format(number);
+}

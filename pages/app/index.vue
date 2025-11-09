@@ -1,9 +1,11 @@
 <script setup lang="ts">
+  import UserScore from '~/components/UserScore.vue';
   import { puzzles } from '~/content/puzzles';
 
   const user = useSupabaseUser();
   const { $gsap } = useNuxtApp();
-  const { getServerTime, isEqualOrLaterThan } = useServerTime();
+  const { getServerTime } = useServerTime();
+  const { getPlayerStats } = useStats();
   const router = useRouter();
 
   definePageMeta({
@@ -11,6 +13,8 @@
   });
 
   const { data: serverTime } = useAsyncData('serverTime', () => getServerTime());
+
+  const { data: scores } = useAsyncData('profiles', () => getPlayerStats(user.value?.sub ?? ''));
 
   onMounted(() => {
     // use KeenSlider instead, does not feel great on mobile
@@ -20,7 +24,8 @@
 
 <template>
   <div class="wrapper">
-    serverTime: {{ serverTime }}
+    serverTime: {{ serverTime }} scores: {{ scores }}
+
     <div v-if="serverTime">
       <ClientOnly>{{ new Date(serverTime) }}</ClientOnly>
     </div>
@@ -36,12 +41,13 @@
       </button>
     </div>
     <div class="stats">
-      <div class="heading-medium">Dein Fortschritt</div>
+      <div class="heading-large">Dein Fortschritt</div>
     </div>
-    <pre>
+    <UserScore v-if="scores" v-bind="scores" />
+    <!-- <pre>
     {{ user }}
   </pre
-    >
+    > -->
   </div>
 </template>
 
@@ -66,14 +72,24 @@
     width: 200px;
     height: 200px;
     flex-shrink: 0;
-    background: #cdcdcd;
+    background: white;
     border-radius: spacing('s');
     padding: spacing('l');
     font-size: 50px;
+    border: 1px solid #cdcdcd;
+
+    &:disabled {
+      background: #cdcdcd;
+      color: grey;
+    }
   }
 
   .stats {
     margin-top: spacing('xl');
+
+    .heading-large {
+      margin-bottom: spacing('m');
+    }
   }
 
   .debug {

@@ -33,9 +33,11 @@
   );
 
   async function saveGame() {
+    if (!user.value) return;
+
     const { data, error } = await client.from('savegames').upsert(
       {
-        user_id: 'fe557dc4-28d7-40d7-8bc1-84684c26ea16',
+        user_id: user.value.sub,
         puzzle_id: '1',
         data: {
           remainingMistakes: 2,

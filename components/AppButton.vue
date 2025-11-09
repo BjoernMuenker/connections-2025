@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  const props = defineProps<{ loading?: boolean; disabled?: boolean }>();
+  const props = withDefaults(defineProps<{ loading?: boolean; disabled?: boolean; hierarchy?: 'primary' | 'secondary' }>(), { hierarchy: 'primary' });
 </script>
 
 <template>
-  <button :disabled="loading || disabled">
+  <button :disabled="loading || disabled" :class="hierarchy">
     <span v-if="loading">lädt...</span>
     <slot v-else />
   </button>
@@ -13,11 +13,11 @@
   button {
     font-size: 20px;
     padding: 14px 20px;
-    background: #333;
-    color: #fff;
     font-weight: bold;
     border-radius: 8px;
     transition: transform 0.2s;
+    border-width: 2px;
+    border-style: solid;
 
     &:disabled {
       cursor: not-allowed;
@@ -26,6 +26,18 @@
 
     &:active:not(:disabled) {
       transform: scale(0.95);
+    }
+
+    &.primary {
+      color: #fff;
+      background: #333;
+      border-color: #333;
+    }
+
+    &.secondary {
+      color: #333;
+      border-color: #333;
+      background: #fff;
     }
   }
 </style>

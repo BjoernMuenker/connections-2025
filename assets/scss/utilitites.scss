@@ -246,3 +246,9 @@
     #{$property}: #{$max}px;
   }
 }
+
+@mixin hover-only() {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}

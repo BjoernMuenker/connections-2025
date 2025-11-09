@@ -1,5 +1,7 @@
 # Nuxt Minimal Starter
 
+npx supabase gen types typescript --project-id "nwwwhjzdiqprlscqfojc" --schema public > database.types.ts 
+
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup

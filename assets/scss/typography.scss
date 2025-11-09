@@ -1,0 +1,194 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+[class*='heading'] {
+  margin: 0;
+  font-weight: normal;
+  @include var-font-weight(600);
+
+  &.body-font {
+    font-weight: font-weight(700);
+  }
+}
+
+h1,
+.heading-xxlarge {
+  font-size: 30px;
+  line-height: 1.2em;
+
+  @include breakpoint('medium') {
+    font-size: 40px;
+  }
+
+  @include breakpoint('large') {
+    font-size: 44px;
+  }
+
+  @include breakpoint('xlarge') {
+    font-size: 48px;
+  }
+}
+
+h2,
+.heading-xlarge {
+  font-size: 26px;
+  line-height: 1.2em;
+
+  @include breakpoint('medium') {
+    font-size: 34px;
+  }
+
+  @include breakpoint('large') {
+    font-size: 38px;
+  }
+}
+
+h3,
+.heading-large {
+  font-size: 22px;
+  line-height: 1.2em;
+
+  @include breakpoint('medium') {
+    font-size: 24px;
+  }
+
+  @include breakpoint('large') {
+    font-size: 26px;
+  }
+
+  @include breakpoint('xlarge') {
+    font-size: 30px;
+  }
+}
+
+h4,
+.heading-medium {
+  font-size: 20px;
+  line-height: 1.2em;
+
+  @include breakpoint('medium') {
+    font-size: 22px;
+  }
+
+  @include breakpoint('large') {
+    font-size: 24px;
+  }
+}
+
+h5,
+h6,
+.heading-small {
+  font-size: 18px;
+  line-height: 1.2em;
+
+  @include breakpoint('medium') {
+    font-size: 19px;
+  }
+}
+
+p,
+.copy-default,
+blockquote,
+ul {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5em;
+
+  @include breakpoint('large') {
+    font-size: 20px;
+  }
+}
+
+strong {
+  font-weight: font-weight(700);
+}
+
+// .heading-font {
+//   font-family: $heading-font;
+// }
+
+// .body-font {
+//   font-family: $body-font;
+// }
+
+.inline-link {
+  text-decoration: underline;
+  text-underline-offset: 0.1em;
+  cursor: pointer;
+  white-space: normal;
+  color: blue;
+
+  @include hover-only {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.inline-button {
+  font-size: 17px;
+  text-underline-offset: 0.1em;
+  color: blue;
+
+  @include hover-only {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.copy {
+  &-info {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  &-large {
+    font-size: 20px;
+    line-height: 1.4em;
+
+    @include breakpoint('medium') {
+      line-height: 1.5em;
+      font-size: 22px;
+    }
+
+    @include breakpoint('large') {
+      font-size: 24px;
+    }
+  }
+
+  &-medium {
+    font-size: 18px;
+    line-height: 1.45em;
+
+    @include breakpoint('medium') {
+      font-size: 21px;
+    }
+  }
+
+  &-small {
+    font-size: 16px;
+    line-height: 1.3em;
+
+    @include breakpoint('medium') {
+      font-size: 18px;
+    }
+  }
+}
+
+sub,
+sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  font-size: 75%;
+}
+
+sup {
+  top: -0.5em;
+}
