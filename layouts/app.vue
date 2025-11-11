@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import { onClickOutside } from '@vueuse/core';
   import AppButton from '~/components/AppButton.vue';
+  import LoadingIndicator from '~/components/LoadingIndicator.vue';
+  import { useAppStore } from '~/store/appStore';
 
+  const store = useAppStore();
   const route = useRoute();
   const { routes } = useRoutes();
   const supabase = useSupabaseClient();
@@ -81,8 +84,8 @@
   }
 
   .avatar {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     background: linear-gradient(#5c5c5c, #000);
     border-radius: 50%;
     display: flex;
@@ -90,6 +93,11 @@
     justify-content: center;
     font-weight: bold;
     color: white;
+
+    @include breakpoint('medium') {
+      width: 48px;
+      height: 48px;
+    }
   }
 
   .off-canvas {

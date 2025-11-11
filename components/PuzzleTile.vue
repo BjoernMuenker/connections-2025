@@ -76,14 +76,19 @@
     color: color('black');
     cursor: pointer;
     text-transform: uppercase;
-    font-weight: 700;
     overflow: hidden;
     user-select: none;
+    // transition: transform 0.2s;
+    @include var-font-weight(800);
     @include fluid-value('font-size', 16, 22);
 
     &.disabled {
       cursor: not-allowed;
     }
+
+    // &:active:not(:disabled) {
+    //   transform: scale(0.9);
+    // }
 
     &.selected {
       color: color('white');

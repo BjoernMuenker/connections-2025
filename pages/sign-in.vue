@@ -21,6 +21,7 @@
       const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
       console.log(error);
       if (error) throw error;
+      console.log('login sucessful');
       navigateTo('/app');
     } catch (error) {
       errorMessage.value = error.error_description || error.message;

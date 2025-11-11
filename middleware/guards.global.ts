@@ -15,9 +15,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
     data: { user },
   } = await client.auth.getUser();
 
-  if (!user) {
-    return navigateTo(routes.login);
-  }
+  // if (!user) {
+  //   return navigateTo(routes.login);
+  // }
 
   const day = to.params.day as string | undefined;
 

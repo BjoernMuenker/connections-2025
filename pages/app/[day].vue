@@ -17,42 +17,6 @@
   definePageMeta({
     layout: 'app',
   });
-
-  const { data } = await useAsyncData(
-    'tasks',
-    async () => {
-      // const { data } = await client.from('profiles').select('*');
-      const { data } = await client.from('savegames').select('*').eq('user_id', 'fe557dc4-28d7-40d7-8bc1-84684c26ea1e');
-      await client.from('savegames');
-      console.log(data);
-      // .eq('user_id', 'fe557dc4-28d7-40d7-8bc1-84684c26ea1e');
-
-      return data ?? [];
-    },
-    { default: () => [] }
-  );
-
-  async function saveGame() {
-    if (!user.value) return;
-
-    const { data, error } = await client.from('savegames').upsert(
-      {
-        user_id: user.value.sub,
-        puzzle_id: '1',
-        data: {
-          remainingMistakes: 2,
-        },
-      },
-      {
-        onConflict: 'puzzle_id,user_id',
-      }
-    );
-  }
-
-  // use middleware instead?
-  if (!puzzles[puzzleId]) {
-    router.push('/app');
-  }
 </script>
 
 <template>
@@ -60,9 +24,9 @@
       {{ user }}
   </pre> -->
 
-  loaded savegames: {{ data }}
+  <!-- loaded savegames: {{ data }}
   <AppButton @click="saveGame">save game</AppButton>
-  <div>{{ puzzleId }}</div>
+  <div>{{ puzzleId }}</div> -->
   <Puzzle :puzzle-id="puzzleId" />
 </template>
 

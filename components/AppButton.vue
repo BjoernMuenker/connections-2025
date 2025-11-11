@@ -11,17 +11,16 @@
 
 <style lang="scss" scoped>
   button {
-    font-size: 20px;
-    padding: 14px 20px;
+    font-size: 18px;
+    padding: spacing('xs') spacing('s');
     font-weight: bold;
     border-radius: 8px;
     transition: transform 0.2s;
     border-width: 2px;
     border-style: solid;
 
-    &:disabled {
-      cursor: not-allowed;
-      background: #cdcdcd;
+    @include breakpoint('medium') {
+      font-size: 20px;
     }
 
     &:active:not(:disabled) {
@@ -32,12 +31,26 @@
       color: #fff;
       background: #333;
       border-color: #333;
+
+      &:disabled {
+        background-color: #c2c2c2;
+        border-color: #c2c2c2;
+      }
     }
 
     &.secondary {
       color: #333;
       border-color: #333;
       background: #fff;
+
+      &:disabled {
+        border-color: #cdcdcd;
+        color: #cdcdcd;
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
     }
   }
 </style>

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-  import type { PuzzleState } from '~/types/PuzzleState';
   import PuzzleGroupComponent from './PuzzleGroup.vue';
   import PuzzleTile from './PuzzleTile.vue';
   import PuzzleMistakes from './PuzzleMistakes.vue';
-  import { puzzles } from '~/content/puzzles';
   import AppButton from './AppButton.vue';
   import { useAppStore } from '~/store/appStore';
   import type { PuzzleGroup } from '~/types/PuzzleGroup';
@@ -12,44 +10,13 @@
   const props = defineProps<{ puzzleId: string }>();
 
   const { $gsap } = useNuxtApp();
-  const { initPuzzleById } = usePuzzle();
   const store = useAppStore();
 
-  const puzzle = ref(initPuzzleById(props.puzzleId));
+  const { deselectAllItems, getGroupById, getGroupByItemId, getItemIndexById, maxItemsSelected, puzzle, reset, save, solvedGroups } = usePuzzle(
+    props.puzzleId
+  );
 
   const animationRunning = ref(false);
-
-  const solvedGroups = computed(() => {
-    return puzzle.value?.solved.map((id) => getGroupById(id)!);
-  });
-
-  const maxItemsSelected = computed(() => {
-    return puzzle.value?.selected.length === 4;
-  });
-
-  function getGroupById(id: string) {
-    return puzzle.value?.groups.find((group) => group.id === id);
-  }
-
-  function getGroupByItemId(id: string) {
-    return puzzle.value?.groups.find((group) => group.id.startsWith(id[0]));
-  }
-
-  function getItemIndexById(id: string) {
-    return puzzle.value?.items.findIndex((item) => item.id === id);
-  }
-
-  function deselectAllItems() {
-    if (!puzzle.value) return;
-    puzzle.value.selected = [];
-  }
-
-  function reset() {
-    if (!puzzle.value) return;
-    const { id, groups } = puzzle.value;
-    // puzzle.value = getPuzzleDefaultState({ id, groups });
-    store.debug = false;
-  }
 
   function shuffleItems(transition = true) {
     if (!puzzle.value) return;
@@ -113,8 +80,6 @@
     }
 
     animationRunning.value = true;
-    await animateSelectedItems();
-
     puzzle.value.guesses.push(currentGuess);
 
     const groups = puzzle.value.selected.map((id) => getGroupByItemId(id));
@@ -122,21 +87,28 @@
     const totalMatch = Object.values(sortedGroups).find((group) => group.length === 4);
 
     if (totalMatch) {
-      await solveGroup(totalMatch[0].id);
-      animationRunning.value = false;
+      puzzle.value!.solved.push(totalMatch[0].id);
       if (puzzle.value.solved.length === 4) {
         puzzle.value.won = true;
       }
+      await save();
+      await animateSelectedItems();
+      await solveGroup(totalMatch[0].id);
+      animationRunning.value = false;
       return;
     }
 
     puzzle.value.remainingMistakes--;
 
     if (puzzle.value.remainingMistakes === 0) {
+      const remainingGroupIds = ['a', 'b', 'c', 'd'].filter((groupId) => !puzzle.value?.solved.includes(groupId));
+      puzzle.value.solved = [...puzzle.value.solved, ...remainingGroupIds];
+      await save();
+
+      await animateSelectedItems();
       store.pushToast('Vielleicht nächstes Mal!');
       deselectAllItems();
 
-      const remainingGroupIds = ['a', 'b', 'c', 'd'].filter((groupId) => !puzzle.value?.solved.includes(groupId));
       for (const groupId of remainingGroupIds) {
         await sleep(1000);
         await solveGroup(groupId);
@@ -146,6 +118,9 @@
       return;
     }
 
+    await save();
+
+    await animateSelectedItems();
     animateSelectedItemsFail();
     animationRunning.value = false;
 
@@ -169,6 +144,7 @@
 
   async function solveGroup(groupId: string): Promise<void> {
     if (!puzzle.value) return;
+
     const flipState = $gsap.Flip.getState('.puzzle-tile');
 
     moveSolvedItemsToTop(groupId);
@@ -186,8 +162,7 @@
         onComplete: () => {
           deselectAllItems();
           puzzle.value!.items = puzzle.value!.items.filter((item) => !item.id.startsWith(groupId));
-          puzzle.value!.solved.push(groupId);
-
+          solvedGroups.value.push(getGroupById(groupId)!);
           nextTick(() => {
             $gsap.to(`.puzzle-group[data-group-id="${groupId}"]`, { scale: 1.1, duration: 0.15, ease: 'power(4)', yoyo: true, repeat: 1 });
             resolve();
@@ -254,30 +229,14 @@
       });
 
       for (const item of items) {
-        // TODO: use wiggle instead?
-        const subTimeline = $gsap.timeline();
-
-        subTimeline.to(item, {
-          x: -10,
-          duration: 0.1,
-        });
-        subTimeline.to(item, {
-          x: 10,
-          duration: 0.1,
-        });
-        subTimeline.to(item, {
-          x: -5,
-          duration: 0.1,
-        });
-        subTimeline.to(item, {
-          x: 0,
-          duration: 0.1,
-        });
-
-        timeline.add(subTimeline, '<');
+        timeline.to(item, { x: 10, ease: 'wiggle' }, '<');
       }
     });
   }
+
+  onMounted(() => {
+    $gsap.CustomWiggle.create('wiggle', { wiggles: 6 });
+  });
 
   // debug function
   //   function checkDuplicates() {
@@ -301,53 +260,54 @@
 </script>
 
 <template>
-  <div v-if="puzzle" class="puzzle">
-    <div class="board">
-      <PuzzleGroupComponent v-for="group in solvedGroups" :group="group" :key="group.id" class="animation-target" />
-      <PuzzleTile
-        v-for="item in puzzle.items"
-        :key="item.id"
-        v-model="puzzle.selected"
-        :input-value="item.id"
-        :id="item.id"
-        :caption="item.caption"
-        :disabled="(maxItemsSelected && !puzzle.selected.includes(item.id)) || animationRunning"
-        class="animation-target"
-      />
-    </div>
-    <PuzzleMistakes v-if="puzzle.solved.length !== 4" :remaining-mistakes="puzzle.remainingMistakes" class="animation-target" />
-    <div class="button-container">
-      <AppButton v-if="store.debug" hierarchy="secondary" :disabled="animationRunning" @click="reset" class="animation-target">
-        Zurücksetzen
-      </AppButton>
-      <template v-if="puzzle.solved.length !== 4">
-        <AppButton hierarchy="secondary" :disabled="animationRunning" @click="shuffleItems" class="animation-target">Mischen</AppButton>
-        <AppButton
-          hierarchy="secondary"
-          :disabled="puzzle.selected.length === 0 || animationRunning"
-          @click="deselectAllItems"
+  <ClientOnly>
+    <!-- <pre>{{ puzzle?.items }}</pre> -->
+    <div v-if="puzzle" class="puzzle">
+      <div class="board">
+        <PuzzleGroupComponent v-for="group in solvedGroups" :group="group" :key="group.id" class="animation-target" />
+        <PuzzleTile
+          v-for="item in puzzle.items"
+          :key="item.id"
+          v-model="puzzle.selected"
+          :input-value="item.id"
+          :id="item.id"
+          :caption="item.caption"
+          :disabled="(maxItemsSelected && !puzzle.selected.includes(item.id)) || animationRunning"
           class="animation-target"
-        >
-          Alle abwählen
+        />
+      </div>
+      <PuzzleMistakes v-if="puzzle.solved.length !== 4" :remaining-mistakes="puzzle.remainingMistakes" class="animation-target" />
+      <div class="button-container">
+        <AppButton v-if="store.debug" hierarchy="secondary" :disabled="animationRunning" @click="reset" class="animation-target">
+          Zurücksetzen
         </AppButton>
-        <AppButton :disabled="!maxItemsSelected || animationRunning" @click="submitItems" class="animation-target">Absenden</AppButton>
-      </template>
-      <!-- <template v-else>
+        <template v-if="puzzle.solved.length !== 4">
+          <AppButton hierarchy="secondary" :disabled="animationRunning" @click="shuffleItems" class="animation-target">Mischen</AppButton>
+          <AppButton
+            hierarchy="secondary"
+            :disabled="puzzle.selected.length === 0 || animationRunning"
+            @click="deselectAllItems"
+            class="animation-target"
+          >
+            Alle abwählen
+          </AppButton>
+          <AppButton :disabled="!maxItemsSelected || animationRunning" @click="submitItems" class="animation-target">Absenden</AppButton>
+        </template>
+        <!-- <template v-else>
         <AppButton @click="showResults" class="animation-target">Verlauf anzeigen</AppButton>
       </template> -->
+      </div>
     </div>
-  </div>
+  </ClientOnly>
 </template>
 
 <style lang="scss" scoped>
   .puzzle {
     width: 100%;
-    padding: 0 spacing('xs') spacing('l') spacing('xs');
 
     @media all and (min-width: 769px) {
       margin: 0 auto;
       width: calc(3 * 8px + 4 * 140px);
-      padding: 0 0 spacing('l') 0;
     }
 
     @media all and (max-width: 768px) {
