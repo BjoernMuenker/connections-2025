@@ -2,6 +2,7 @@
   import { onClickOutside } from '@vueuse/core';
   import AppButton from '~/components/AppButton.vue';
   import LoadingIndicator from '~/components/LoadingIndicator.vue';
+  import ToastNotification from '~/components/ToastNotification.vue';
   import { useAppStore } from '~/store/appStore';
 
   const store = useAppStore();
@@ -60,6 +61,9 @@
       {{ user?.user_metadata?.name?.slice(0, 1) ?? 'B' }}
     </div>
   </header>
+  <div class="toast-notifications">
+    <ToastNotification v-for="toast in store.toastNotifications" v-bind="toast" :key="toast.id" />
+  </div>
   <main>
     <div class="page-content">
       <slot />
@@ -97,6 +101,26 @@
     @include breakpoint('medium') {
       width: 48px;
       height: 48px;
+    }
+  }
+
+  .toast-notifications {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: spacing('m');
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: spacing('s');
+    z-index: 1;
+    pointer-events: none;
+
+    .toast-notification {
+      pointer-events: all;
     }
   }
 

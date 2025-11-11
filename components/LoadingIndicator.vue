@@ -55,6 +55,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
+    width: 34px;
+    height: 34px;
   }
 
   .tile {

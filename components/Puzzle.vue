@@ -6,15 +6,15 @@
   import { useAppStore } from '~/store/appStore';
   import type { PuzzleGroup } from '~/types/PuzzleGroup';
   import type { PuzzleGroupItem } from '~/types/PuzzleGroupItem';
+  import LoadingIndicator from './LoadingIndicator.vue';
 
   const props = defineProps<{ puzzleId: string }>();
 
   const { $gsap } = useNuxtApp();
   const store = useAppStore();
 
-  const { deselectAllItems, getGroupById, getGroupByItemId, getItemIndexById, maxItemsSelected, puzzle, reset, save, solvedGroups } = usePuzzle(
-    props.puzzleId
-  );
+  const { deselectAllItems, getGroupById, getGroupByItemId, getItemIndexById, maxItemsSelected, puzzle, reset, save, solvedGroups, loading } =
+    usePuzzle(props.puzzleId);
 
   const animationRunning = ref(false);
 
@@ -76,7 +76,7 @@
     const currentGuess = sortAlphabetically(puzzle.value.selected).join('-');
 
     if (puzzle.value.guesses.find((guess) => guess === currentGuess)) {
-      return store.pushToast('Schon geraten!');
+      return store.pushToastNotification('Schon geraten!');
     }
 
     animationRunning.value = true;
@@ -106,7 +106,7 @@
       await save();
 
       await animateSelectedItems();
-      store.pushToast('Vielleicht nächstes Mal!');
+      store.pushToastNotification('Vielleicht nächstes Mal!');
       deselectAllItems();
 
       for (const groupId of remainingGroupIds) {
@@ -126,7 +126,7 @@
 
     const closeMatch = Object.values(sortedGroups).find((group) => group.length === 3);
     if (closeMatch) {
-      return store.pushToast('Einer falsch!');
+      return store.pushToastNotification('Einer falsch!');
     }
   }
 
@@ -261,8 +261,10 @@
 
 <template>
   <ClientOnly>
-    <!-- <pre>{{ puzzle?.items }}</pre> -->
-    <div v-if="puzzle" class="puzzle">
+    <div v-if="loading" class="loading-wrapper">
+      <LoadingIndicator />
+    </div>
+    <div v-else-if="puzzle" class="puzzle">
       <div class="board">
         <PuzzleGroupComponent v-for="group in solvedGroups" :group="group" :key="group.id" class="animation-target" />
         <PuzzleTile
@@ -302,6 +304,14 @@
 </template>
 
 <style lang="scss" scoped>
+  .loading-wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .puzzle {
     width: 100%;
 

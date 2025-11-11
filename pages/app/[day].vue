@@ -1,18 +1,8 @@
 <script setup lang="ts">
-  import AppButton from '~/components/AppButton.vue';
   import Puzzle from '~/components/Puzzle.vue';
-  import { puzzles } from '~/content/puzzles';
 
-  const user = useSupabaseUser();
-  const client = useSupabaseClient();
   const route = useRoute();
-  const router = useRouter();
-
-  const { $gsap } = useNuxtApp();
-
   const puzzleId = route.params.day as string;
-
-  // await client.from('savegames').select('*').eq('user', user.value!.id).order('created_at');
 
   definePageMeta({
     layout: 'app',
@@ -20,13 +10,6 @@
 </script>
 
 <template>
-  <!-- <pre>
-      {{ user }}
-  </pre> -->
-
-  <!-- loaded savegames: {{ data }}
-  <AppButton @click="saveGame">save game</AppButton>
-  <div>{{ puzzleId }}</div> -->
   <Puzzle :puzzle-id="puzzleId" />
 </template>
 

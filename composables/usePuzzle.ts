@@ -10,6 +10,7 @@ export const usePuzzle = (puzzleId: string) => {
   const user = useSupabaseUser();
   const client = useSupabaseClient();
 
+  const loading = ref(false);
   const puzzle = ref<PuzzleState>();
 
   function getColorByGroupId(id: string) {
@@ -73,9 +74,14 @@ export const usePuzzle = (puzzleId: string) => {
   }
 
   async function load(puzzleId: string) {
+    const loadingStarted = Date.now();
+    loading.value = true;
     const _puzzle = initPuzzleById(puzzleId);
 
-    if (!_puzzle) return;
+    if (!_puzzle) {
+      onLoadComplete(loadingStarted);
+      return;
+    }
 
     const { data, error } = await client
       .from('savegames')
@@ -84,6 +90,7 @@ export const usePuzzle = (puzzleId: string) => {
 
     if (error || !data || data.length === 0) {
       puzzle.value = _puzzle;
+      onLoadComplete(loadingStarted);
       return;
     }
 
@@ -101,11 +108,23 @@ export const usePuzzle = (puzzleId: string) => {
     };
 
     solvedGroups.value = puzzle.value?.solved.map((id) => getGroupById(id)!);
+    onLoadComplete(loadingStarted);
+  }
+
+  async function onLoadComplete(startedAt: number) {
+    const completedAt = Date.now();
+    const loadingTimeMs = completedAt - startedAt;
+
+    console.log('loaded for', loadingTimeMs, 'ms');
+
+    if (loadingTimeMs < 500) {
+      await sleep(500 - loadingTimeMs);
+    }
+
+    loading.value = false;
   }
 
   async function save() {
-    console.log('trigger save');
-
     if (!user.value || !puzzle.value) return;
 
     const savegame = createSavegame();
@@ -122,6 +141,10 @@ export const usePuzzle = (puzzleId: string) => {
         onConflict: 'puzzle_id,user_id',
       }
     );
+
+    if (error) {
+      console.error('unable to save game');
+    }
   }
 
   function createSavegame(): PuzzlePersistedState | undefined {
@@ -177,6 +200,7 @@ export const usePuzzle = (puzzleId: string) => {
     getScoreByAction,
     initPuzzleById,
     load,
+    loading,
     maxItemsSelected,
     puzzle,
     reset,

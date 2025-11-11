@@ -1,7 +1,10 @@
 <script setup lang="ts">
+  import AppButton from '~/components/AppButton.vue';
   import UserScore from '~/components/UserScore.vue';
   import { puzzles } from '~/content/puzzles';
+  import { useAppStore } from '~/store/appStore';
 
+  const store = useAppStore();
   const user = useSupabaseUser();
   const { $gsap } = useNuxtApp();
   const { getServerTime } = useServerTime();
@@ -25,7 +28,7 @@
 <template>
   <div class="wrapper">
     serverTime: {{ serverTime }} scores: {{ scores }}
-
+    <AppButton @click="store.pushToastNotification(Date.now().toString())">Push toast</AppButton>
     <div v-if="serverTime">
       <ClientOnly>{{ new Date(serverTime) }}</ClientOnly>
     </div>
