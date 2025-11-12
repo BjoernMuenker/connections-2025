@@ -69,6 +69,12 @@ export function sortNumerically<T>(array: T[], direction: 'asc' | 'desc' = 'asc'
   });
 }
 
+export function sumArray(array: any[], defaultValue = 0) {
+  return array.reduce((a, b) => {
+    return a + b;
+  }, defaultValue);
+}
+
 export function randomNumber(min: number, max: number, stepSize?: number) {
   if (!stepSize) return Math.floor(Math.random() * (max - min + 1) + min);
   return clamp(min, max, Math.round(Math.floor(Math.random() * (max - min + 1) + min) / stepSize) * stepSize);

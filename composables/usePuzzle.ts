@@ -147,7 +147,7 @@ export const usePuzzle = (puzzleId?: string) => {
     scores = getScoreDiff(lastPersistedState ?? savegame, savegame);
     lastPersistedState = savegame;
 
-    const { data, error } = await client.from('savegames').upsert(
+    const { data: dataA, error: errorA } = await client.from('savegames').upsert(
       {
         user_id: user.value.sub,
         puzzle_id: puzzle.value.id,
@@ -158,9 +158,29 @@ export const usePuzzle = (puzzleId?: string) => {
       }
     );
 
-    if (error) {
+    const scoreIncrement = sumArray(Object.values(scores).map((entry) => entry.total));
+
+    // const { data: dataB, error: errorB } = await client
+    //   .from('profiles')
+    //   .update({
+    //     score: scoreIncrement,
+    //   })
+    //   .eq('id', user.value.sub);
+
+    const { data: dataB, error: errorB } = await client.rpc('increment_profile_score', {
+      p_user_id: user.value.sub,
+      p_increment: scoreIncrement,
+    });
+
+    if (errorA) {
       console.error('unable to save game');
     }
+
+    if (errorB) {
+      console.error('unable to update score');
+    }
+
+    console.log(dataB);
   }
 
   function pushScoreNotifications() {

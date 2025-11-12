@@ -16,11 +16,12 @@ export const useStats = () => {
 
     if (!data) return;
 
-    const rank = data?.findIndex((entry) => entry.id === id) + 1;
+    const playerIndex = data?.findIndex((entry) => entry.id === id);
+    const rank = playerIndex + 1;
     const badge = getScoreBadge(rank, 50);
 
     return {
-      score: data[0].score,
+      score: data[playerIndex].score,
       rank,
       totalRanks: data.length,
       ...(badge && { badge }),

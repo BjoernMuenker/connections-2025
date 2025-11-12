@@ -64,7 +64,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      increment_profile_score: {
+        Args: { p_increment: number; p_user_id: string };
+        Returns: number;
+      };
     };
     Enums: {
       [_ in never]: never;
