@@ -1,20 +1,27 @@
 import { puzzles } from '~/content/puzzles';
+import { scoreActions } from '~/content/scoreActions';
+import { useAppStore } from '~/store/appStore';
 import type { Json } from '~/types/database.types';
 import type { Puzzle } from '~/types/Puzzle';
 import type { PuzzleGroup } from '~/types/PuzzleGroup';
+import type { PuzzleGroupId } from '~/types/PuzzleGroupId';
 import type { PuzzlePersistedState } from '~/types/PuzzlePersistedState';
+import type { PuzzleScore } from '~/types/PuzzleScore';
 import type { PuzzleState } from '~/types/PuzzleState';
-import type { ScoreAction } from '~/types/ScoreAction';
+import type { ScoreActionId } from '~/types/ScoreActionId';
 
-export const usePuzzle = (puzzleId: string) => {
+export const usePuzzle = (puzzleId?: string) => {
   const user = useSupabaseUser();
   const client = useSupabaseClient();
+  const store = useAppStore();
 
   const loading = ref(false);
   const puzzle = ref<PuzzleState>();
+  let lastPersistedState: PuzzlePersistedState | undefined;
+  let scores: PuzzleScore | undefined;
 
-  function getColorByGroupId(id: string) {
-    const idToColor: { [key: string]: string } = {
+  function getColorByGroupId(id: PuzzleGroupId) {
+    const idToColor: { [key in PuzzleGroupId]: string } = {
       a: 'yellow',
       b: 'green',
       c: 'blue',
@@ -112,6 +119,12 @@ export const usePuzzle = (puzzleId: string) => {
   }
 
   async function onLoadComplete(startedAt: number) {
+    const savegame = createSavegame();
+
+    if (savegame) {
+      lastPersistedState = savegame;
+    }
+
     const completedAt = Date.now();
     const loadingTimeMs = completedAt - startedAt;
 
@@ -131,6 +144,9 @@ export const usePuzzle = (puzzleId: string) => {
 
     if (!savegame) return;
 
+    scores = getScoreDiff(lastPersistedState ?? savegame, savegame);
+    lastPersistedState = savegame;
+
     const { data, error } = await client.from('savegames').upsert(
       {
         user_id: user.value.sub,
@@ -147,27 +163,80 @@ export const usePuzzle = (puzzleId: string) => {
     }
   }
 
+  function pushScoreNotifications() {
+    console.log('pushScoreNotifications', scores);
+    if (!scores) return;
+
+    for (const [key, value] of Object.entries(scores)) {
+      const { total: score, amount } = value;
+      store.pushScoreNotification({ action: key as ScoreActionId, amount, score });
+    }
+  }
+
   function createSavegame(): PuzzlePersistedState | undefined {
     if (!puzzle.value) return;
 
+    const nonReactivePuzzle = JSON.parse(JSON.stringify(puzzle.value));
+    const { id, solved, remainingMistakes, guesses, won } = nonReactivePuzzle;
+
     return {
-      id: puzzle.value.id,
-      solved: puzzle.value.solved,
-      remainingMistakes: puzzle.value.remainingMistakes,
-      guesses: puzzle.value.guesses,
-      won: puzzle.value.won,
+      id,
+      solved,
+      remainingMistakes,
+      guesses,
+      won,
     };
   }
 
-  function getScoreByAction(action: ScoreAction) {
-    const actionToScore: { [key in ScoreAction]: number } = {
-      blueFoundFirst: 50,
-      groupFound: 100,
-      remainingMistake: 100,
-      violetFoundFirst: 100,
-    };
+  function getScoreFromSavegame(savegame: PuzzlePersistedState) {
+    const result: PuzzleScore = {};
 
-    return actionToScore[action];
+    if (savegame.won) {
+      const score = scoreActions['remainingMistake'].score;
+
+      result.remainingMistake = {
+        amount: savegame.remainingMistakes,
+        single: score,
+        total: score * savegame.remainingMistakes,
+      };
+    }
+
+    const groupsSolvedByUser = savegame.solved.filter((groupId) =>
+      savegame.guesses.find((guess) => guess.every((itemId) => itemId.startsWith(groupId)))
+    );
+
+    for (const groupId of groupsSolvedByUser) {
+      const action = `${getColorByGroupId(groupId)}Solved` as ScoreActionId;
+      const score = scoreActions[action].score;
+
+      result[action] = {
+        amount: 1,
+        single: score,
+        total: score,
+      };
+    }
+
+    const firstSolvedGroupId = groupsSolvedByUser[0];
+
+    if (['c', 'd'].includes(firstSolvedGroupId)) {
+      const action = `${getColorByGroupId(firstSolvedGroupId)}SolvedFirst` as ScoreActionId;
+      const score = scoreActions[action].score;
+
+      result[action] = {
+        amount: 1,
+        single: score,
+        total: score,
+      };
+    }
+
+    return result;
+  }
+
+  function getScoreDiff(from: PuzzlePersistedState, to: PuzzlePersistedState) {
+    const fromScore = getScoreFromSavegame(from);
+    const toScore = getScoreFromSavegame(to);
+
+    return Object.fromEntries(Object.entries(toScore).filter(([key]) => !(key in fromScore))) as typeof toScore;
   }
 
   function deselectAllItems() {
@@ -197,11 +266,12 @@ export const usePuzzle = (puzzleId: string) => {
     getGroupById,
     getGroupByItemId,
     getItemIndexById,
-    getScoreByAction,
     initPuzzleById,
+    lastPersistedState,
     load,
     loading,
     maxItemsSelected,
+    pushScoreNotifications,
     puzzle,
     reset,
     save,

@@ -1,4 +1,6 @@
+import type { PuzzleGroupItemId } from './PuzzleGroupItemId';
+
 export interface PuzzleGroupItem {
-  id: string;
+  id: PuzzleGroupItemId;
   caption: string;
 }

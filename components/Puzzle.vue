@@ -7,14 +7,26 @@
   import type { PuzzleGroup } from '~/types/PuzzleGroup';
   import type { PuzzleGroupItem } from '~/types/PuzzleGroupItem';
   import LoadingIndicator from './LoadingIndicator.vue';
+  import type { PuzzleGroupId } from '~/types/PuzzleGroupId';
 
   const props = defineProps<{ puzzleId: string }>();
 
   const { $gsap } = useNuxtApp();
   const store = useAppStore();
 
-  const { deselectAllItems, getGroupById, getGroupByItemId, getItemIndexById, maxItemsSelected, puzzle, reset, save, solvedGroups, loading } =
-    usePuzzle(props.puzzleId);
+  const {
+    deselectAllItems,
+    getGroupById,
+    getGroupByItemId,
+    getItemIndexById,
+    loading,
+    maxItemsSelected,
+    pushScoreNotifications,
+    puzzle,
+    reset,
+    save,
+    solvedGroups,
+  } = usePuzzle(props.puzzleId);
 
   const animationRunning = ref(false);
 
@@ -73,9 +85,9 @@
   async function submitItems() {
     if (!puzzle.value) return;
 
-    const currentGuess = sortAlphabetically(puzzle.value.selected).join('-');
+    const currentGuess = sortAlphabetically(puzzle.value.selected);
 
-    if (puzzle.value.guesses.find((guess) => guess === currentGuess)) {
+    if (puzzle.value.guesses.find((guess) => guess.join('-') === currentGuess.join('-'))) {
       return store.pushToastNotification('Schon geraten!');
     }
 
@@ -101,7 +113,7 @@
     puzzle.value.remainingMistakes--;
 
     if (puzzle.value.remainingMistakes === 0) {
-      const remainingGroupIds = ['a', 'b', 'c', 'd'].filter((groupId) => !puzzle.value?.solved.includes(groupId));
+      const remainingGroupIds = (['a', 'b', 'c', 'd'] as PuzzleGroupId[]).filter((groupId) => !puzzle.value?.solved.includes(groupId));
       puzzle.value.solved = [...puzzle.value.solved, ...remainingGroupIds];
       await save();
 
@@ -163,6 +175,7 @@
           deselectAllItems();
           puzzle.value!.items = puzzle.value!.items.filter((item) => !item.id.startsWith(groupId));
           solvedGroups.value.push(getGroupById(groupId)!);
+          pushScoreNotifications();
           nextTick(() => {
             $gsap.to(`.puzzle-group[data-group-id="${groupId}"]`, { scale: 1.1, duration: 0.15, ease: 'power(4)', yoyo: true, repeat: 1 });
             resolve();

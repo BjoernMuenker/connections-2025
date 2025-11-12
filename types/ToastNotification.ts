@@ -1,5 +1,6 @@
 export interface ToastNotification {
   id: string;
   text: string;
-  type: 'info' | 'error' | 'success';
+  score?: number;
+  type: 'info' | 'error' | 'success' | 'score';
 }

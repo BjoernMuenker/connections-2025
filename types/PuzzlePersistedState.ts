@@ -1,7 +1,10 @@
+import type { PuzzleGroupId } from './PuzzleGroupId';
+import type { PuzzleGroupItemId } from './PuzzleGroupItemId';
+
 export interface PuzzlePersistedState {
   id: string;
-  solved: string[];
+  solved: PuzzleGroupId[];
   remainingMistakes: number;
-  guesses: string[];
+  guesses: PuzzleGroupItemId[][];
   won: boolean;
 }

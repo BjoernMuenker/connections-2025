@@ -15,9 +15,6 @@
   });
 
   const joinedItems = computed(() => {
-    const player = route.params.player;
-    const day = route.params.day;
-
     return props.group.items
       .map((item) => item.caption)
       .flat()
@@ -49,7 +46,7 @@
     @include fluid-value('font-size', 17, 22);
 
     .title {
-      font-weight: 700;
+      @include var-font-weight(800);
     }
   }
 </style>

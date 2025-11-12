@@ -28,7 +28,7 @@
 <template>
   <div class="wrapper">
     serverTime: {{ serverTime }} scores: {{ scores }}
-    <AppButton @click="store.pushToastNotification(Date.now().toString())">Push toast</AppButton>
+    <AppButton @click="store.pushScoreNotification('blueSolved', 50)">Push toast</AppButton>
     <div v-if="serverTime">
       <ClientOnly>{{ new Date(serverTime) }}</ClientOnly>
     </div>

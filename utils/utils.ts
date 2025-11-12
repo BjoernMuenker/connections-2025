@@ -45,19 +45,26 @@ export function deg2rad(deg: number) {
   return deg * (Math.PI / 180);
 }
 
-export function sortAlphabetically(array: any[], direction: 'asc' | 'desc' = 'asc', path?: string) {
-  array.sort((a, b) => {
-    return path ? getObjectValueByPath(a, path).localeCompare(getObjectValueByPath(b, path)) : a.localeCompare(b);
+export function sortAlphabetically<T>(array: T[], direction: 'asc' | 'desc' = 'asc', path?: string) {
+  const sorted = [...array].sort((a, b) => {
+    const aVal = path ? getObjectValueByPath(a as { [key: string]: any }, path) : a;
+    const bVal = path ? getObjectValueByPath(b as { [key: string]: any }, path) : b;
+    return String(aVal).localeCompare(String(bVal));
   });
-  return direction === 'asc' ? array : array.reverse();
+
+  return direction === 'asc' ? sorted : sorted.reverse();
 }
 
-export function sortNumerically(array: any[], direction: 'asc' | 'desc' = 'asc', path?: string): any[] {
+export function sortNumerically<T>(array: T[], direction: 'asc' | 'desc' = 'asc', path?: string): any[] {
   return array.sort((a, b) => {
     if (direction === 'asc') {
-      return path ? Number(getObjectValueByPath(a, path)) - Number(getObjectValueByPath(b, path)) : Number(a) - Number(b);
+      return path
+        ? Number(getObjectValueByPath(a as { [key: string]: any }, path)) - Number(getObjectValueByPath(b as { [key: string]: any }, path))
+        : Number(a) - Number(b);
     } else {
-      return path ? Number(getObjectValueByPath(b, path)) - Number(getObjectValueByPath(a, path)) : Number(b) - Number(a);
+      return path
+        ? Number(getObjectValueByPath(b as { [key: string]: any }, path)) - Number(getObjectValueByPath(a as { [key: string]: any }, path))
+        : Number(b) - Number(a);
     }
   });
 }

@@ -30,22 +30,35 @@
   onMounted(() => {
     if (!rootRef.value) return;
     $gsap.fromTo(rootRef.value, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power3.out' });
-
-    setTimeout(remove, 5000);
+    setTimeout(remove, 7000); // clear this on unmounted?
   });
 </script>
 
 <template>
   <div class="toast-notification" :class="type" ref="rootRef" @click="remove">
+    <span v-if="score" class="score-badge">+{{ score }}</span>
     {{ text }}
   </div>
 </template>
 
 <style lang="scss" scoped>
+  .score-badge {
+    color: #333;
+    background: white;
+    padding: 0 spacing('xxs');
+    border-radius: 50px;
+    line-height: 1em;
+    display: flex;
+    align-items: center;
+    @include var-font-weight(800);
+  }
+
   .toast-notification {
     color: white;
     border-radius: spacing('xs');
     padding: spacing('s');
     background: #333;
+    display: flex;
+    gap: spacing('xs');
   }
 </style>
