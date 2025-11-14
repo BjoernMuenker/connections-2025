@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   components: { global: false },
   modules: ['@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@nuxtjs/supabase', '@formkit/nuxt'],
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       htmlAttrs: {
         lang: 'de',
@@ -104,7 +105,7 @@ export default defineNuxtConfig({
       exclude: ['*'],
       saveRedirectToCookie: true,
     },
-    types: './types/database.types.ts'
+    types: './types/database.types.ts',
   },
   // runtimeConfig: {
   //   STACK_PROJECT_ID: process.env.STACK_PROJECT_ID,

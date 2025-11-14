@@ -10,6 +10,7 @@
   const { getServerTime } = useServerTime();
   const { getPlayerStats } = useStats();
   const router = useRouter();
+  const { routes } = useRoutes();
 
   definePageMeta({
     layout: 'app',
@@ -27,11 +28,6 @@
 
 <template>
   <div class="wrapper">
-    serverTime: {{ serverTime }} scores: {{ scores }}
-    <AppButton @click="store.pushScoreNotification('blueSolved', 50)">Push toast</AppButton>
-    <div v-if="serverTime">
-      <ClientOnly>{{ new Date(serverTime) }}</ClientOnly>
-    </div>
     <div class="puzzles">
       <button
         v-for="puzzle in puzzles"
@@ -46,11 +42,7 @@
     <div class="stats">
       <div class="heading-large">Dein Fortschritt</div>
     </div>
-    <UserScore v-if="scores" v-bind="scores" />
-    <!-- <pre>
-    {{ user }}
-  </pre
-    > -->
+    <UserScore v-if="scores" v-bind="scores" @click="router.push(routes.scores)" />
   </div>
 </template>
 

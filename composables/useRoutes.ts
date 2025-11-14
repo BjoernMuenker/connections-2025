@@ -7,6 +7,7 @@ export function useRoutes() {
     changePassword: '/passwort-aendern',
     confirmEmail: '/email-bestaetigen',
     signup: '/signup',
+    scores: '/app/scores',
   };
 
   return { routes };

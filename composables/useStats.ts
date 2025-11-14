@@ -3,7 +3,13 @@ export const useStats = () => {
   const client = useSupabaseClient();
 
   async function getScores() {
-    return await client.from('profiles').select('id, username, score').order('score', { ascending: false });
+    const { data, error } = await client.from('profiles').select('id, username, score').order('score', { ascending: false });
+    if (error) {
+      console.error('fail');
+      return;
+    }
+
+    return data;
 
     // return await client
     //   .from('profiles')
@@ -12,7 +18,7 @@ export const useStats = () => {
   }
 
   async function getPlayerStats(id: string) {
-    const { data, error } = await getScores();
+    const data = await getScores();
 
     if (!data) return;
 

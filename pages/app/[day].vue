@@ -10,7 +10,9 @@
 </script>
 
 <template>
-  <Puzzle :puzzle-id="puzzleId" />
+  <div>
+    <Puzzle :puzzle-id="puzzleId" />
+  </div>
 </template>
 
 <style lang="scss" scoped>

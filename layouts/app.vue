@@ -43,6 +43,28 @@
 
   const offCanvasRef = ref<HTMLElement>();
 
+  const title = ref();
+
+  function getPageTitle() {
+    if (route.name === 'app-day') {
+      return route.params.day + '.Dezember';
+    }
+
+    if (route.path === routes.scores) {
+      return 'Bestenliste';
+    }
+
+    return 'Hi, ' + (user.value?.user_metadata.display_name ?? 'Nutzer');
+  }
+
+  watch(
+    () => route.fullPath,
+    () => {
+      title.value = getPageTitle();
+    },
+    { immediate: true }
+  );
+
   onMounted(() => {
     onClickOutside(offCanvasRef.value, hideOffCanvas);
   });
@@ -50,13 +72,27 @@
 
 <template>
   <header class="header">
-    <h1>
+    <div class="back">
+      <Transition name="slide-fade">
+        <NuxtLink v-if="route.path !== routes.app" to="/app" class="back-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+          </svg>
+        </NuxtLink>
+      </Transition>
+    </div>
+    <TransitionGroup name="elevator" tag="div" class="title-wrapper">
+      <h1 :key="title" class="title heading-large">
+        {{ title }}
+      </h1>
+    </TransitionGroup>
+    <!-- <h1 class="heading-large">
       <template v-if="route.name === 'app-day'">
-        <NuxtLink to="/app"><</NuxtLink>
         {{ route.params.day + '.Dezember' }}
       </template>
-      <template v-else>Hello {{ user?.user_metadata.display_name }}</template>
-    </h1>
+      <template v-else>Hi, {{ user?.user_metadata.display_name }}</template>
+    </h1> -->
     <div class="avatar" @click="showOffCanvas">
       {{ user?.user_metadata?.name?.slice(0, 1) ?? 'B' }}
     </div>
@@ -79,12 +115,48 @@
   header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
     padding: spacing('m');
   }
 
+  h1 {
+    white-space: nowrap;
+  }
+
   .page-content {
     padding: 0 spacing('m');
+  }
+
+  .page-title {
+    display: flex;
+    align-items: center;
+    gap: spacing('s');
+  }
+
+  .back {
+    width: 40px;
+    height: 40px;
+
+    @include breakpoint('medium') {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .back-button {
+    width: 40px;
+    height: 40px;
+    background: color('beige');
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include breakpoint('medium') {
+      width: 48px;
+      height: 48px;
+    }
   }
 
   .avatar {
@@ -97,8 +169,10 @@
     justify-content: center;
     font-weight: bold;
     color: white;
+    font-size: 14px;
 
     @include breakpoint('medium') {
+      font-size: 18px;
       width: 48px;
       height: 48px;
     }
@@ -136,5 +210,72 @@
     border-top-left-radius: spacing('m');
     border-top-right-radius: spacing('m');
     transform: translateY(100%);
+  }
+
+  .slide-fade-enter-active {
+    transition: all 0.3s cubic-bezier(0.17, 0.84, 0.44, 1);
+  }
+
+  .slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(0.17, 0.84, 0.44, 1);
+  }
+
+  .slide-fade-enter-from,
+  .slide-fade-leave-to {
+    transform: translateX(-8px);
+    opacity: 0;
+  }
+
+  /* wrapper prevents layout jumping */
+  .title-wrapper {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .title {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    line-height: 40px;
+  }
+
+  /* entering item */
+  .elevator-enter-from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  .elevator-enter-to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .elevator-enter-active {
+    transition: transform 0.5s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.5s cubic-bezier(0.17, 0.84, 0.44, 1);
+  }
+
+  /* leaving item */
+  .elevator-leave-from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .elevator-leave-to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .elevator-leave-active {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: transform 0.5s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.5s cubic-bezier(0.17, 0.84, 0.44, 1);
   }
 </style>
