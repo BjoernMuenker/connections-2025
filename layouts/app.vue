@@ -87,12 +87,6 @@
         {{ title }}
       </h1>
     </TransitionGroup>
-    <!-- <h1 class="heading-large">
-      <template v-if="route.name === 'app-day'">
-        {{ route.params.day + '.Dezember' }}
-      </template>
-      <template v-else>Hi, {{ user?.user_metadata.display_name }}</template>
-    </h1> -->
     <div class="avatar" @click="showOffCanvas">
       {{ user?.user_metadata?.name?.slice(0, 1) ?? 'B' }}
     </div>
@@ -126,6 +120,12 @@
 
   .page-content {
     padding: 0 spacing('m');
+    overflow-x: hidden;
+
+    @include breakpoint('large') {
+      max-width: 616px;
+      margin: 0 auto;
+    }
   }
 
   .page-title {
@@ -152,6 +152,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: color('white');
 
     @include breakpoint('medium') {
       width: 48px;

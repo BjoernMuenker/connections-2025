@@ -172,7 +172,7 @@
   @each $name, $value in $colors {
     .background-#{$name},
     [data-background-color='#{$name}'] {
-      background-color: $value;
+      background-color: $value !important;
     }
 
     .fill-#{$name},

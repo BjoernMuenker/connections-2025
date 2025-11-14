@@ -35,6 +35,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: color('black');
   font-size: 18px;
+  // background: #fffcf8;
+  background: #efefef;
   @include var-font-weight(500);
 }
 

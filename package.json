@@ -19,6 +19,7 @@
     "pinia-plugin-persistedstate": "^4.1.2",
     "vue": "latest",
     "vue-router": "latest",
+    "keen-slider": "6.8.6",
     "@formkit/addons": "^1.6.9",
     "@formkit/core": "^1.6.9",
     "@formkit/nuxt": "^1.6.9",

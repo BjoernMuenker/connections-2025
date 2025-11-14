@@ -71,7 +71,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: color('beige');
+    background: color('white');
     border-radius: 6px;
     color: color('black');
     cursor: pointer;
@@ -92,7 +92,7 @@
 
     &.selected {
       color: color('white');
-      background-color: color('grey-dark');
+      background-color: #333;
     }
 
     &.extrashort {

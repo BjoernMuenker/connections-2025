@@ -22,11 +22,11 @@
 <style lang="scss" scoped>
   .user-score {
     min-width: 300px;
-    border: 1px solid #cdcdcd;
     border-radius: 8px;
     padding: spacing('l');
     display: inline-block;
-    background: linear-gradient(#fff, #eeeeee);
+    background: color('white');
+    // box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
 
   .heading-wrapper {

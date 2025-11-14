@@ -31,11 +31,10 @@
   .top-ranks {
     display: flex;
     flex-direction: column;
-    gap: spacing('xs');
+    gap: spacing('m');
     margin-bottom: spacing('xl');
 
     .entry {
-      border: 1px solid #cdcdcd;
       border-radius: spacing('s');
       padding: spacing('s');
 
