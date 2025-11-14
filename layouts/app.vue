@@ -257,7 +257,7 @@
   }
 
   .elevator-enter-active {
-    transition: transform 0.5s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.5s cubic-bezier(0.17, 0.84, 0.44, 1);
+    transition: transform 0.6s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.5s ease;
   }
 
   /* leaving item */
@@ -276,6 +276,6 @@
     top: 0;
     left: 0;
     width: 100%;
-    transition: transform 0.5s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.5s cubic-bezier(0.17, 0.84, 0.44, 1);
+    transition: transform 0.6s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.5s ease;
   }
 </style>

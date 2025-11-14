@@ -42,6 +42,21 @@
 </template>
 
 <style lang="scss" scoped>
+  .toast-notification {
+    color: white;
+    border-radius: spacing('xs');
+    padding: spacing('xs') spacing('s');
+    background: #333;
+    display: flex;
+    gap: spacing('xs');
+    font-size: 15px;
+
+    @include breakpoint('medium') {
+      font-size: 16px;
+      padding: spacing('s') spacing('s');
+    }
+  }
+
   .score-badge {
     color: #333;
     background: white;
@@ -51,14 +66,5 @@
     display: flex;
     align-items: center;
     @include var-font-weight(800);
-  }
-
-  .toast-notification {
-    color: white;
-    border-radius: spacing('xs');
-    padding: spacing('s');
-    background: #333;
-    display: flex;
-    gap: spacing('xs');
   }
 </style>
