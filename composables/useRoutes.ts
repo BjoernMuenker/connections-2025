@@ -8,6 +8,7 @@ export function useRoutes() {
     confirmEmail: '/email-bestaetigen',
     signup: '/signup',
     scores: '/app/scores',
+    statistics: '/app/statistik',
   };
 
   return { routes };

@@ -54,7 +54,13 @@
       return 'Bestenliste';
     }
 
-    return 'Hi, ' + (user.value?.user_metadata.display_name ?? 'Nutzer');
+    if (route.path === routes.app) {
+      return 'Hi, ' + (user.value?.user_metadata.display_name ?? 'Nutzer');
+    }
+
+    if (route.path === routes.statistics) {
+      return 'Statistik';
+    }
   }
 
   watch(
@@ -107,11 +113,26 @@
 
 <style lang="scss" scoped>
   header {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
     padding: spacing('m');
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+
+    &::after {
+      position: absolute;
+      content: '';
+      z-index: -1;
+      height: 100%;
+      top: 0;
+      left: spacing('m');
+      width: calc(100% - spacing('m') * 2);
+      background: #efefef;
+    }
   }
 
   h1 {
@@ -119,7 +140,7 @@
   }
 
   .page-content {
-    padding: 0 spacing('m');
+    padding: 100px spacing('m');
     overflow-x: hidden;
 
     @include breakpoint('large') {
@@ -178,6 +199,17 @@
       height: 48px;
     }
   }
+
+  // main::after {
+  //   position: fixed;
+  //   content: '';
+  //   left: 0;
+  //   top: 0;
+  //   width: 100%;
+  //   height: 100px;
+  //   background: red;
+  //   background: linear-gradient(#efefef, transparent);
+  // }
 
   .toast-notifications {
     position: fixed;

@@ -1,6 +1,7 @@
 import { puzzles } from '~/content/puzzles';
 import { scoreActions } from '~/content/scoreActions';
 import { useAppStore } from '~/store/appStore';
+import type { Color } from '~/types/Color';
 import type { Json } from '~/types/database.types';
 import type { Puzzle } from '~/types/Puzzle';
 import type { PuzzleGroup } from '~/types/PuzzleGroup';
@@ -21,7 +22,7 @@ export const usePuzzle = (puzzleId?: string) => {
   let scores: PuzzleScore | undefined;
 
   function getColorByGroupId(id: PuzzleGroupId) {
-    const idToColor: { [key in PuzzleGroupId]: string } = {
+    const idToColor: { [key in PuzzleGroupId]: Color } = {
       a: 'yellow',
       b: 'green',
       c: 'blue',
@@ -29,6 +30,26 @@ export const usePuzzle = (puzzleId?: string) => {
     };
 
     return idToColor[id];
+  }
+
+  function getNameByGroupId(id: PuzzleGroupId) {
+    const idToName: { [key in PuzzleGroupId]: string } = {
+      a: 'gelb',
+      b: 'grün',
+      c: 'blau',
+      d: 'violett',
+    };
+
+    return idToName[id];
+  }
+
+  function getGroupsSolvedByUser(state: PuzzlePersistedState) {
+    return state.solved.filter((groupId) => isGroupSolvedByUser(groupId, state));
+  }
+
+  function isGroupSolvedByUser(id: PuzzleGroupId, state: PuzzlePersistedState) {
+    if (!state.solved.includes(id)) return false;
+    return state.guesses.find((guess) => guess.every((itemId) => itemId.startsWith(id)));
   }
 
   const solvedGroups = ref<PuzzleGroup[]>([]);
@@ -285,8 +306,11 @@ export const usePuzzle = (puzzleId?: string) => {
     getColorByGroupId,
     getGroupById,
     getGroupByItemId,
+    getGroupsSolvedByUser,
     getItemIndexById,
+    getNameByGroupId,
     initPuzzleById,
+    isGroupSolvedByUser,
     lastPersistedState,
     load,
     loading,

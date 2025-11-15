@@ -2,6 +2,7 @@
   import { usePuzzle } from '#imports';
   import KeenSlider, { type KeenSliderInstance } from 'keen-slider';
   import AppButton from '~/components/AppButton.vue';
+  import UserProgress from '~/components/UserProgress.vue';
   import UserScore from '~/components/UserScore.vue';
   import { puzzles as puzzlesData } from '~/content/puzzles';
   import { useAppStore } from '~/store/appStore';
@@ -92,9 +93,13 @@
       </div>
     </div>
     <div class="stats">
-      <div class="heading-large">Dein Fortschritt</div>
+      <div class="heading">
+        <div class="heading-large">Dein Fortschritt</div>
+        <NuxtLink :to="routes.statistics">Mehr</NuxtLink>
+      </div>
+      <UserProgress v-if="savegames" :states="savegames.map((savegame) => savegame.data)" />
+      <UserScore v-if="scores" v-bind="scores" @click="router.push(routes.scores)" />
     </div>
-    <UserScore v-if="scores" v-bind="scores" @click="router.push(routes.scores)" />
   </div>
 </template>
 
@@ -169,6 +174,11 @@
   .stats {
     margin-top: spacing('xl');
 
+    .heading {
+      display: flex;
+      justify-content: space-between;
+    }
+
     .heading-large {
       margin-bottom: spacing('m');
     }
@@ -176,6 +186,10 @@
 
   .debug {
     font-size: 14px;
+  }
+
+  .user-progress {
+    margin-bottom: spacing('l');
   }
 
   .user-score {
