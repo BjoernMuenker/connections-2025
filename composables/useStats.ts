@@ -17,12 +17,12 @@ export const useStats = () => {
     //   .eq('id', userId); // filter for specific user
   }
 
-  async function getPlayerStats(id: string) {
+  async function getScore(playerId: string) {
     const data = await getScores();
 
     if (!data) return;
 
-    const playerIndex = data?.findIndex((entry) => entry.id === id);
+    const playerIndex = data?.findIndex((entry) => entry.id === playerId);
     const rank = playerIndex + 1;
     const badge = getScoreBadge(rank, 50);
 
@@ -31,6 +31,17 @@ export const useStats = () => {
       rank,
       totalRanks: data.length,
       ...(badge && { badge }),
+    };
+  }
+
+  async function getGlobalScore() {
+    const data = await getScores();
+
+    if (!data) return;
+
+    return {
+      score: sumArray(data.map((entry) => entry.score)),
+      totalRanks: data.length,
     };
   }
 
@@ -55,5 +66,5 @@ export const useStats = () => {
     }
   }
 
-  return { getScores, getPlayerStats };
+  return { getScores, getScore, getGlobalScore };
 };

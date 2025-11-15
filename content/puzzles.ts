@@ -13,7 +13,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '2': {
     id: '2',
-    unlocksAt: new Date('2025-12-02T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-02T00:00:00Z').getTime(),
     groups: [
       { caption: 'Kaffee-Zubereitungen', items: ['Pharisäer', 'Einspänner', 'Lungo', 'Affogato'] },
       { caption: 'Bodenbeläge', items: ['Laminat', 'Kork', 'Teppich', 'Beton'] },
@@ -23,7 +23,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '3': {
     id: '3',
-    unlocksAt: new Date('2025-12-03T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-03T00:00:00Z').getTime(),
     groups: [
       { caption: 'Bowling-Begriffe', items: ['Split', 'Strike', 'Pin', 'Frame'] },
       { caption: 'Geld', items: ['Steine', 'Moos', 'Zaster', 'Bims'] },
@@ -33,7 +33,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '4': {
     id: '4',
-    unlocksAt: new Date('2025-12-04T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-04T00:00:00Z').getTime(),
     groups: [
       { caption: 'Himmelsrichtungen-Merkspruch', items: ['Nie', 'Ohne', 'Seife', 'Waschen'] },
       { caption: 'Duftkonzentrationen', items: ['Fraîche', 'Cologne', 'Toilette', 'Parfum'] },
@@ -43,7 +43,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '5': {
     id: '5',
-    unlocksAt: new Date('2025-12-05T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-05T00:00:00Z').getTime(),
     groups: [
       { caption: 'Kölner Stadtbezirke', items: ['Kalk', 'Porz', 'Ehrenfeld', 'Nippes'] },
       { caption: 'Trinkgefäße', items: ['Horn', 'Tasse', 'Glas', 'Kelch'] },
@@ -53,7 +53,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '6': {
     id: '6',
-    unlocksAt: new Date('2025-12-06T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-06T00:00:00Z').getTime(),
     groups: [
       { caption: 'Gottesdienst-Bestandteile', items: ['Gesang', 'Predigt', 'Gebet', 'Abendmahl'] },
       { caption: 'Sitzplätze im Theater', items: ['Rang', 'Parkett', 'Loge', 'Balkon'] },
@@ -63,7 +63,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '7': {
     id: '7',
-    unlocksAt: new Date('2025-12-07T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-07T00:00:00Z').getTime(),
     groups: [
       { caption: 'E-Roller-Anbieter', items: ['Tier', 'Volt', 'Bolt', 'Lime'] },
       { caption: 'Marken der Volkswagen AG', items: ['Audi', 'Seat', 'Bentley', 'Porsche'] },
@@ -73,7 +73,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '8': {
     id: '8',
-    unlocksAt: new Date('2025-12-08T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-08T00:00:00Z').getTime(),
     groups: [
       { caption: 'Discounter', items: ['Netto', 'Penny', 'Aldi', 'Lidl'] },
       { caption: '___sexuell', items: ['Pan', 'Andro', 'Bi', 'Metro'] },
@@ -83,7 +83,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '9': {
     id: '9',
-    unlocksAt: new Date('2025-12-09T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-09T00:00:00Z').getTime(),
     groups: [
       { caption: 'Zwischenraum', items: ['Ritze', 'Spalt', 'Fuge', 'Schlitz'] },
       { caption: 'ABBA-Songs', items: ['Fernando', 'Chiquitita', 'Tiger', 'SOS'] },
@@ -93,7 +93,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '10': {
     id: '10',
-    unlocksAt: new Date('2025-12-10T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-10T00:00:00Z').getTime(),
     groups: [
       { caption: 'Unternehmen', items: ['SAP', 'BMW', 'IBM', 'DHL'] },
       { caption: 'Bild-Dateiformate', items: ['JPG', 'GIF', 'PNG', 'BMP'] },
@@ -103,7 +103,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '11': {
     id: '11',
-    unlocksAt: new Date('2025-12-11T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-11T00:00:00Z').getTime(),
     groups: [
       { caption: 'Vierecke', items: ['Raute', 'Trapez', 'Quadrat', 'Rechteck'] },
       { caption: 'Währungen', items: ['Rand', 'Pfund', 'Real', 'Krone'] },
@@ -113,7 +113,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '12': {
     id: '12',
-    unlocksAt: new Date('2025-12-12T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-12T00:00:00Z').getTime(),
     groups: [
       { caption: 'Nominierte Jugendwörter 2024', items: ['Schere', 'Yurr', 'Talahon', 'Aura'] },
       { caption: 'Cola-Marken', items: ['Nuka', 'Fritz', 'Afri', 'Pepsi'] },
@@ -123,7 +123,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '13': {
     id: '13',
-    unlocksAt: new Date('2025-12-13T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-13T00:00:00Z').getTime(),
     groups: [
       { caption: 'Näh-Utensilien', items: ['Nadel', 'Garn', 'Lineal', 'Stoff'] },
       { caption: 'Tools in Grafikprogrammen', items: ['Auswahl', 'Pipette', 'Text', 'Pinsel'] },
@@ -133,7 +133,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '14': {
     id: '14',
-    unlocksAt: new Date('2025-12-14T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-14T00:00:00Z').getTime(),
     groups: [
       { caption: 'Milch-Arten', items: ['Hafer', 'Kuh', 'Mandel', 'Soja'] },
       { caption: 'Frisuren', items: ['Bob', 'Pixie', 'Afro', 'Mohawk'] },
@@ -143,7 +143,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '15': {
     id: '15',
-    unlocksAt: new Date('2025-12-15T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-15T00:00:00Z').getTime(),
     groups: [
       { caption: 'Spielkarten', items: ['Bube', 'Dame', 'König', 'Ass'] },
       { caption: 'Halloween-Kostüme', items: ['Hexe', 'Geist', 'Zombie', 'Vampir'] },
@@ -153,7 +153,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '16': {
     id: '16',
-    unlocksAt: new Date('2025-12-16T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-16T00:00:00Z').getTime(),
     groups: [
       { caption: 'Brauntöne', items: ['Umbra', 'Ocker', 'Beige', 'Cognac'] },
       { caption: 'Kleine Menge', items: ['Prise', 'Idee', 'Spur', 'My'] },
@@ -163,7 +163,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '17': {
     id: '17',
-    unlocksAt: new Date('2025-12-17T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-17T00:00:00Z').getTime(),
     groups: [
       { caption: 'Denkwerk-Standorte', items: ['Köln', 'Berlin', 'Hamburg', 'München'] },
       { caption: 'US-Bundesstaaten', items: ['Kalifornien', 'Hawaii', 'Alaska', 'Florida'] },
@@ -173,7 +173,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '18': {
     id: '18',
-    unlocksAt: new Date('2025-12-18T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-18T00:00:00Z').getTime(),
     groups: [
       { caption: 'Griechische Buchstaben', items: ['Zeta', 'Kappa', 'Delta', 'Omnikron'] },
       { caption: 'Bier-Arten', items: ['Lager', 'Export', 'Keller', 'Alt'] },
@@ -183,7 +183,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '19': {
     id: '19',
-    unlocksAt: new Date('2025-12-19T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-19T00:00:00Z').getTime(),
     groups: [
       { caption: 'Kölner Postleitzahlen', items: ['50667', '50823', '51101', '51149'] },
       { caption: 'Deutschland gewinnt Fußball-WM', items: ['1954', '1974', '1990', '2014'] },
@@ -193,7 +193,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '20': {
     id: '20',
-    unlocksAt: new Date('2025-12-20T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-20T00:00:00Z').getTime(),
     groups: [
       { caption: 'Cocktails', items: ['Manhattan', 'Daiquiri', 'Martini', 'Negroni'] },
       { caption: 'US-Präsidenten am Mt. Rushmore', items: ['Washington', 'Jefferson', 'Roosevelt', 'Lincoln'] },
@@ -203,7 +203,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '21': {
     id: '21',
-    unlocksAt: new Date('2025-12-21T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-21T00:00:00Z').getTime(),
     groups: [
       { caption: 'Harry Potter', items: ['⚡️', '🪄', '🧹', '🤓'] },
       { caption: 'Jurassic Park', items: ['🧬', '🐐', '🦖', '🚽'] },
@@ -213,7 +213,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '22': {
     id: '22',
-    unlocksAt: new Date('2025-12-22T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-22T00:00:00Z').getTime(),
     groups: [
       { caption: 'Schnell', items: ['Fix', 'Zügig', 'Rasch', 'Flink'] },
       { caption: 'Flaschengrößen für Wein', items: ['Piccolo', 'Magnum', 'Goliath', 'Demi'] },
@@ -223,7 +223,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '23': {
     id: '23',
-    unlocksAt: new Date('2025-12-23T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-23T00:00:00Z').getTime(),
     groups: [
       { caption: 'Geschossbezeichnungen', items: ['UG', 'EG', 'OG', 'DG'] },
       { caption: 'DIN Papier-Formate', items: ['A4', 'B2', 'C3', 'D1'] },
@@ -233,7 +233,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '24': {
     id: '24',
-    unlocksAt: new Date('2025-12-24T00:00:00Z').getTime(),
+    unlocksAt: new Date('2025-11-24T00:00:00Z').getTime(),
     groups: [
       { caption: 'Stimmlagen', items: ['Sopran', 'Tenor', 'Bariton', 'Alt'] },
       { caption: '"Weihnachten"', items: ['Vánoce', 'Natal', 'Kerstmis', 'Jul'] },

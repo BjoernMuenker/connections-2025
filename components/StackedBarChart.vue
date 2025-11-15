@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import type { Color } from '~/types/Color';
+  import type { StackedBarChartItem } from '~/types/StackedBarChartItem';
 
-  const props = withDefaults(defineProps<{ data: { id: string; caption: string; amount: number; color: Color }[]; size?: 'large' | 'default' }>(), {
+  const props = withDefaults(defineProps<{ data: StackedBarChartItem[]; size?: 'large' | 'default' }>(), {
     size: 'default',
   });
 
@@ -10,7 +11,7 @@
 
 <template>
   <div class="stacked-bar-chart">
-    <div class="chart" :class="size">
+    <div class="chart" :class="[size, { empty: total === 0 }]">
       <div
         v-for="item in data.filter((item) => item.amount !== 0)"
         :key="item.id"
@@ -33,7 +34,10 @@
     height: 12px;
     overflow: hidden;
     margin-bottom: spacing('xs');
-    background: #efefef;
+
+    &.empty {
+      background: #efefef;
+    }
 
     &.large {
       height: 16px;

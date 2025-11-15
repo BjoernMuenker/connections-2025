@@ -114,7 +114,8 @@ export const usePuzzle = (puzzleId?: string) => {
     const { data, error } = await client
       .from('savegames')
       .select('*')
-      .eq('user_id', user.value?.sub ?? '');
+      .eq('user_id', user.value?.sub ?? '')
+      .eq('puzzle_id', puzzleId);
 
     if (error || !data || data.length === 0) {
       puzzle.value = _puzzle;

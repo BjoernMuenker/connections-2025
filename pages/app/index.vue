@@ -3,6 +3,7 @@
   import KeenSlider, { type KeenSliderInstance } from 'keen-slider';
   import AppButton from '~/components/AppButton.vue';
   import UserProgress from '~/components/UserProgress.vue';
+  import UserRank from '~/components/UserRank.vue';
   import UserScore from '~/components/UserScore.vue';
   import { puzzles as puzzlesData } from '~/content/puzzles';
   import { useAppStore } from '~/store/appStore';
@@ -11,7 +12,7 @@
   const user = useSupabaseUser();
   const { $gsap } = useNuxtApp();
   const { getServerTime } = useServerTime();
-  const { getPlayerStats } = useStats();
+  const { getScore } = useStats();
   const { getSavegames } = useSavegames();
   const { getColorByGroupId } = usePuzzle();
   const router = useRouter();
@@ -22,7 +23,7 @@
   });
 
   const { data: serverTime } = useAsyncData('serverTime', () => getServerTime());
-  const { data: scores } = useAsyncData('profiles', () => getPlayerStats(user.value?.sub ?? ''));
+  const { data: scores } = useAsyncData('score', () => getScore(user.value?.sub ?? ''));
   const { data: savegames } = useAsyncData('savegames', () => getSavegames({ userId: user.value?.sub ?? '' }));
 
   const sliderRef = ref<HTMLElement | null>(null);
@@ -71,7 +72,6 @@
 
 <template>
   <div class="wrapper">
-    <!-- {{ savegames }} -->
     <div class="puzzles" ref="sliderRef">
       <div class="slide" v-for="puzzle in puzzles" :key="puzzle.id">
         <button
@@ -97,8 +97,11 @@
         <div class="heading-large">Dein Fortschritt</div>
         <NuxtLink :to="routes.statistics">Mehr</NuxtLink>
       </div>
-      <UserProgress v-if="savegames" :states="savegames.map((savegame) => savegame.data)" />
-      <UserScore v-if="scores" v-bind="scores" @click="router.push(routes.scores)" />
+      <UserProgress v-if="savegames" :states="savegames.map((savegame) => savegame.data)" :show-pending="true" />
+      <div class="items">
+        <UserScore v-if="scores" v-bind="scores" @click="router.push(routes.scores)" />
+        <UserRank v-if="scores" v-bind="scores" @click="router.push(routes.scores)" />
+      </div>
     </div>
   </div>
 </template>
@@ -192,9 +195,12 @@
     margin-bottom: spacing('l');
   }
 
-  .user-score {
-    @include breakpoint('small', 'max') {
-      width: 100%;
+  .items {
+    display: flex;
+    gap: spacing('m');
+
+    > div {
+      flex: 1;
     }
   }
 </style>

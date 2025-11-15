@@ -7,9 +7,13 @@
   import StackedBarChart from './StackedBarChart.vue';
   import type { PuzzleGroupId } from '~/types/PuzzleGroupId';
 
-  const props = defineProps<{ states: PuzzlePersistedState[]; score: { score: number; rank: number; totalRanks: number; badge?: string } }>();
+  const props = defineProps<{
+    states: PuzzlePersistedState[];
+    score: { score: number; rank?: number; totalRanks: number; badge?: string };
+    scope?: 'player' | 'global';
+  }>();
 
-  const { isGroupSolvedByUser, getColorByGroupId, getNameByGroupId, getGroupsSolvedByUser } = usePuzzle();
+  const { getColorByGroupId, getNameByGroupId, getGroupsSolvedByUser } = usePuzzle();
 
   const solvedFirst = computed(() => {
     return getSolveOrder(props.states, 'first');
@@ -17,6 +21,10 @@
 
   const solvedLast = computed(() => {
     return getSolveOrder(props.states, 'last');
+  });
+
+  const averageScorePerUser = computed(() => {
+    return props.score.score / props.score.totalRanks;
   });
 
   function getSolveOrder(states: PuzzlePersistedState[], position: 'first' | 'last') {
@@ -46,7 +54,7 @@
 
   const items = computed(() => {
     const totalMistakes = sumArray(props.states.map((state) => 4 - state.remainingMistakes));
-    const averageMistakesPerDay = totalMistakes / (24 * props.states.length);
+    const averageMistakesPerDay = props.states.length === 0 ? 0 : totalMistakes / props.states.length;
     const daysWithoutMistake = props.states.filter((state) => state.won && state.remainingMistakes === 4).length;
 
     return [
@@ -65,16 +73,21 @@
         caption: 'Fehlerfreie Tage',
         value: daysWithoutMistake,
       },
+
+      // day with most / less mistakes?
     ];
   });
 </script>
 
 <template>
   <div class="user-statistics">
-    <UserProgress :states="states" />
     <div class="items">
+      <StatisticItem caption="Siege vs. Niederlagen" class="bar-chart">
+        <UserProgress :states="states" :scope="scope" />
+      </StatisticItem>
       <UserScore v-bind="score" />
-      <UserRank :rank="score.rank" :totalRanks="score.totalRanks" />
+      <StatisticItem v-if="scope === 'global'" caption="⌀ Score / Nutzer" :value="averageScorePerUser" />
+      <UserRank v-if="scope === 'player' && score.rank" :rank="score.rank" :totalRanks="score.totalRanks" />
       <StatisticItem caption="Zuerst gelöst" class="bar-chart">
         <StackedBarChart :data="solvedFirst" />
       </StatisticItem>
@@ -91,10 +104,11 @@
     display: flex;
     flex-wrap: wrap;
     gap: spacing('s');
-    margin-top: spacing('xl');
 
     > div {
-      flex: 1;
+      // width: calc(50% - spacing('s') / 2);
+      flex: 1 1;
+      flex-shrink: 0;
       min-width: 200px;
 
       &.bar-chart {

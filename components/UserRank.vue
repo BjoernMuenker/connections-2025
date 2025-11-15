@@ -8,7 +8,7 @@
   <div class="user-score">
     <StatisticItem caption="Platzierung">
       <span class="heading-large">{{ rank }}</span>
-      <span class="total-ranks heading-medium">/{{ totalRanks }}</span>
+      <span class="total-ranks heading-small"> / {{ totalRanks }}</span>
     </StatisticItem>
   </div>
 </template>

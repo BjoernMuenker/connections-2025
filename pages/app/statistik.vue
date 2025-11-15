@@ -5,7 +5,7 @@
 
   const user = useSupabaseUser();
   const { getSavegames } = useSavegames();
-  const { getPlayerStats } = useStats();
+  const { getScore, getGlobalScore } = useStats();
 
   definePageMeta({
     layout: 'app',
@@ -15,10 +15,23 @@
     title: 'Statistik',
   });
 
-  const scope = ref('du');
+  const scope = ref<'player' | 'global'>('player');
 
-  const { data: savegames } = useAsyncData('savegames', () => getSavegames({ ...(scope.value === 'du' && { userId: user.value?.sub ?? '' }) }));
-  const { data: scores } = useAsyncData('profiles', () => getPlayerStats(user.value?.sub ?? ''));
+  const { data: savegames, refresh: refreshSavegames } = useAsyncData('savegames', () =>
+    getSavegames({ ...(scope.value === 'player' && { userId: user.value?.sub ?? '' }) })
+  );
+
+  const { data: scores, refresh: refreshScores } = useAsyncData('profiles', () => {
+    return scope.value === 'player' ? getScore(user.value?.sub ?? '') : getGlobalScore();
+  });
+
+  watch(
+    () => scope.value,
+    () => {
+      refreshSavegames();
+      refreshScores();
+    }
+  );
 </script>
 
 <template>
@@ -26,12 +39,12 @@
     <ToggleButton
       v-model="scope"
       :items="[
-        { data: 'du', caption: 'Du' },
+        { data: 'player', caption: 'Du' },
         { data: 'global', caption: 'Global' },
       ]"
     />
     <div class="wrapper">
-      <UserStatistics v-if="savegames && scores" :states="savegames.map((savegame) => savegame.data)" :score="scores" />
+      <UserStatistics v-if="savegames && scores" :states="savegames.map((savegame) => savegame.data)" :score="scores" :scope="scope" />
     </div>
   </div>
 </template>
