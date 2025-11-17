@@ -1,16 +1,20 @@
 <script setup lang="ts">
-  const props = withDefaults(defineProps<{ loading?: boolean; disabled?: boolean; hierarchy?: 'primary' | 'secondary' }>(), { hierarchy: 'primary' });
+  const props = withDefaults(defineProps<{ tag?: 'a' | 'button'; loading?: boolean; disabled?: boolean; hierarchy?: 'primary' | 'secondary' }>(), {
+    tag: 'button',
+    hierarchy: 'primary',
+  });
 </script>
 
 <template>
-  <button :disabled="loading || disabled" :class="hierarchy">
+  <component :is="tag" :disabled="loading || disabled" :class="hierarchy">
     <span v-if="loading">lädt...</span>
     <slot v-else />
-  </button>
+  </component>
 </template>
 
 <style lang="scss" scoped>
-  button {
+  button,
+  a {
     font-size: 18px;
     padding: spacing('xs') spacing('s');
     font-weight: bold;
@@ -52,5 +56,9 @@
     &:disabled {
       cursor: not-allowed;
     }
+  }
+
+  a {
+    display: inline-block;
   }
 </style>

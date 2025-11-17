@@ -6,7 +6,7 @@ export function useRoutes() {
     resetPassword: '/passwort-zuruecksetzen',
     changePassword: '/passwort-aendern',
     confirmEmail: '/email-bestaetigen',
-    signup: '/signup',
+    signup: '/sign-up',
     scores: '/app/scores',
     statistics: '/app/statistik',
   };

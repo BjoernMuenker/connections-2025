@@ -69,11 +69,7 @@
 
 <style lang="scss" scoped>
   .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 400px;
+    width: 100%;
   }
 
   .header {
@@ -83,8 +79,8 @@
   form {
     width: 100%;
     padding: spacing('xl');
-    border: 1px solid #949494;
-    border-radius: 10px;
+    background: color('white');
+    border-radius: spacing('m');
   }
 
   button {

@@ -61,14 +61,6 @@
 </template>
 
 <style lang="scss" scoped>
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 400px;
-  }
-
   .header {
     margin-bottom: spacing('l');
   }
@@ -76,8 +68,9 @@
   form {
     width: 100%;
     padding: spacing('xl');
-    border: 1px solid #949494;
-    border-radius: 8px;
+    background: color('white');
+    border-radius: spacing('m');
+    margin-bottom: spacing('l');
     margin-bottom: spacing('l');
   }
 

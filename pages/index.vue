@@ -1,77 +1,47 @@
 <script setup lang="ts">
-  import LoadingIndicator from '~/components/LoadingIndicator.vue';
+  import AppButton from '~/components/AppButton.vue';
 
-  const { data: serverTime, error } = await useAsyncData('server-time', async () => $fetch<{ now: number }>('/api/time'));
+  const { routes } = useRoutes();
 </script>
 
 <template>
-  <div v-if="serverTime">
-    server_timestamp: {{ serverTime.now }}
-    <ClientOnly>{{ new Date(serverTime.now) }}</ClientOnly>
+  <div class="card">
+    <h1>Hohoho!</h1>
+    <p>
+      24 kleine Rätsel erwarten Dich - schaffst Du es, alle bis Weihnachten zu lösen? Melde dich an oder erstelle dir einen Account und schon kann es
+      losgehen.
+    </p>
+    <div class="buttons">
+      <NuxtLink :to="routes.signup" v-slot="{ href, navigate }" custom>
+        <AppButton tag="a" :href="href" @click="navigate">Account erstellen</AppButton>
+      </NuxtLink>
+      <NuxtLink :to="routes.login" v-slot="{ href, navigate }" custom>
+        <AppButton tag="a" :href="href" @click="navigate" hierarchy="secondary">Anmelden</AppButton>
+      </NuxtLink>
+    </div>
   </div>
-
-  <div class="wrapper">
-    <LoadingIndicator />
-  </div>
-  <!-- <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div>
-  <div>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quibusdam animi eligendi! Aspernatur perspiciatis harum est pariatur fuga
-    consectetur dolores, deleniti alias ab ipsam cum totam eligendi id? Atque, ad.
-  </div> -->
 </template>
 
 <style lang="scss" scoped>
-  .wrapper {
-    height: 100%;
+  .card {
+    padding: spacing('xl');
+    background: color('white');
+    border-radius: spacing('m');
+  }
+
+  h1 {
+    margin-bottom: spacing('m');
+  }
+
+  .buttons {
+    margin-top: spacing('l');
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: spacing('s');
+    flex-direction: column;
+
+    a {
+      width: 100%;
+      text-align: center;
+    }
   }
 </style>

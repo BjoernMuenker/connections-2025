@@ -52,14 +52,6 @@
 </template>
 
 <style lang="scss" scoped>
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 400px;
-  }
-
   .no-account {
     padding: 0 spacing('xl');
     width: 100%;
@@ -72,8 +64,8 @@
   form {
     width: 100%;
     padding: spacing('xl');
-    border: 1px solid #949494;
-    border-radius: 8px;
+    background: color('white');
+    border-radius: spacing('m');
     margin-bottom: spacing('l');
   }
 
