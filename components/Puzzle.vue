@@ -13,6 +13,7 @@
 
   const { $gsap } = useNuxtApp();
   const store = useAppStore();
+  const router = useRouter();
 
   const {
     deselectAllItems,
@@ -247,7 +248,12 @@
     });
   }
 
+  function showResults() {
+    router.push(`/app/${props.puzzleId}/statistik`);
+  }
+
   onMounted(() => {
+    console.log('puzzle mounted');
     $gsap.CustomWiggle.create('wiggle', { wiggles: 6 });
   });
 
@@ -308,9 +314,9 @@
           </AppButton>
           <AppButton :disabled="!maxItemsSelected || animationRunning" @click="submitItems" class="animation-target">Absenden</AppButton>
         </template>
-        <!-- <template v-else>
-        <AppButton @click="showResults" class="animation-target">Verlauf anzeigen</AppButton>
-      </template> -->
+        <template v-else>
+          <AppButton @click="showResults" class="animation-target">Statistik anzeigen</AppButton>
+        </template>
       </div>
     </div>
   </ClientOnly>
@@ -319,10 +325,16 @@
 <style lang="scss" scoped>
   .loading-wrapper {
     width: 100%;
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: calc(100vw - #{spacing('m') * 2});
+
+    @media all and (min-width: 769px) {
+      margin: 0 auto;
+      width: calc(3 * 8px + 4 * 140px);
+      height: calc(3 * 8px + 4 * 140px);
+    }
   }
 
   .puzzle {

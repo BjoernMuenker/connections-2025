@@ -32,5 +32,6 @@ export function useSavegames() {
       };
     });
   }
+
   return { getSavegames };
 }

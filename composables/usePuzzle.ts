@@ -6,6 +6,7 @@ import type { Json } from '~/types/database.types';
 import type { Puzzle } from '~/types/Puzzle';
 import type { PuzzleGroup } from '~/types/PuzzleGroup';
 import type { PuzzleGroupId } from '~/types/PuzzleGroupId';
+import type { PuzzleGroupItemId } from '~/types/PuzzleGroupItemId';
 import type { PuzzlePersistedState } from '~/types/PuzzlePersistedState';
 import type { PuzzleScore } from '~/types/PuzzleScore';
 import type { PuzzleState } from '~/types/PuzzleState';
@@ -30,6 +31,10 @@ export const usePuzzle = (puzzleId?: string) => {
     };
 
     return idToColor[id];
+  }
+
+  function getColorByGroupItemId(id: PuzzleGroupItemId) {
+    return getColorByGroupId(id.slice(0, 1) as PuzzleGroupId);
   }
 
   function getNameByGroupId(id: PuzzleGroupId) {
@@ -152,8 +157,8 @@ export const usePuzzle = (puzzleId?: string) => {
 
     console.log('loaded for', loadingTimeMs, 'ms');
 
-    if (loadingTimeMs < 500) {
-      await sleep(500 - loadingTimeMs);
+    if (loadingTimeMs < 1000) {
+      await sleep(1000 - loadingTimeMs);
     }
 
     loading.value = false;
@@ -206,7 +211,6 @@ export const usePuzzle = (puzzleId?: string) => {
   }
 
   function pushScoreNotifications() {
-    console.log('pushScoreNotifications', scores);
     if (!scores) return;
 
     for (const [key, value] of Object.entries(scores)) {
@@ -310,6 +314,8 @@ export const usePuzzle = (puzzleId?: string) => {
     getGroupsSolvedByUser,
     getItemIndexById,
     getNameByGroupId,
+    getScoreFromSavegame,
+    getColorByGroupItemId,
     initPuzzleById,
     isGroupSolvedByUser,
     lastPersistedState,

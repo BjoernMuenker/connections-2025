@@ -72,14 +72,14 @@
     align-items: center;
     justify-content: center;
     background: color('white');
-    border-radius: 6px;
+    border-radius: border-radius('default');
     color: color('black');
     cursor: pointer;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     overflow: hidden;
     user-select: none;
     // transition: transform 0.2s;
-    @include var-font-weight(800);
+    @include var-font-weight(500);
     @include fluid-value('font-size', 16, 22);
 
     &.disabled {
@@ -113,7 +113,7 @@
   }
 
   .caption {
-    position: absolute;
+    // position: absolute;
     line-height: 1em;
     text-align: center;
   }

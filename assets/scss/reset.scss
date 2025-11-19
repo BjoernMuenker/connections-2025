@@ -27,16 +27,20 @@ main {
 }
 
 body {
-  font-family: Satoshi, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  // font-synthesis: none;
+  // text-rendering: optimizeLegibility;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
   color: color('black');
   font-size: 18px;
   // background: #fffcf8;
   background: #efefef;
-  @include var-font-weight(500);
+  // @include var-font-weight(500);
+
+  @include breakpoint('small') {
+    font-size: 20px;
+  }
 }
 
 *,
@@ -112,11 +116,10 @@ h1 {
 
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
-  // transform: translateY(10px);
 }

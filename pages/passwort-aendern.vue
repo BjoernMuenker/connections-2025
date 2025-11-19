@@ -46,48 +46,50 @@
 </script>
 
 <template>
-  <ClientOnly>
-    <div class="wrapper">
-      <template v-if="!user || !code">
-        <MessageBox v-if="errorMessage" type="error">
-          {{ errorMessage }}
-        </MessageBox>
-      </template>
-      <template v-else>
-        <FormKit type="form" @submit="resetPassword">
-          <div class="header">
-            <h1>Wähle ein neues Passwort</h1>
-          </div>
+  <div>
+    <ClientOnly>
+      <div class="wrapper">
+        <template v-if="!user || !code">
           <MessageBox v-if="errorMessage" type="error">
             {{ errorMessage }}
           </MessageBox>
-          <MessageBox v-if="successMessage" type="success">
-            {{ successMessage }}
-          </MessageBox>
-          <template v-if="!successMessage">
-            <FormkitPassword
-              validation="required|user_password"
-              name="password"
-              label="Neues Passwort"
-              v-model="formData.password"
-              placeholder="Dein neues Passwort"
-            />
-            <FormkitPassword
-              validation="required|confirm:password"
-              name="confirmPassword"
-              label="Neues Passwort wiederholen"
-              v-model="formData.confirmPassword"
-              placeholder="Bestätige dein neues Passwort"
-            />
-            <div>
-              <AppButton type="submit" class="button block" :loading="false">Passwort zurücksetzen</AppButton>
+        </template>
+        <template v-else>
+          <FormKit type="form" @submit="resetPassword">
+            <div class="header">
+              <h1>Wähle ein neues Passwort</h1>
             </div>
-          </template>
-        </FormKit>
-        <div class="back-to-login"><NuxtLink :to="routes.login" class="text-link">Zurück zum Login</NuxtLink></div>
-      </template>
-    </div>
-  </ClientOnly>
+            <MessageBox v-if="errorMessage" type="error">
+              {{ errorMessage }}
+            </MessageBox>
+            <MessageBox v-if="successMessage" type="success">
+              {{ successMessage }}
+            </MessageBox>
+            <template v-if="!successMessage">
+              <FormkitPassword
+                validation="required|user_password"
+                name="password"
+                label="Neues Passwort"
+                v-model="formData.password"
+                placeholder="Dein neues Passwort"
+              />
+              <FormkitPassword
+                validation="required|confirm:password"
+                name="confirmPassword"
+                label="Neues Passwort wiederholen"
+                v-model="formData.confirmPassword"
+                placeholder="Bestätige dein neues Passwort"
+              />
+              <div>
+                <AppButton type="submit" class="button block" :loading="false">Passwort zurücksetzen</AppButton>
+              </div>
+            </template>
+          </FormKit>
+          <div class="back-to-login"><NuxtLink :to="routes.login" class="text-link">Zurück zum Login</NuxtLink></div>
+        </template>
+      </div>
+    </ClientOnly>
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -25,7 +25,12 @@
 <template>
   <div ref="rootRef" class="puzzle-group" :class="`background-${color}`" :data-group-id="group.id">
     <div class="title">{{ group.caption }}</div>
-    <div class="items">{{ joinedItems }}</div>
+    <div class="items">
+      <span class="item-wrapper" v-for="(item, index) in props.group.items" :key="item.id">
+        <span class="item">{{ item.caption }} </span>
+        <span class="separator" v-if="index < props.group.items.length - 1">, </span>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -33,8 +38,8 @@
   .puzzle-group {
     width: 100%;
     line-height: 1em;
-    border-radius: 6px;
-    text-transform: uppercase;
+    border-radius: border-radius('default');
+    // text-transform: uppercase;
     text-align: center;
     display: flex;
     align-items: center;
@@ -46,7 +51,11 @@
     @include fluid-value('font-size', 17, 22);
 
     .title {
-      @include var-font-weight(800);
+      @include var-font-weight(600);
     }
+  }
+
+  .item {
+    white-space: nowrap;
   }
 </style>

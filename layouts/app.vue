@@ -47,7 +47,11 @@
 
   function getPageTitle() {
     if (route.name === 'app-day') {
-      return route.params.day + '.Dezember';
+      return route.params.day + '.&thinsp;Dezember';
+    }
+
+    if (route.name === 'app-day-statistik') {
+      return route.params.day + '.&thinsp;Dezember&thinsp;/&thinsp;Statistik';
     }
 
     if (route.path === routes.scores) {
@@ -71,6 +75,14 @@
     { immediate: true }
   );
 
+  const backButtonTarget = computed(() => {
+    if (route.name === 'app-day-statistik') {
+      return routes.app + '/' + route.params.day;
+    }
+
+    return routes.app;
+  });
+
   onMounted(() => {
     onClickOutside(offCanvasRef.value, hideOffCanvas);
   });
@@ -80,7 +92,7 @@
   <header class="header">
     <div class="back">
       <Transition name="slide-fade">
-        <NuxtLink v-if="route.path !== routes.app" to="/app" class="back-button">
+        <NuxtLink v-if="route.path !== routes.app" :to="backButtonTarget" class="back-button">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="m12 19-7-7 7-7" />
             <path d="M19 12H5" />
@@ -89,9 +101,7 @@
       </Transition>
     </div>
     <TransitionGroup name="elevator" tag="div" class="title-wrapper">
-      <h1 :key="title" class="title heading-large">
-        {{ title }}
-      </h1>
+      <div :key="title" class="title heading-large" v-html="title"></div>
     </TransitionGroup>
     <div class="avatar" @click="showOffCanvas">
       {{ user?.user_metadata?.name?.slice(0, 1) ?? 'B' }}
@@ -102,7 +112,7 @@
   </div>
   <main>
     <div class="page-content">
-      <slot />
+      <NuxtPage :page-key="(route) => route.fullPath" />
     </div>
   </main>
   <div class="off-canvas" ref="offCanvasRef">
@@ -140,7 +150,7 @@
   }
 
   .page-content {
-    padding: 100px spacing('m');
+    padding: 100px spacing('m') spacing('m') spacing('m');
     overflow-x: hidden;
 
     @include breakpoint('large') {
@@ -269,6 +279,12 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+
+    @include breakpoint('small', 'max') {
+      .title {
+        font-size: 20px;
+      }
+    }
   }
 
   .title {

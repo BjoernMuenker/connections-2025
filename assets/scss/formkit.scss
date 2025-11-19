@@ -1,5 +1,17 @@
-.formkit-outer + .formkit-outer {
-  margin-top: spacing('m');
+.formkit-outer {
+  & + .formkit-outer {
+    margin-top: spacing('m');
+  }
+
+  label {
+    font-size: 16px;
+    display: block;
+    margin-bottom: spacing('xs');
+
+    @include breakpoint('medium') {
+      font-size: 18px;
+    }
+  }
 }
 
 .formkit-outer[data-invalid='true'] {
@@ -28,9 +40,9 @@
 
 input {
   font-family: inherit;
-  font-size: inherit;
+  font-size: 18px;
   border: 2px solid black;
-  border-radius: 8px;
+  border-radius: border-radius('default');
   transition: border-color 0.2s, box-shadow 0.2s;
 
   &:focus:not(:disabled) {
@@ -77,11 +89,6 @@ button.formkit-input[type='submit'] {
   position: relative;
   display: flex;
   align-items: center;
-
-  label {
-    display: block;
-    margin-bottom: spacing('xs');
-  }
 }
 
 .formkit-icon {

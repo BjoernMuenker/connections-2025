@@ -17,14 +17,15 @@
   a {
     font-size: 18px;
     padding: spacing('xs') spacing('s');
-    font-weight: bold;
-    border-radius: 8px;
+    border-radius: border-radius('default');
     transition: transform 0.2s;
     border-width: 2px;
     border-style: solid;
+    @include var-font-weight(500);
 
     @include breakpoint('medium') {
       font-size: 20px;
+      padding: spacing('s') spacing('s');
     }
 
     &:active:not(:disabled) {

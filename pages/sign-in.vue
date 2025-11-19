@@ -15,8 +15,6 @@
     errorMessage.value = '';
     submitting.value = true;
 
-    await nextTick();
-
     try {
       const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
       console.log(error);
@@ -36,7 +34,7 @@
     <FormKit type="form" @submit="handleLogin">
       <div class="header">
         <h1>Wieder da?</h1>
-        <p class="description">Melde dich mit Mail und Passwort an.</p>
+        <p class="description">Melde dich mit deiner Mail und deinem Passwort an.</p>
       </div>
       <MessageBox v-if="errorMessage" type="error">
         {{ errorMessage }}
@@ -47,7 +45,9 @@
         <AppButton type="submit" class="button block" :loading="submitting">Anmelden</AppButton>
       </div>
     </FormKit>
-    <div class="no-account">Du hast noch keinen Account?<br /><NuxtLink to="/sign-up" class="text-link">Erstell dir jetzt einen.</NuxtLink></div>
+    <div class="no-account copy-small">
+      Du hast noch keinen Account?<br /><NuxtLink to="/sign-up" class="text-link">Erstell dir jetzt einen.</NuxtLink>
+    </div>
   </div>
 </template>
 

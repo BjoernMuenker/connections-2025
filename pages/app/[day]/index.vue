@@ -2,10 +2,14 @@
   import Puzzle from '~/components/Puzzle.vue';
 
   const route = useRoute();
-  const puzzleId = route.params.day as string;
+  const puzzleId = computed(() => route.params.day as string);
 
   definePageMeta({
     layout: 'app',
+  });
+
+  onMounted(() => {
+    console.log('day/index');
   });
 </script>
 

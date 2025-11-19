@@ -117,8 +117,6 @@
     height: 200px;
     flex-shrink: 0;
     background: color('white');
-    // border: 2px solid #333;
-
     border-radius: spacing('s');
     padding: spacing('l');
     font-size: 50px;
@@ -192,7 +190,7 @@
   }
 
   .user-progress {
-    margin-bottom: spacing('l');
+    margin-bottom: spacing('xl');
   }
 
   .items {

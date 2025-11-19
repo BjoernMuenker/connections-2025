@@ -8,7 +8,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
       { caption: 'Funktionen in Mail-Programmen', items: ['Senden', 'Antworten', 'Löschen', 'Öffnen'] },
       { caption: 'Regionale Brötchen-Bezeichnungen', items: ['Weckle', 'Semmel', 'Schrippe', 'Rundstück'] },
       { caption: '"Auf Rädern"', items: ['Laster', 'Essen', 'Zug', 'Fahrrad'] },
-      { caption: 'Deutsche Komponisten', items: ['Bach', 'Strauss', 'Zimmer', 'Bruch'] },
+      { caption: '"4x4"', items: ['Allradantrieb', 'Ritter Sport Tafel', 'Dieses Spielfeld', 'Sechszehn'] },
     ],
   },
   '2': {

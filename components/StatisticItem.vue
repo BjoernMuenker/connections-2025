@@ -1,10 +1,13 @@
 <script setup lang="ts">
-  const props = defineProps<{ caption: string; value?: string | number }>();
+  const props = defineProps<{ caption?: string; value?: string | number }>();
 </script>
 
 <template>
   <div class="statistic-item">
-    <div class="key heading-medium">{{ caption }}</div>
+    <div class="key heading-medium">
+      <template v-if="caption">{{ caption }}</template>
+      <slot name="caption"></slot>
+    </div>
     <div class="value">
       <template v-if="value !== undefined">
         <div class="heading-large">{{ typeof value === 'number' ? formatNumber(value) : value }}</div>
