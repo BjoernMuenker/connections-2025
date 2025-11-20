@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="230" height="230" rx="30" ry="30" style="fill: #f9df6d;"/>
+  <rect x="282" width="230" height="230" rx="30" ry="30" style="fill: #a0c35a;"/>
+  <rect x="282" y="282" width="230" height="230" rx="30" ry="30" style="fill: #ba81c5;"/>
+  <rect y="282" width="230" height="230" rx="30" ry="30" style="fill: #b0c4ef;"/>
+</svg>
