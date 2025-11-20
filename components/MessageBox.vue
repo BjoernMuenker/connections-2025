@@ -12,7 +12,12 @@
   .message-box {
     padding: spacing('s');
     border: 1px solid black;
-    border-radius: 8px;
+    border-radius: border-radius('default');
+    line-height: 1.3em;
+
+    @include breakpoint('small') {
+      padding: spacing('m');
+    }
 
     &.error {
       border-color: color('red');

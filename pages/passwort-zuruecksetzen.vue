@@ -37,7 +37,7 @@
     <FormKit type="form" @submit="resetPassword" id="form" #default="slotProps">
       <div class="header">
         <h1>Passiert den Besten.</h1>
-        <p class="description">Wir senden dir eine Mail, um dein Passwort zurückzusetzen.</p>
+        <p class="description">Du bekommst eine E-Mail, um dein Passwort zurückzusetzen.</p>
       </div>
       <MessageBox v-if="errorMessage" type="error">
         {{ errorMessage }}
@@ -45,22 +45,28 @@
       <MessageBox v-if="successMessage" type="success">
         {{ successMessage }}
       </MessageBox>
-      <FormKit
-        validation="required|email"
-        label="E-Mail"
-        name="email"
-        v-model="formData.email"
-        placeholder="Deine E-Mail"
-        type="email"
-        :disabled="submitting"
-      />
-      <AppButton type="submit" :loading="submitting">Passwort zurücksetzen</AppButton>
+      <template v-if="!successMessage">
+        <FormKit
+          validation="required|email"
+          label="E-Mail"
+          name="email"
+          v-model="formData.email"
+          placeholder="Deine E-Mail"
+          type="email"
+          :disabled="submitting"
+        />
+        <AppButton type="submit" :loading="submitting">Passwort zurücksetzen</AppButton>
+      </template>
     </FormKit>
-    <div class="back-to-login"><NuxtLink :to="routes.login" class="text-link">Zurück zum Login</NuxtLink></div>
+    <div class="back-to-login copy-medium"><NuxtLink :to="routes.login" class="text-link">Zurück zum Login</NuxtLink></div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+  h1 {
+    margin-bottom: spacing('xs');
+  }
+
   .header {
     margin-bottom: spacing('l');
   }
@@ -79,13 +85,12 @@
     width: 100%;
   }
 
-  .message-box {
-    margin: spacing('l') 0;
+  .message-box.error {
+    margin-bottom: spacing('l');
   }
 
   .back-to-login {
     padding: 0 spacing('xl');
     width: 100%;
-    font-size: 16px;
   }
 </style>

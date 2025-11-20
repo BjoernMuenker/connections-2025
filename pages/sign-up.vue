@@ -60,16 +60,20 @@
         placeholder="Bestätige dein Passwort"
       />
       <div>
-        <AppButton type="submit" class="button block" @click="resetMessages" :disabled="submitting">Anmelden</AppButton>
+        <AppButton type="submit" class="button block" @click="resetMessages" :disabled="submitting">Account erstellen</AppButton>
       </div>
     </FormKit>
-    <div class="account-exists">Du hast schon einen Account?<br /><NuxtLink to="/sign-in">Melde dich jetzt an.</NuxtLink></div>
+    <div class="account-exists copy-medium">Du hast schon einen Account?<br /><NuxtLink to="/sign-in">Melde dich jetzt an.</NuxtLink></div>
   </div>
 </template>
 
 <style lang="scss" scoped>
   .wrapper {
     width: 100%;
+  }
+
+  h1 {
+    margin-bottom: spacing('xs');
   }
 
   .header {

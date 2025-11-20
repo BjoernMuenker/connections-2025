@@ -45,7 +45,7 @@
         <AppButton type="submit" class="button block" :loading="submitting">Anmelden</AppButton>
       </div>
     </FormKit>
-    <div class="no-account copy-small">
+    <div class="no-account copy-medium">
       Du hast noch keinen Account?<br /><NuxtLink to="/sign-up" class="text-link">Erstell dir jetzt einen.</NuxtLink>
     </div>
   </div>
@@ -55,6 +55,10 @@
   .no-account {
     padding: 0 spacing('xl');
     width: 100%;
+  }
+
+  h1 {
+    margin-bottom: spacing('xs');
   }
 
   .header {

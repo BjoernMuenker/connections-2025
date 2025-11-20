@@ -13,7 +13,7 @@ h6,
 h1,
 .heading-xxlarge {
   font-size: 30px;
-  line-height: 1.2em;
+  line-height: 1.1em;
 
   @include breakpoint('medium') {
     font-size: 40px;
@@ -91,7 +91,7 @@ blockquote,
 ul {
   margin: 0;
   font-size: 18px;
-  line-height: 1.5em;
+  line-height: 1.3em;
 
   @include breakpoint('large') {
     font-size: 20px;
@@ -139,32 +139,17 @@ strong {
 }
 
 .copy {
-  &-info {
-    font-size: 14px;
-    line-height: 20px;
-  }
-
-  &-large {
-    font-size: 20px;
-    line-height: 1.4em;
-  }
-
   &-medium {
-    font-size: 18px;
-    line-height: 1.45em;
-
-    @include breakpoint('medium') {
-      font-size: 21px;
-    }
-  }
-
-  &-small {
     font-size: 16px;
     line-height: 1.3em;
 
     @include breakpoint('medium') {
       font-size: 18px;
     }
+  }
+
+  &-small {
+    font-size: 14px;
   }
 }
 

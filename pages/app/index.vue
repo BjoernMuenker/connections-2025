@@ -72,6 +72,9 @@
 
 <template>
   <div class="wrapper">
+    {{ useDebug().getCompletedPuzzleCount() }}
+    {{ useDebug().getMissingItemsCount() }}
+    {{ useDebug().getDuplicatedItemGroups() }}
     <div class="puzzles" ref="sliderRef">
       <div class="slide" v-for="puzzle in puzzles" :key="puzzle.id">
         <button
