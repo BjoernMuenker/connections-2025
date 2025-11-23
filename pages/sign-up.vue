@@ -52,9 +52,15 @@
       <MessageBox v-if="errorMessage" type="error">{{ errorMessage }}</MessageBox>
       <MessageBox v-if="successMessage" type="success">{{ successMessage }}</MessageBox>
       <template v-if="!successMessage">
-        <FormKit validation="required" label="Nutzername" v-model="name" placeholder="Dein Nutzername" type="text" />
+        <FormKit
+          validation="required|length:2,16|trimmed|(750)unique_username"
+          label="Nutzername"
+          v-model="name"
+          placeholder="Dein Nutzername"
+          type="text"
+        />
         <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" />
-        <FormkitPassword validation="required|user_password" name="password" label="Passwort" v-model="password" placeholder="Dein Passwort" />
+        <FormkitPassword validation="required|length:6" name="password" label="Passwort" v-model="password" placeholder="Dein Passwort" />
         <FormkitPassword
           validation="required|confirm:password"
           label="Passwort wiederholen"

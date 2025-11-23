@@ -14,7 +14,7 @@
     <BaseTile>
       <h1>Hohoho!</h1>
       <p>
-        24 kleine Rätsel erwarten Dich - schaffst Du es, alle bis Weihnachten zu lösen? Melde dich an oder erstelle dir einen Account und los geht's.
+        24 kleine Rätsel erwarten dich - schaffst du es, alle bis Weihnachten zu lösen? Erstelle dir einen Account oder melde dich an und los geht's.
       </p>
       <div class="buttons">
         <NuxtLink :to="routes.signup" v-slot="{ href, navigate }" custom>

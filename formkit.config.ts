@@ -58,14 +58,38 @@ export default defineFormKitConfig(() => {
     messages: {
       de: {
         validation: {
-          user_name: 'Nutzernamen müssen mindestens 6 Zeichen lang sein.',
-          user_password: 'Passwörter müssen mindestens 6 Zeichen lang sein.',
+          length: ({ name, args }) => {
+            if (args.length === 2) {
+              return `${name} muss zwischen ${args[0]} und ${args[1]} Zeichen lang sein.`;
+            }
+
+            return `${name} muss mindestens ${args[0]} Zeichen lang sein.`;
+          },
+          unique_username: 'Dieser Nutzername ist leider schon vergeben.',
+          trimmed: ({ name }) => `${name} enhält unerlaubte Leerzeichen.`,
         },
       },
     },
     rules: {
-      user_name: (node: FormKitNode) => (node.value as string).length >= 6,
-      user_password: (node: FormKitNode) => (node.value as string).length >= 6,
+      trimmed: (node: FormKitNode) => {
+        console.log(node.value);
+        return (node.value as string).length === 0 || !!(node.value as string).match(/^\S+(?: +\S+)*$/);
+      },
+      unique_username: async (node: FormKitNode) => {
+        const supabase = useSupabaseClient();
+
+        const { error, data } = await supabase
+          .from('profiles')
+          .select('username')
+          .eq('username', node.value as string)
+          .maybeSingle();
+
+        if (error) {
+          return false;
+        }
+
+        return !data;
+      },
     },
   };
 });
