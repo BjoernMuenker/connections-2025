@@ -92,7 +92,7 @@
       color: color('white');
 
       .selected-indicator {
-        background-color: color('black');
+        background-color: color('grey-dark');
       }
     }
 

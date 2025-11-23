@@ -34,8 +34,8 @@
 
     &.primary {
       color: #fff;
-      background: #333;
-      border-color: #333;
+      background: color('grey-dark');
+      border-color: color('grey-dark');
 
       &:disabled {
         background-color: #c2c2c2;
@@ -44,8 +44,8 @@
     }
 
     &.secondary {
-      color: #333;
-      border-color: #333;
+      color: color('grey-dark');
+      border-color: color('grey-dark');
 
       &:disabled {
         border-color: #cdcdcd;

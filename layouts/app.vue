@@ -37,13 +37,13 @@
   function showOffCanvas() {
     offCanvasVisible.value = true;
     $gsap.to('.off-canvas', { translateY: 0, duration: 0.3 });
-    $gsap.to('.wrapper', { scale: 0.9, duration: 0.3 });
+    $gsap.to('.non-off-canvas', { scale: 0.9, duration: 0.3 });
   }
 
   function hideOffCanvas() {
     offCanvasVisible.value = false;
     $gsap.to('.off-canvas', { translateY: '100%', duration: 0.3 });
-    $gsap.to('.wrapper', { scale: 1, duration: 0.3 });
+    $gsap.to('.non-off-canvas', { scale: 1, duration: 0.3 });
   }
 
   const offCanvasRef = ref<HTMLElement>();
@@ -87,46 +87,58 @@
 
     return routes.app;
   });
-
-  onMounted(() => {
-    onClickOutside(offCanvasRef.value, hideOffCanvas);
-  });
 </script>
 
 <template>
-  <header class="header">
-    <div class="back">
-      <Transition name="slide-fade">
-        <NuxtLink v-if="route.path !== routes.app" :to="backButtonTarget" class="back-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m12 19-7-7 7-7" />
-            <path d="M19 12H5" />
-          </svg>
-        </NuxtLink>
-      </Transition>
+  <div class="non-off-canvas" :class="{ 'off-canvas-visible': offCanvasVisible }">
+    <header class="header">
+      <div class="back">
+        <Transition name="slide-fade">
+          <NuxtLink v-if="route.path !== routes.app" :to="backButtonTarget" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m12 19-7-7 7-7" />
+              <path d="M19 12H5" />
+            </svg>
+          </NuxtLink>
+        </Transition>
+      </div>
+      <TransitionGroup name="elevator" tag="div" class="title-wrapper">
+        <div :key="title" class="title heading-large" v-html="title"></div>
+      </TransitionGroup>
+      <div class="avatar" @click="showOffCanvas">
+        {{ user?.user_metadata?.name?.slice(0, 1) ?? 'B' }}
+      </div>
+    </header>
+    <div class="toast-notifications">
+      <ToastNotification v-for="toast in store.toastNotifications" v-bind="toast" :key="toast.id" />
     </div>
-    <TransitionGroup name="elevator" tag="div" class="title-wrapper">
-      <div :key="title" class="title heading-large" v-html="title"></div>
-    </TransitionGroup>
-    <div class="avatar" @click="showOffCanvas">
-      {{ user?.user_metadata?.name?.slice(0, 1) ?? 'B' }}
-    </div>
-  </header>
-  <div class="toast-notifications">
-    <ToastNotification v-for="toast in store.toastNotifications" v-bind="toast" :key="toast.id" />
+    <main>
+      <div class="page-content" :class="{ 'off-canvas-visible': offCanvasVisible }">
+        <NuxtPage :page-key="(route) => route.fullPath" />
+      </div>
+    </main>
   </div>
-  <main>
-    <div class="page-content">
-      <NuxtPage :page-key="(route) => route.fullPath" />
-    </div>
-  </main>
+  <div class="off-canvas-backdrop" :class="{ visible: offCanvasVisible }" @click="hideOffCanvas"></div>
   <div class="off-canvas" ref="offCanvasRef">
-    <AppButton @click="signOut">Abmelden</AppButton>
-    <AppButton @click="deleteAccount">Account löschen</AppButton>
+    <div class="off-canvas-inner">
+      <div class="close-button">×</div>
+      <div class="user-menu">
+        <button @click="signOut">Abmelden</button>
+        <button @click="deleteAccount">Account löschen</button>
+        <div>Build ID: {{ useRuntimeConfig().public.NUXT_PUBLIC_BUILD_ID }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+  .non-off-canvas {
+    backdrop-filter: blur(10px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: 100%;
+  }
+
   header {
     position: fixed;
     display: flex;
@@ -154,6 +166,12 @@
     white-space: nowrap;
   }
 
+  .user-menu {
+    display: flex;
+    flex-direction: column;
+    gap: spacing('s');
+  }
+
   .page-content {
     padding: 100px spacing('m') spacing('m') spacing('m');
     overflow-x: hidden;
@@ -161,6 +179,28 @@
     @include breakpoint('large') {
       max-width: 616px;
       margin: 0 auto;
+    }
+
+    &.off-canvas-visible {
+      backdrop-filter: blur(10px);
+    }
+  }
+
+  .off-canvas-backdrop {
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transition: opacity 0.2s, backdrop-filter 0.2s;
+    pointer-events: none;
+
+    &.visible {
+      opacity: 1;
+      pointer-events: all;
+      // backdrop-filter: blur(20px);
     }
   }
 
@@ -215,17 +255,6 @@
     }
   }
 
-  // main::after {
-  //   position: fixed;
-  //   content: '';
-  //   left: 0;
-  //   top: 0;
-  //   width: 100%;
-  //   height: 100px;
-  //   background: red;
-  //   background: linear-gradient(#efefef, transparent);
-  // }
-
   .toast-notifications {
     position: fixed;
     top: 0;
@@ -247,17 +276,42 @@
   }
 
   .off-canvas {
-    width: 100%;
     left: 0;
     bottom: 0;
-    padding: spacing('l');
+    width: 100%;
     position: fixed;
-    background: white;
-    border: 1px solid #cdcdcd;
-    border-bottom: none;
-    border-top-left-radius: spacing('m');
-    border-top-right-radius: spacing('m');
+    background: color('white');
+    border-top-left-radius: border-radius('large');
+    border-top-right-radius: border-radius('large');
     transform: translateY(100%);
+  }
+
+  .close-button {
+    position: absolute;
+    right: spacing('m');
+    top: spacing('m');
+    width: 40px;
+    height: 40px;
+    background: color('beige');
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include breakpoint('medium') {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .off-canvas-inner {
+    padding: spacing('l') spacing('m');
+    width: 100%;
+
+    @include breakpoint('large') {
+      width: 616px;
+      margin: 0 auto;
+    }
   }
 
   .slide-fade-enter-active {

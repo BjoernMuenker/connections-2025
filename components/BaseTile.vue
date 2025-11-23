@@ -10,7 +10,7 @@
   .base-tile {
     padding: spacing('l');
     background: color('white');
-    border-radius: spacing('m');
+    border-radius: border-radius('large');
 
     @include breakpoint('small') {
       padding: spacing('xl');

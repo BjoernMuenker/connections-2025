@@ -78,7 +78,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
       { caption: 'Nobelpreis-Disziplinen', items: ['Frieden', 'Literatur', 'Physik', 'Medizin'] },
       { caption: 'Kryptowährungen', items: ['Tether', 'Bitcoin', 'Ethereum', 'Ripple'] },
       { caption: 'Nominierte Jugendwörter 2025', items: ['Lowkey', 'Goonen', 'Tot', 'Rede'] },
-      { caption: 'Jupiter-Monde', items: ['Ganymed', 'Callisto', 'Europa', 'Kallisto'] },
+      { caption: 'Erdzeitalter', items: ['Karbon', 'Tertiär', 'Jura', 'Kreide'] },
     ],
   },
   '9': {
@@ -138,7 +138,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
       { caption: 'Weihnachtsbaumschmuck', items: ['Kugel', 'Stern', 'Lametta', 'Kerze'] },
       { caption: '', items: ['', '', '', ''] },
       { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Jupiter-Monde', items: ['Ganymed', 'Callisto', 'Europa', 'Kallisto'] },
     ],
   },
   '15': {
@@ -147,7 +147,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     groups: [
       { caption: '', items: ['', '', '', ''] },
       { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Diagramm-Arten', items: ['Säule', 'Linie', 'Balken', 'Kreis'] },
       { caption: 'Berühmte Skulpturen', items: ['David', 'Venus', 'Nofretete', 'Denker'] },
     ],
   },
@@ -186,7 +186,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-11-19T00:00:00').getTime(),
     groups: [
       { caption: 'Notruf-Nummern', items: ['911', '112', '110', '117'] },
-      { caption: 'Deutsche Autobahnnummern', items: ['7', '23', '', ''] }, // viel zu viele...
+      { caption: '', items: ['', '', '', ''] }, // viel zu viele...
       { caption: '', items: ['', '', '', ''] },
       { caption: '', items: ['', '', '', ''] },
     ],

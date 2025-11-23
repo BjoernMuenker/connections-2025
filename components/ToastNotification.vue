@@ -42,7 +42,7 @@
     color: white;
     border-radius: spacing('xs');
     padding: spacing('xs') spacing('s');
-    background: #333;
+    background: color('grey-dark');
     display: flex;
     gap: spacing('xs');
     font-size: 15px;
@@ -54,8 +54,8 @@
   }
 
   .score-badge {
-    color: #333;
-    background: white;
+    color: color('grey-dark');
+    background: color('white');
     padding: 0 spacing('xxs');
     border-radius: 50px;
     line-height: 1em;

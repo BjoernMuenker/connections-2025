@@ -407,4 +407,8 @@
   .submit {
     width: 100%;
   }
+
+  button {
+    text-align: center;
+  }
 </style>

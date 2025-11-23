@@ -175,7 +175,7 @@
       width: 16px;
       height: 16px;
       border-radius: spacing('xxs');
-      background: #efefef;
+      background: color('grey-100');
     }
   }
 

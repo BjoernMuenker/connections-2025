@@ -28,15 +28,9 @@ main {
 
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  // font-synthesis: none;
-  // text-rendering: optimizeLegibility;
-  // -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
   color: color('black');
   font-size: 17px;
-  // background: #fffcf8;
-  background: #efefef;
-  // @include var-font-weight(500);
+  background: color('grey-100');
 
   @include breakpoint('large') {
     font-size: 18px;
@@ -64,8 +58,10 @@ button {
   border: none;
   cursor: pointer;
   font-family: inherit;
+  font-size: inherit;
   color: inherit;
   background: none;
+  text-align: inherit;
 
   &:disabled {
     cursor: not-allowed;

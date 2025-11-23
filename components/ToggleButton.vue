@@ -91,7 +91,7 @@
       position: absolute;
       top: spacing('xs');
       bottom: spacing('xs');
-      background: #333;
+      background: color('grey-dark');
       border-radius: spacing('xs');
       z-index: 0;
     }

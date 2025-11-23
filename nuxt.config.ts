@@ -108,12 +108,9 @@ export default defineNuxtConfig({
     },
     types: './types/database.types.ts',
   },
-  // runtimeConfig: {
-  //   STACK_PROJECT_ID: process.env.STACK_PROJECT_ID,
-  //   STACK_SECRET_SERVER_KEY: process.env.STACK_SECRET_SERVER_KEY,
-  //   DATABASE_URL: process.env.DATABASE_URL,
-  //   public: {
-  //     NUXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY: process.env.NUXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY,
-  //   },
-  // },
+  runtimeConfig: {
+    public: {
+      NUXT_PUBLIC_BUILD_ID: process.env.NUXT_PUBLIC_BUILD_ID || 'buildId',
+    },
+  },
 });

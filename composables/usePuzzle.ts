@@ -318,8 +318,7 @@ export const usePuzzle = (puzzleId?: string) => {
       store.pushToastNotification('Noch keine Daten anderer Spieler vorhanden');
     }
 
-    // reset prev colors
-    $gsap.to(`.puzzle-tile`, { background: `white` });
+    resetHeatmap();
 
     console.log(guessIndex.value);
 
@@ -363,14 +362,20 @@ export const usePuzzle = (puzzleId?: string) => {
 
       const greenBlue = Math.round(max * (1 - scaled)); // darker = more red
 
-      timeline.to(`.puzzle-tile[data-id="${tileId}"]`, { background: `rgb(${red}, ${greenBlue}, ${greenBlue})` }, '<+=0.05');
+      timeline.to(`.puzzle-tile[data-id="${tileId}"] .inner`, { background: `rgb(${red}, ${greenBlue}, ${greenBlue})` }, '<+=0.05');
     }
+  }
+
+  function resetHeatmap() {
+    $gsap.to(`.puzzle-tile .inner`, { background: `white` });
   }
 
   watch(
     () => guessIndex.value,
     () => {
-      if (communityView.value) createHeatmap();
+      if (communityView.value) {
+        createHeatmap();
+      }
     }
   );
 
@@ -378,7 +383,7 @@ export const usePuzzle = (puzzleId?: string) => {
     () => communityView.value,
     async (value: boolean) => {
       if (!value) {
-        $gsap.to(`.puzzle-tile`, { background: `white` }); // import var
+        resetHeatmap();
         return;
       }
 

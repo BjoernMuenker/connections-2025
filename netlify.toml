@@ -1,0 +1,2 @@
+[build]
+  command = "NUXT_PUBLIC_BUILD_ID=$BUILD_ID npm run build"
