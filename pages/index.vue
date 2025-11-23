@@ -3,10 +3,6 @@
   import BaseTile from '~/components/BaseTile.vue';
 
   const { routes } = useRoutes();
-
-  useHead({
-    title: 'Willkommen',
-  });
 </script>
 
 <template>
@@ -17,10 +13,10 @@
         24 kleine Rätsel erwarten dich - schaffst du es, alle bis Weihnachten zu lösen? Erstelle dir einen Account oder melde dich an und los geht's.
       </p>
       <div class="buttons">
-        <NuxtLink :to="routes.signup" v-slot="{ href, navigate }" custom>
+        <NuxtLink :to="routes.signUp" v-slot="{ href, navigate }" custom>
           <AppButton tag="a" :href="href" @click="navigate">Account erstellen</AppButton>
         </NuxtLink>
-        <NuxtLink :to="routes.login" v-slot="{ href, navigate }" custom>
+        <NuxtLink :to="routes.signIn" v-slot="{ href, navigate }" custom>
           <AppButton tag="a" :href="href" @click="navigate" hierarchy="secondary">Anmelden</AppButton>
         </NuxtLink>
       </div>

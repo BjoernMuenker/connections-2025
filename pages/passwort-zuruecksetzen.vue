@@ -61,7 +61,7 @@
         </template>
       </FormKit>
     </BaseTile>
-    <div class="back-to-login copy-medium"><NuxtLink :to="routes.login" class="text-link">Zurück zum Login</NuxtLink></div>
+    <div class="back-to-login copy-medium"><NuxtLink :to="routes.signIn" class="text-link">Zurück zum Login</NuxtLink></div>
   </div>
 </template>
 

@@ -5,7 +5,6 @@
   import MessageBox from '~/components/MessageBox.vue';
 
   const route = useRoute();
-  const router = useRouter();
   const code = route.query?.code as string;
 
   const { routes } = useRoutes();
@@ -76,14 +75,12 @@
                 v-model="formData.confirmPassword"
                 placeholder="Bestätige dein neues Passwort"
               />
-            </template>
-            <div>
               <AppButton type="submit" class="button block" :loading="false">Passwort zurücksetzen</AppButton>
-            </div>
+            </template>
           </FormKit>
         </template>
       </BaseTile>
-      <div class="back-to-login"><NuxtLink :to="routes.login" class="text-link">Zurück zum Login</NuxtLink></div>
+      <div class="back-to-login"><NuxtLink :to="routes.signIn" class="text-link">Zurück zum Login</NuxtLink></div>
     </ClientOnly>
   </div>
 </template>
@@ -102,7 +99,7 @@
     margin-top: spacing('l');
   }
 
-  form .message-box {
+  form .message-box.error {
     margin-bottom: spacing('l');
   }
 

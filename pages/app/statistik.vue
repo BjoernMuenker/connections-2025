@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import ToggleButton from '~/components/ToggleButton.vue';
-  import UserProgress from '~/components/UserProgress.vue';
   import UserStatistics from '~/components/UserStatistics.vue';
 
   const user = useSupabaseUser();
@@ -9,10 +8,6 @@
 
   definePageMeta({
     layout: 'app',
-  });
-
-  useHead({
-    title: 'Statistik',
   });
 
   const scope = ref<'player' | 'global'>('player');

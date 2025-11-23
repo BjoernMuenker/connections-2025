@@ -1,3 +1,18 @@
+<script setup lang="ts">
+  const { getTitle } = useRoutes();
+  const route = useRoute();
+
+  watch(
+    () => route.fullPath,
+    () => {
+      useHead({
+        title: getTitle(),
+      });
+    },
+    { immediate: true }
+  );
+</script>
+
 <template>
   <main>
     <div class="page-content">

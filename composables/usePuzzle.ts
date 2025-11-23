@@ -236,7 +236,7 @@ export const usePuzzle = (puzzleId?: string) => {
     };
   }
 
-  function getScoreFromSavegame(savegame: PuzzlePersistedState) {
+  function getScoreFromSavegame(savegame: PuzzlePersistedState): PuzzleScore {
     const result: PuzzleScore = {};
 
     if (savegame.won) {
@@ -277,7 +277,43 @@ export const usePuzzle = (puzzleId?: string) => {
       };
     }
 
-    return result;
+    return sortObjectByCustomOrder(result, [
+      'yellowSolved',
+      'greenSolved',
+      'blueSolved',
+      'blueSolvedFirst',
+      'violetSolved',
+      'violetSolvedFirst',
+      'remainingMistake',
+    ]);
+  }
+
+  function getScoreFromSavegames(savegames: PuzzlePersistedState[]) {
+    const result: PuzzleScore = {};
+
+    for (const savegame of savegames) {
+      const partialResult = getScoreFromSavegame(savegame);
+
+      Object.entries(partialResult).forEach(([scoreAction, value]) => {
+        if (!result[scoreAction as ScoreActionId]) {
+          result[scoreAction as ScoreActionId] = value;
+        } else {
+          result[scoreAction as ScoreActionId]!.amount += value.amount;
+          result[scoreAction as ScoreActionId]!.single += value.single;
+          result[scoreAction as ScoreActionId]!.total += value.total;
+        }
+      });
+    }
+
+    return sortObjectByCustomOrder(result, [
+      'yellowSolved',
+      'greenSolved',
+      'blueSolved',
+      'blueSolvedFirst',
+      'violetSolved',
+      'violetSolvedFirst',
+      'remainingMistake',
+    ]);
   }
 
   function getScoreDiff(from: PuzzlePersistedState, to: PuzzlePersistedState) {
@@ -349,7 +385,17 @@ export const usePuzzle = (puzzleId?: string) => {
       );
     };
 
-    const normalized = normalizeCounts(countOccurrences(guesses));
+    // const normalized = normalizeCounts(countOccurrences(guesses));
+    const normalized = {
+      a1: 0.3,
+      b2: 1,
+      d2: 0.5,
+      d3: 0.4,
+      d4: 0.5,
+      b3: 0.1,
+      c3: 0.2,
+    };
+
     console.warn(normalized);
 
     const timeline = $gsap.timeline();
@@ -407,6 +453,7 @@ export const usePuzzle = (puzzleId?: string) => {
     getItemIndexById,
     getNameByGroupId,
     getScoreFromSavegame,
+    getScoreFromSavegames,
     guessIndex,
     initPuzzleById,
     isGroupSolvedByUser,

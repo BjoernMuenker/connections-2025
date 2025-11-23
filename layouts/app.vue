@@ -1,52 +1,13 @@
 <script setup lang="ts">
-  import { onClickOutside } from '@vueuse/core';
-  import AppButton from '~/components/AppButton.vue';
-  import LoadingIndicator from '~/components/LoadingIndicator.vue';
+  import OffCanvasArea from '~/components/OffCanvasArea.vue';
   import ToastNotification from '~/components/ToastNotification.vue';
   import { useAppStore } from '~/store/appStore';
 
+  const { getTitle, routes } = useRoutes();
+
   const store = useAppStore();
   const route = useRoute();
-  const { routes } = useRoutes();
-  const supabase = useSupabaseClient();
   const user = useSupabaseUser();
-
-  const { $gsap } = useNuxtApp();
-
-  async function signOut() {
-    await supabase.auth.signOut();
-    navigateTo(routes.login);
-  }
-
-  async function deleteAccount() {
-    const result = await $fetch<boolean>('/api/delete-user', {
-      method: 'POST',
-      body: { id: user.value?.sub },
-    });
-
-    if (!result) {
-      store.pushToastNotification('Dein Account konnte nicht gelöscht werden.');
-      return;
-    }
-
-    navigateTo(routes.home);
-  }
-
-  const offCanvasVisible = ref(false);
-
-  function showOffCanvas() {
-    offCanvasVisible.value = true;
-    $gsap.to('.off-canvas', { translateY: 0, duration: 0.3 });
-    $gsap.to('.non-off-canvas', { scale: 0.9, duration: 0.3 });
-  }
-
-  function hideOffCanvas() {
-    offCanvasVisible.value = false;
-    $gsap.to('.off-canvas', { translateY: '100%', duration: 0.3 });
-    $gsap.to('.non-off-canvas', { scale: 1, duration: 0.3 });
-  }
-
-  const offCanvasRef = ref<HTMLElement>();
 
   const title = ref();
 
@@ -59,7 +20,7 @@
       return route.params.day + '.&thinsp;Dezember&thinsp;/&thinsp;Statistik';
     }
 
-    if (route.path === routes.scores) {
+    if (route.path === routes.leaderboard) {
       return 'Bestenliste';
     }
 
@@ -70,12 +31,31 @@
     if (route.path === routes.statistics) {
       return 'Statistik';
     }
+
+    if (route.path === routes.changePasswordAuthorized) {
+      return 'Passwort ändern';
+    }
+
+    if (route.path === routes.changeEmail) {
+      return 'E-Mail ändern';
+    }
+
+    if (route.path === routes.deleteAccount) {
+      return 'Account löschen';
+    }
+
+    if (route.path === routes.score) {
+      return 'Score';
+    }
   }
 
   watch(
     () => route.fullPath,
     () => {
       title.value = getPageTitle();
+      useHead({
+        title: getTitle(),
+      });
     },
     { immediate: true }
   );
@@ -90,7 +70,7 @@
 </script>
 
 <template>
-  <div class="non-off-canvas" :class="{ 'off-canvas-visible': offCanvasVisible }">
+  <div class="non-off-canvas">
     <header class="header">
       <div class="back">
         <Transition name="slide-fade">
@@ -105,35 +85,24 @@
       <TransitionGroup name="elevator" tag="div" class="title-wrapper">
         <div :key="title" class="title heading-large" v-html="title"></div>
       </TransitionGroup>
-      <div class="avatar" @click="showOffCanvas">
-        {{ user?.user_metadata?.name?.slice(0, 1) ?? 'B' }}
-      </div>
+      <button class="avatar" @click="store.openOffCanvas('UserMenu')">
+        {{ user?.user_metadata?.display_name?.slice(0, 1) }}
+      </button>
     </header>
     <div class="toast-notifications">
       <ToastNotification v-for="toast in store.toastNotifications" v-bind="toast" :key="toast.id" />
     </div>
     <main>
-      <div class="page-content" :class="{ 'off-canvas-visible': offCanvasVisible }">
+      <div class="page-content">
         <NuxtPage :page-key="(route) => route.fullPath" />
       </div>
     </main>
   </div>
-  <div class="off-canvas-backdrop" :class="{ visible: offCanvasVisible }" @click="hideOffCanvas"></div>
-  <div class="off-canvas" ref="offCanvasRef">
-    <div class="off-canvas-inner">
-      <div class="close-button">×</div>
-      <div class="user-menu">
-        <button @click="signOut">Abmelden</button>
-        <button @click="deleteAccount">Account löschen</button>
-        <div>Build ID: {{ useRuntimeConfig().public.NUXT_PUBLIC_BUILD_ID }}</div>
-      </div>
-    </div>
-  </div>
+  <OffCanvasArea />
 </template>
 
 <style lang="scss" scoped>
   .non-off-canvas {
-    backdrop-filter: blur(10px);
     overflow: auto;
     overscroll-behavior: contain;
     height: 100%;
@@ -166,12 +135,6 @@
     white-space: nowrap;
   }
 
-  .user-menu {
-    display: flex;
-    flex-direction: column;
-    gap: spacing('s');
-  }
-
   .page-content {
     padding: 100px spacing('m') spacing('m') spacing('m');
     overflow-x: hidden;
@@ -179,28 +142,6 @@
     @include breakpoint('large') {
       max-width: 616px;
       margin: 0 auto;
-    }
-
-    &.off-canvas-visible {
-      backdrop-filter: blur(10px);
-    }
-  }
-
-  .off-canvas-backdrop {
-    background: rgba(0, 0, 0, 0.7);
-    opacity: 0;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    transition: opacity 0.2s, backdrop-filter 0.2s;
-    pointer-events: none;
-
-    &.visible {
-      opacity: 1;
-      pointer-events: all;
-      // backdrop-filter: blur(20px);
     }
   }
 
@@ -272,45 +213,6 @@
 
     .toast-notification {
       pointer-events: all;
-    }
-  }
-
-  .off-canvas {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    position: fixed;
-    background: color('white');
-    border-top-left-radius: border-radius('large');
-    border-top-right-radius: border-radius('large');
-    transform: translateY(100%);
-  }
-
-  .close-button {
-    position: absolute;
-    right: spacing('m');
-    top: spacing('m');
-    width: 40px;
-    height: 40px;
-    background: color('beige');
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    @include breakpoint('medium') {
-      width: 48px;
-      height: 48px;
-    }
-  }
-
-  .off-canvas-inner {
-    padding: spacing('l') spacing('m');
-    width: 100%;
-
-    @include breakpoint('large') {
-      width: 616px;
-      margin: 0 auto;
     }
   }
 

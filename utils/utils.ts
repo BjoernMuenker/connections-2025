@@ -82,6 +82,18 @@ export function sumArray(array: any[], defaultValue = 0) {
   }, defaultValue);
 }
 
+export function sortObjectByCustomOrder<T extends Record<string, any>>(obj: T, order: string[]): T {
+  const sorted: any = {};
+
+  for (const key of order) {
+    if (key in obj) {
+      sorted[key] = obj[key];
+    }
+  }
+
+  return sorted;
+}
+
 export function randomNumber(min: number, max: number, stepSize?: number) {
   if (!stepSize) return Math.floor(Math.random() * (max - min + 1) + min);
   return clamp(min, max, Math.round(Math.floor(Math.random() * (max - min + 1) + min) / stepSize) * stepSize);
@@ -240,4 +252,8 @@ export function clamp(min: number, max: number, valueToClamp: number) {
 
 export function formatNumber(number: number) {
   return new Intl.NumberFormat('de-DE').format(number);
+}
+
+export function getKeyByValue<T extends Record<string, any>>(obj: T, value: T[keyof T]): keyof T | undefined {
+  return (Object.keys(obj) as (keyof T)[]).find((key) => obj[key] === value);
 }

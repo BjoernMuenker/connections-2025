@@ -1,0 +1,45 @@
+<script setup lang="ts">
+  import { useAppStore } from '~/store/appStore';
+
+  const user = useSupabaseUser();
+  const supabase = useSupabaseClient();
+  const runtimeConfig = useRuntimeConfig();
+
+  const { routes } = useRoutes();
+
+  async function signOut() {
+    await supabase.auth.signOut();
+    navigateTo(routes.signIn);
+  }
+</script>
+
+<template>
+  <div class="user-menu">
+    <div class="heading-medium">{{ user?.user_metadata?.display_name }}</div>
+    <nav>
+      <NuxtLink :to="routes.changePasswordAuthorized">Passwort ändern</NuxtLink>
+      <NuxtLink :to="routes.changeEmail">E-Mail ändern</NuxtLink>
+      <button @click="signOut">Abmelden</button>
+      <NuxtLink :to="routes.deleteAccount">Account löschen</NuxtLink>
+    </nav>
+    <div class="build-info copy-small">Build {{ runtimeConfig.public.NUXT_PUBLIC_BUILD_ID }}</div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: spacing('s');
+  }
+
+  .heading-medium {
+    margin-bottom: spacing('l');
+  }
+
+  .build-info {
+    margin-top: spacing('l');
+    color: color('grey-very-light');
+  }
+</style>

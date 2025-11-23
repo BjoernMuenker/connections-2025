@@ -4,6 +4,7 @@
   import MessageBox from '~/components/MessageBox.vue';
 
   const supabase = useSupabaseClient();
+  const { routes } = useRoutes();
 
   const submitting = ref(false);
   const email = ref('');
@@ -17,12 +18,10 @@
 
     try {
       const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
-      console.log(error);
       if (error) throw error;
-      console.log('login sucessful');
       navigateTo('/app');
     } catch (error) {
-      errorMessage.value = error.error_description || error.message;
+      errorMessage.value = useAuth().getErrorMessage(error.code);
     } finally {
       submitting.value = false;
     }
@@ -39,14 +38,14 @@
       <MessageBox v-if="errorMessage" type="error">
         {{ errorMessage }}
       </MessageBox>
-      <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" />
-      <FormkitPassword v-model="password" validation="required" :include-reset-password="true" />
+      <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" autocomplete />
+      <FormkitPassword v-model="password" validation="required" :include-reset-password="true" autocomplete="current-password" />
       <div>
         <AppButton type="submit" class="button block" :loading="submitting">Anmelden</AppButton>
       </div>
     </FormKit>
     <div class="no-account copy-medium">
-      Du hast noch keinen Account?<br /><NuxtLink to="/sign-up" class="text-link">Erstell dir jetzt einen.</NuxtLink>
+      Du hast noch keinen Account?<br /><NuxtLink :to="routes.signUp" class="text-link">Erstell dir jetzt einen.</NuxtLink>
     </div>
   </div>
 </template>

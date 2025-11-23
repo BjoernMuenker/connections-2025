@@ -66,6 +66,10 @@ input[type='email'] {
   width: 100%;
 }
 
+input[type='password'] {
+  padding-right: spacing('s') + 30px;
+}
+
 button.formkit-input[type='submit'] {
   font-size: 20px;
   padding: 14px 20px;

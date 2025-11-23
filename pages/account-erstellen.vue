@@ -25,12 +25,11 @@
         options: { data: { display_name: name.value }, emailRedirectTo: `${window.location.origin}${routes.confirmEmail}` },
       });
 
-      console.log(response);
       if (response.error) throw response.error;
 
       successMessage.value = 'Fast geschafft! Wir haben dir einen Bestätigungslink an deine Mailadresse geschickt.';
     } catch (error) {
-      errorMessage.value = error.error_description || error.message;
+      errorMessage.value = useAuth().getErrorMessage(error.code);
     } finally {
       submitting.value = false;
     }
@@ -59,20 +58,28 @@
           placeholder="Dein Nutzername"
           type="text"
         />
-        <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" />
-        <FormkitPassword validation="required|length:6" name="password" label="Passwort" v-model="password" placeholder="Dein Passwort" />
+        <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" autocomplete />
+        <FormkitPassword
+          validation="required|length:6"
+          name="password"
+          label="Passwort"
+          v-model="password"
+          placeholder="Dein Passwort"
+          autocomplete="new-password"
+        />
         <FormkitPassword
           validation="required|confirm:password"
           label="Passwort wiederholen"
           v-model="passwordRepeat"
           placeholder="Bestätige dein Passwort"
+          autocomplete="new-password"
         />
         <div>
           <AppButton type="submit" class="button block" @click="resetMessages" :disabled="submitting">Account erstellen</AppButton>
         </div>
       </template>
     </FormKit>
-    <div class="account-exists copy-medium">Du hast schon einen Account?<br /><NuxtLink to="/sign-in">Melde dich jetzt an.</NuxtLink></div>
+    <div class="account-exists copy-medium">Du hast schon einen Account?<br /><NuxtLink :to="routes.signIn">Melde dich jetzt an.</NuxtLink></div>
   </div>
 </template>
 

@@ -1,17 +1,11 @@
+import { errorMessages } from '~/content/errorMessages';
+import type { ErrorCode } from '~/types/ErrorCode';
+
 export function useAuth() {
-  const client = useSupabaseClient();
-  const route = useRoute();
-
-  async function logInByCode() {
-    const code = route.query?.code as string;
-
-    // fullscreen loader here...
-    const { data, error } = await client.auth.exchangeCodeForSession(code);
-
-    if (error) {
-      return error.message;
-    }
+  function getErrorMessage(code?: ErrorCode) {
+    if (!code || !errorMessages[code]) return errorMessages.unknown;
+    return errorMessages[code];
   }
 
-  return { logInByCode };
+  return { getErrorMessage };
 }

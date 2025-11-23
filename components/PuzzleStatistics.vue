@@ -1,10 +1,7 @@
 <script setup lang="ts">
   import type { PuzzlePersistedState } from '~/types/PuzzlePersistedState';
-  import StatisticItem from './StatisticItem.vue';
-  import AppButton from './AppButton.vue';
-  import { puzzles } from '~/content/puzzles';
   import { scoreActions } from '~/content/scoreActions';
-  import type { ScoreAction } from '~/types/ScoreAction';
+
   import type { ScoreActionId } from '~/types/ScoreActionId';
   import BaseTile from './BaseTile.vue';
 
@@ -42,7 +39,6 @@
           <div>Score</div>
           <div class="total">{{ sumArray(Object.values(score).map((entry) => entry.total)) }}</div>
         </div>
-
         <div class="score-items">
           <div v-for="[key, value] in Object.entries(score)" class="item">
             <div>{{ value.amount }} × {{ scoreActions[key as ScoreActionId]?.name }}</div>

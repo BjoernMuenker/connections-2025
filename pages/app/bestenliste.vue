@@ -16,10 +16,6 @@
     layout: 'app',
   });
 
-  useHead({
-    title: 'Bestenliste',
-  });
-
   const { data: scores } = useAsyncData('scores', () => getScores());
 </script>
 

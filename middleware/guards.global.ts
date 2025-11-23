@@ -1,14 +1,14 @@
 import { puzzles } from '~/content/puzzles';
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  console.log('hello from middleware');
+  const { routes, isAppRoute } = useRoutes();
 
-  if (!to.path.startsWith('/app')) {
+  if (!isAppRoute(to.path)) {
     return;
   }
 
   const client = useSupabaseClient();
-  const { routes } = useRoutes();
+
   const { getServerTime } = useServerTime();
 
   const {
@@ -16,7 +16,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   } = await client.auth.getUser();
 
   if (!user) {
-    return navigateTo(routes.login);
+    return navigateTo(routes.signIn);
   }
 
   const day = to.params.day as string | undefined;

@@ -22,10 +22,6 @@
     layout: 'app',
   });
 
-  useHead({
-    title: 'Home',
-  });
-
   const { data: serverTime } = useAsyncData('serverTime', () => getServerTime());
   const { data: scores } = useAsyncData('score', () => getScore(user.value?.sub ?? ''));
   const { data: savegames } = useAsyncData('savegames', () => getSavegames({ userId: user.value?.sub ?? '' }));
@@ -76,9 +72,9 @@
 
 <template>
   <div class="wrapper">
-    {{ useDebug().getCompletedPuzzleCount() }}
+    <!-- {{ useDebug().getCompletedPuzzleCount() }}
     {{ useDebug().getMissingItemsCount() }}
-    {{ useDebug().getDuplicatedItemGroups() }}
+    {{ useDebug().getDuplicatedItemGroups() }} -->
     <div class="puzzles" ref="sliderRef">
       <div class="slide" v-for="puzzle in puzzles" :key="puzzle.id">
         <button
@@ -106,8 +102,8 @@
       </div>
       <UserProgress v-if="savegames" :states="savegames.map((savegame) => savegame.data)" :show-pending="true" />
       <div class="items">
-        <UserScore v-if="scores" v-bind="scores" @click="router.push(routes.scores)" />
-        <UserRank v-if="scores" v-bind="scores" @click="router.push(routes.scores)" />
+        <UserScore v-if="scores" v-bind="scores" @click="router.push(routes.score)" />
+        <UserRank v-if="scores" v-bind="scores" @click="router.push(routes.leaderboard)" />
       </div>
     </div>
   </div>

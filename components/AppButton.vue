@@ -1,12 +1,16 @@
 <script setup lang="ts">
-  const props = withDefaults(defineProps<{ tag?: 'a' | 'button'; loading?: boolean; disabled?: boolean; hierarchy?: 'primary' | 'secondary' }>(), {
-    tag: 'button',
-    hierarchy: 'primary',
-  });
+  const props = withDefaults(
+    defineProps<{ tag?: 'a' | 'button'; loading?: boolean; disabled?: boolean; hierarchy?: 'primary' | 'secondary'; color?: 'grey-dark' | 'red' }>(),
+    {
+      tag: 'button',
+      hierarchy: 'primary',
+      color: 'grey-dark',
+    }
+  );
 </script>
 
 <template>
-  <component :is="tag" :disabled="loading || disabled" :class="hierarchy">
+  <component :is="tag" :disabled="loading || disabled" :class="[hierarchy, color, { disabled: disabled }]">
     <span v-if="loading">lädt...</span>
     <slot v-else />
   </component>
@@ -21,6 +25,8 @@
     transition: transform 0.2s;
     border-width: 2px;
     border-style: solid;
+    text-align: center;
+    white-space: nowrap;
     @include var-font-weight(500);
 
     @include breakpoint('medium') {
@@ -28,37 +34,59 @@
       padding: spacing('s') spacing('s');
     }
 
-    &:active:not(:disabled) {
+    &:active:not(:disabled):not(.disabled) {
       transform: scale(0.95);
     }
 
     &.primary {
       color: #fff;
-      background: color('grey-dark');
-      border-color: color('grey-dark');
 
-      &:disabled {
+      &.grey-dark {
+        background: color('grey-dark');
+        border-color: color('grey-dark');
+      }
+
+      &.red {
+        background: color('red');
+        border-color: color('red');
+      }
+
+      &:disabled,
+      &.disabled {
         background-color: #c2c2c2;
         border-color: #c2c2c2;
       }
     }
 
     &.secondary {
-      color: color('grey-dark');
-      border-color: color('grey-dark');
+      &.grey-dark {
+        color: color('grey-dark');
+        border-color: color('grey-dark');
+      }
 
-      &:disabled {
+      &.red {
+        color: color('red');
+        border-color: color('red');
+      }
+
+      &:disabled,
+      &.disabled {
         border-color: #cdcdcd;
         color: #cdcdcd;
       }
     }
 
-    &:disabled {
+    &:disabled,
+    &.disabled {
       cursor: not-allowed;
     }
   }
 
   a {
     display: inline-block;
+
+    &.disabled {
+      pointer-events: none;
+    }
   }
 </style>
