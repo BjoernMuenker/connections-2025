@@ -26,7 +26,7 @@
   onMounted(() => {
     if (!rootRef.value) return;
     $gsap.fromTo(rootRef.value, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power3.out' });
-    // setTimeout(remove, 7000); // clear this on unmounted?
+    setTimeout(remove, 7000); // clear this on unmounted?
   });
 </script>
 

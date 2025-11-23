@@ -61,26 +61,22 @@
 
 <template>
   <label :for="id" class="puzzle-tile" :class="[{ selected: model.includes(props.id), disabled }, `${wordLength}`]" :data-id="id">
-    <span class="selected-indicator indicator"></span>
-    <span class="caption">{{ caption }}</span>
-    <input :id="id" type="checkbox" :value="inputValue" v-model="model" :disabled="disabled" />
+    <span class="inner">
+      <span class="selected-indicator indicator"></span>
+      <span class="caption">{{ caption }}</span>
+      <input :id="id" type="checkbox" :value="inputValue" v-model="model" :disabled="disabled" />
+    </span>
   </label>
 </template>
 
 <style lang="scss" scoped>
   .puzzle-tile {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: color('white');
-    border-radius: border-radius('default');
-    color: color('black');
     cursor: pointer;
-    // text-transform: uppercase;
     overflow: hidden;
     user-select: none;
-    // transition: transform 0.2s;
+    border-radius: border-radius('default');
+
     @include var-font-weight(500);
     @include fluid-value('font-size', 16, 22);
 
@@ -88,16 +84,16 @@
       cursor: not-allowed;
     }
 
-    // &:active:not(:disabled) {
-    //   transform: scale(0.9);
-    // }
+    &:active:not(.disabled) .inner {
+      transform: scale(0.9);
+    }
 
-    &.selected {
+    &.selected .inner {
+      color: color('white');
+
       .selected-indicator {
         background-color: color('black');
       }
-
-      color: color('white');
     }
 
     &.extrashort {
@@ -117,9 +113,20 @@
     }
   }
 
+  .inner {
+    width: 100%;
+    height: 100%;
+    background: color('white');
+    border-radius: inherit;
+    color: color('black');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+
   .caption {
     position: relative;
-    // position: absolute;
     line-height: 1em;
     text-align: center;
   }
@@ -130,6 +137,7 @@
     height: 100%;
     left: 0;
     top: 0;
+    border-radius: inherit;
   }
 
   input {

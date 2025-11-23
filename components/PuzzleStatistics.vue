@@ -54,7 +54,7 @@
         </div>
       </BaseTile>
       <BaseTile>
-        <div class="heading-large">Kombinationen</div>
+        <div class="heading-large">Spielzüge</div>
         <div class="guesses">
           <div v-for="(guess, index) in state.guesses" :key="index" class="guess">
             <div class="index">{{ index + 1 }}</div>

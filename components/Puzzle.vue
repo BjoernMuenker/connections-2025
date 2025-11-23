@@ -341,7 +341,9 @@
   }
 
   .puzzle {
-    width: 100%;
+    width: calc(100% + spacing('m') * 2);
+    margin-left: -#{spacing('m')};
+    margin-top: -#{spacing('m')};
 
     @media all and (min-width: 769px) {
       margin: 0 auto;
@@ -350,6 +352,7 @@
 
     @media all and (max-width: 768px) {
       overflow-x: hidden;
+      padding: spacing('m') spacing('m') 0 spacing('m');
     }
   }
 

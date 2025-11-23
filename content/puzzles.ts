@@ -6,7 +6,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-11-01T00:00:00').getTime(),
     groups: [
       { caption: 'Kopfbedeckungen', items: ['Krone', 'Mütze', 'Toupet', 'Hut'] },
-      { caption: 'Schachfiguren', items: ['Dame', 'Läufer', 'König', 'Springer'] },
+      { caption: 'Schachfiguren', items: ['Dame', 'Läufer', 'König', 'Turm'] },
       { caption: 'Bekannte Kanäle', items: ['Suez', 'Panama', 'Ärmel', 'Kaiser'] },
       { caption: 'Ehemalige Bundespräsidenten', items: ['Heuss', 'Scheel', 'Herzog', 'Rau'] },
     ],
