@@ -61,6 +61,7 @@
 
 <template>
   <label :for="id" class="puzzle-tile" :class="[{ selected: model.includes(props.id), disabled }, `${wordLength}`]" :data-id="id">
+    <span class="selected-indicator indicator"></span>
     <span class="caption">{{ caption }}</span>
     <input :id="id" type="checkbox" :value="inputValue" v-model="model" :disabled="disabled" />
   </label>
@@ -68,6 +69,7 @@
 
 <style lang="scss" scoped>
   .puzzle-tile {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,8 +93,11 @@
     // }
 
     &.selected {
+      .selected-indicator {
+        background-color: color('black');
+      }
+
       color: color('white');
-      background-color: #333;
     }
 
     &.extrashort {
@@ -113,9 +118,18 @@
   }
 
   .caption {
+    position: relative;
     // position: absolute;
     line-height: 1em;
     text-align: center;
+  }
+
+  .indicator {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
   }
 
   input {

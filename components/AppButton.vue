@@ -46,7 +46,6 @@
     &.secondary {
       color: #333;
       border-color: #333;
-      background: #fff;
 
       &:disabled {
         border-color: #cdcdcd;

@@ -4,6 +4,7 @@
   import MessageBox from '~/components/MessageBox.vue';
 
   const supabase = useSupabaseClient();
+  const { routes } = useRoutes();
 
   const submitting = ref(false);
   const name = ref('');
@@ -21,7 +22,7 @@
       const response = await supabase.auth.signUp({
         email: email.value,
         password: password.value,
-        options: { data: { display_name: name.value }, emailRedirectTo: `${window.location.host}/email-bestaetigen` },
+        options: { data: { display_name: name.value }, emailRedirectTo: `${window.location.origin}${routes.confirmEmail}` },
       });
 
       console.log(response);
@@ -50,18 +51,20 @@
       </div>
       <MessageBox v-if="errorMessage" type="error">{{ errorMessage }}</MessageBox>
       <MessageBox v-if="successMessage" type="success">{{ successMessage }}</MessageBox>
-      <FormKit validation="required" label="Nutzername" v-model="name" placeholder="Dein Nutzername" type="text" />
-      <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" />
-      <FormkitPassword validation="required|user_password" name="password" label="Passwort" v-model="password" placeholder="Dein Passwort" />
-      <FormkitPassword
-        validation="required|confirm:password"
-        label="Passwort wiederholen"
-        v-model="passwordRepeat"
-        placeholder="Bestätige dein Passwort"
-      />
-      <div>
-        <AppButton type="submit" class="button block" @click="resetMessages" :disabled="submitting">Account erstellen</AppButton>
-      </div>
+      <template v-if="!successMessage">
+        <FormKit validation="required" label="Nutzername" v-model="name" placeholder="Dein Nutzername" type="text" />
+        <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" />
+        <FormkitPassword validation="required|user_password" name="password" label="Passwort" v-model="password" placeholder="Dein Passwort" />
+        <FormkitPassword
+          validation="required|confirm:password"
+          label="Passwort wiederholen"
+          v-model="passwordRepeat"
+          placeholder="Bestätige dein Passwort"
+        />
+        <div>
+          <AppButton type="submit" class="button block" @click="resetMessages" :disabled="submitting">Account erstellen</AppButton>
+        </div>
+      </template>
     </FormKit>
     <div class="account-exists copy-medium">Du hast schon einen Account?<br /><NuxtLink to="/sign-in">Melde dich jetzt an.</NuxtLink></div>
   </div>
@@ -93,7 +96,11 @@
   }
 
   .message-box {
-    margin: spacing('l') 0;
+    margin-top: spacing('l');
+
+    &.error {
+      margin-bottom: spacing('l');
+    }
   }
 
   .account-exists {

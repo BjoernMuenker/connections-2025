@@ -9,6 +9,13 @@ export function shuffleArray<T>(a: Array<T>) {
   return a;
 }
 
+export function countOccurrences(arr: string[]): Record<string, number> {
+  return arr.reduce<Record<string, number>>((acc, item) => {
+    acc[item] = (acc[item] || 0) + 1;
+    return acc;
+  }, {});
+}
+
 export function groupArrayByKey(array: any[], key: string) {
   return array.reduce((hash, obj) => ({ ...hash, [obj[key]]: (hash[obj[key]] || []).concat(obj) }), {});
 }
@@ -222,6 +229,10 @@ export function randomValueFromArray<T>(array: T[]) {
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+export const roundToMaxFractions = (number: number, fractionDigits = 2): number => {
+  return Math.round((number + Number.EPSILON) * Math.pow(10, fractionDigits)) / Math.pow(10, fractionDigits);
+};
 
 export function clamp(min: number, max: number, valueToClamp: number) {
   return Math.min(Math.max(valueToClamp, min), max);

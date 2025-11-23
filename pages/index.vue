@@ -3,6 +3,10 @@
   import BaseTile from '~/components/BaseTile.vue';
 
   const { routes } = useRoutes();
+
+  useHead({
+    title: 'Willkommen',
+  });
 </script>
 
 <template>

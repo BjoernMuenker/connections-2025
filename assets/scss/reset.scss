@@ -38,8 +38,8 @@ body {
   background: #efefef;
   // @include var-font-weight(500);
 
-  @include breakpoint('small') {
-    font-size: 20px;
+  @include breakpoint('large') {
+    font-size: 18px;
   }
 }
 

@@ -36,7 +36,10 @@
   <div class="puzzle-mistakes">
     <div class="mistakes-caption">Verbleibende Fehler:</div>
     <div class="mistakes-bubbles">
-      <div v-for="index in 4" :key="index" class="mistake-bubble" :class="{ used: index > remainingMistakes }"></div>
+      <div v-for="index in 4" :key="index" class="bubble-wrapper">
+        <div class="background"></div>
+        <div class="mistake-bubble" :class="{ used: index > remainingMistakes }"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -58,11 +61,32 @@
       gap: spacing('xs');
     }
 
-    .mistake-bubble {
+    .mistake-bubble,
+    .background {
       width: 16px;
       height: 16px;
       border-radius: 50%;
       background: color('grey');
+    }
+
+    .mistake-bubble {
+      position: relative;
+      z-index: 1;
+    }
+
+    .bubble-wrapper {
+      position: relative;
+      width: 16px;
+      height: 16px;
+    }
+
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: color('grey-very-light');
     }
   }
 </style>

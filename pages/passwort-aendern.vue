@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import AppButton from '~/components/AppButton.vue';
+  import BaseTile from '~/components/BaseTile.vue';
   import FormkitPassword from '~/components/FormkitPassword.vue';
   import MessageBox from '~/components/MessageBox.vue';
 
@@ -33,22 +34,20 @@
   }
 
   onMounted(async () => {
-    // if (!code) {
-    //   console.error('no code');
-    //   return;
-    // }
-    // const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-    // if (error) {
-    //   errorMessage.value = error.message;
-    //   return;
-    // }
+    if (!code) {
+      errorMessage.value = 'Sicherheits-Code ungültig oder abgelaufen.';
+      return;
+    }
   });
 </script>
 
 <template>
   <div>
     <ClientOnly>
-      <div class="wrapper">
+      <BaseTile>
+        <div class="header">
+          <h1 class="heading-xlarge">Wähle ein neues Passwort</h1>
+        </div>
         <template v-if="!user || !code">
           <MessageBox v-if="errorMessage" type="error">
             {{ errorMessage }}
@@ -56,9 +55,6 @@
         </template>
         <template v-else>
           <FormKit type="form" @submit="resetPassword">
-            <div class="header">
-              <h1>Wähle ein neues Passwort</h1>
-            </div>
             <MessageBox v-if="errorMessage" type="error">
               {{ errorMessage }}
             </MessageBox>
@@ -80,36 +76,20 @@
                 v-model="formData.confirmPassword"
                 placeholder="Bestätige dein neues Passwort"
               />
-              <div>
-                <AppButton type="submit" class="button block" :loading="false">Passwort zurücksetzen</AppButton>
-              </div>
             </template>
+            <div>
+              <AppButton type="submit" class="button block" :loading="false">Passwort zurücksetzen</AppButton>
+            </div>
           </FormKit>
-          <div class="back-to-login"><NuxtLink :to="routes.login" class="text-link">Zurück zum Login</NuxtLink></div>
         </template>
-      </div>
+      </BaseTile>
+      <div class="back-to-login"><NuxtLink :to="routes.login" class="text-link">Zurück zum Login</NuxtLink></div>
     </ClientOnly>
   </div>
 </template>
 
 <style lang="scss" scoped>
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    max-width: 400px;
-  }
-
   .header {
-    margin-bottom: spacing('l');
-  }
-
-  form {
-    width: 100%;
-    padding: spacing('xl');
-    border: 1px solid #949494;
-    border-radius: 8px;
     margin-bottom: spacing('l');
   }
 
@@ -119,12 +99,15 @@
   }
 
   .message-box {
-    margin: spacing('l') 0;
+    margin-top: spacing('l');
+  }
+
+  form .message-box {
+    margin-bottom: spacing('l');
   }
 
   .back-to-login {
     padding: 0 spacing('xl');
-    width: 100%;
-    font-size: 16px;
+    margin-top: spacing('l');
   }
 </style>

@@ -78,7 +78,8 @@ export default defineNuxtConfig({
           href: '/meta/apple-touch-icon.png',
         },
       ],
-      title: 'Connections 2025',
+      title: 'Hohoho 2025',
+      titleTemplate: `%s | Hohoho 2025`,
     },
   },
   vite: {

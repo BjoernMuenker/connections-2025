@@ -2,6 +2,7 @@
   import AppButton from '~/components/AppButton.vue';
   import MessageBox from '~/components/MessageBox.vue';
   import { reset } from '@formkit/core';
+  import BaseTile from '~/components/BaseTile.vue';
 
   const { routes } = useRoutes();
   const supabase = useSupabaseClient();
@@ -33,31 +34,33 @@
 </script>
 
 <template>
-  <div class="wrapper">
-    <FormKit type="form" @submit="resetPassword" id="form" #default="slotProps">
-      <div class="header">
-        <h1>Passiert den Besten.</h1>
-        <p class="description">Du bekommst eine E-Mail, um dein Passwort zurückzusetzen.</p>
-      </div>
-      <MessageBox v-if="errorMessage" type="error">
-        {{ errorMessage }}
-      </MessageBox>
-      <MessageBox v-if="successMessage" type="success">
-        {{ successMessage }}
-      </MessageBox>
-      <template v-if="!successMessage">
-        <FormKit
-          validation="required|email"
-          label="E-Mail"
-          name="email"
-          v-model="formData.email"
-          placeholder="Deine E-Mail"
-          type="email"
-          :disabled="submitting"
-        />
-        <AppButton type="submit" :loading="submitting">Passwort zurücksetzen</AppButton>
-      </template>
-    </FormKit>
+  <div>
+    <BaseTile>
+      <FormKit type="form" @submit="resetPassword" id="form" #default="slotProps">
+        <div class="header">
+          <h1>Passiert den Besten.</h1>
+          <p class="description">Du bekommst eine E-Mail, um dein Passwort zurückzusetzen.</p>
+        </div>
+        <MessageBox v-if="errorMessage" type="error">
+          {{ errorMessage }}
+        </MessageBox>
+        <MessageBox v-if="successMessage" type="success">
+          {{ successMessage }}
+        </MessageBox>
+        <template v-if="!successMessage">
+          <FormKit
+            validation="required|email"
+            label="E-Mail"
+            name="email"
+            v-model="formData.email"
+            placeholder="Deine E-Mail"
+            type="email"
+            :disabled="submitting"
+          />
+          <AppButton type="submit" :loading="submitting">Passwort zurücksetzen</AppButton>
+        </template>
+      </FormKit>
+    </BaseTile>
     <div class="back-to-login copy-medium"><NuxtLink :to="routes.login" class="text-link">Zurück zum Login</NuxtLink></div>
   </div>
 </template>
@@ -73,11 +76,7 @@
 
   form {
     width: 100%;
-    padding: spacing('xl');
     background: color('white');
-    border-radius: spacing('m');
-    margin-bottom: spacing('l');
-    margin-bottom: spacing('l');
   }
 
   button {
@@ -92,5 +91,6 @@
   .back-to-login {
     padding: 0 spacing('xl');
     width: 100%;
+    margin-top: spacing('l');
   }
 </style>

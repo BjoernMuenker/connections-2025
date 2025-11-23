@@ -16,11 +16,20 @@ export const usePuzzle = (puzzleId?: string) => {
   const user = useSupabaseUser();
   const client = useSupabaseClient();
   const store = useAppStore();
+  const { $gsap } = useNuxtApp();
+
+  const { getSavegames } = useSavegames();
 
   const loading = ref(false);
+  const communityView = ref(false);
   const puzzle = ref<PuzzleState>();
   let lastPersistedState: PuzzlePersistedState | undefined;
   let scores: PuzzleScore | undefined;
+
+  const guessIndex = computed(() => {
+    if (!puzzle.value) return 0;
+    return puzzle.value.guesses.length + solvedGroups.value.length;
+  });
 
   function getColorByGroupId(id: PuzzleGroupId) {
     const idToColor: { [key in PuzzleGroupId]: Color } = {
@@ -187,13 +196,6 @@ export const usePuzzle = (puzzleId?: string) => {
 
     const scoreIncrement = sumArray(Object.values(scores).map((entry) => entry.total));
 
-    // const { data: dataB, error: errorB } = await client
-    //   .from('profiles')
-    //   .update({
-    //     score: scoreIncrement,
-    //   })
-    //   .eq('id', user.value.sub);
-
     const { data: dataB, error: errorB } = await client.rpc('increment_profile_score', {
       p_user_id: user.value.sub,
       p_increment: scoreIncrement,
@@ -301,21 +303,106 @@ export const usePuzzle = (puzzleId?: string) => {
     await save();
   }
 
+  async function createHeatmap() {
+    if (!puzzle.value) return;
+    deselectAllItems();
+
+    // throw sth here
+    const savegames = await getSavegames({ puzzleId: puzzle.value.id });
+    if (!savegames) {
+      //
+      return;
+    }
+
+    if (savegames.length === 0) {
+      store.pushToastNotification('Noch keine Daten anderer Spieler vorhanden');
+    }
+
+    // reset prev colors
+    $gsap.to(`.puzzle-tile`, { background: `white` });
+
+    console.log(guessIndex.value);
+
+    // extract the guesses
+    const guesses = savegames?.map((savegame) => savegame.data.guesses[guessIndex.value] ?? []).flat();
+
+    console.log(guesses);
+
+    console.warn(countOccurrences(guesses));
+
+    const normalizeCounts = (counts: Record<string, number>): Record<string, number> => {
+      const values = Object.values(counts);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+
+      // Avoid division by zero if all tiles have the same count
+      if (min === max) {
+        return Object.fromEntries(
+          Object.keys(counts).map((key) => [key, 0.5]) // all mid-intensity
+        );
+      }
+
+      return Object.fromEntries(
+        Object.entries(counts).map(([key, value]) => [
+          key,
+          roundToMaxFractions((value - min) / (max - min)), // → 0 to 1
+        ])
+      );
+    };
+
+    const normalized = normalizeCounts(countOccurrences(guesses));
+    console.warn(normalized);
+
+    const timeline = $gsap.timeline();
+
+    for (const [tileId, percentage] of Object.entries(normalized)) {
+      const scaled = clamp(0.15, 0.65, percentage);
+
+      const max = 255;
+      const red = 255;
+
+      const greenBlue = Math.round(max * (1 - scaled)); // darker = more red
+
+      timeline.to(`.puzzle-tile[data-id="${tileId}"]`, { background: `rgb(${red}, ${greenBlue}, ${greenBlue})` }, '<+=0.05');
+    }
+  }
+
+  watch(
+    () => guessIndex.value,
+    () => {
+      if (communityView.value) createHeatmap();
+    }
+  );
+
+  watch(
+    () => communityView.value,
+    async (value: boolean) => {
+      if (!value) {
+        $gsap.to(`.puzzle-tile`, { background: `white` }); // import var
+        return;
+      }
+
+      createHeatmap();
+    }
+  );
+
   onBeforeMount(() => {
     if (!puzzleId) return;
     load(puzzleId);
   });
 
   return {
+    communityView,
     deselectAllItems,
     getColorByGroupId,
+    getColorByGroupItemId,
     getGroupById,
     getGroupByItemId,
     getGroupsSolvedByUser,
     getItemIndexById,
     getNameByGroupId,
     getScoreFromSavegame,
-    getColorByGroupItemId,
+    guessIndex,
     initPuzzleById,
     isGroupSolvedByUser,
     lastPersistedState,

@@ -8,8 +8,8 @@
     layout: 'app',
   });
 
-  onMounted(() => {
-    console.log('day/index');
+  useHead({
+    title: `${puzzleId.value}.Dezember`,
   });
 </script>
 

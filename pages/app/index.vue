@@ -22,6 +22,10 @@
     layout: 'app',
   });
 
+  useHead({
+    title: 'Home',
+  });
+
   const { data: serverTime } = useAsyncData('serverTime', () => getServerTime());
   const { data: scores } = useAsyncData('score', () => getScore(user.value?.sub ?? ''));
   const { data: savegames } = useAsyncData('savegames', () => getSavegames({ userId: user.value?.sub ?? '' }));

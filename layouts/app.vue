@@ -19,12 +19,17 @@
   }
 
   async function deleteAccount() {
-    console.log(user.value?.sub);
-
-    await $fetch('/api/delete-user', {
+    const result = await $fetch<boolean>('/api/delete-user', {
       method: 'POST',
       body: { id: user.value?.sub },
     });
+
+    if (!result) {
+      store.pushToastNotification('Dein Account konnte nicht gelöscht werden.');
+      return;
+    }
+
+    navigateTo(routes.home);
   }
 
   const offCanvasVisible = ref(false);
@@ -224,8 +229,8 @@
   .toast-notifications {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 50px;
+    width: calc(100% - 100px);
     height: 100%;
     padding-top: spacing('m');
     display: flex;

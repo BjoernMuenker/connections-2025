@@ -8,6 +8,7 @@
   import type { PuzzleGroupItem } from '~/types/PuzzleGroupItem';
   import LoadingIndicator from './LoadingIndicator.vue';
   import type { PuzzleGroupId } from '~/types/PuzzleGroupId';
+  import SwitchToggle from './SwitchToggle.vue';
 
   const props = defineProps<{ puzzleId: string }>();
 
@@ -22,6 +23,7 @@
     getItemIndexById,
     loading,
     maxItemsSelected,
+    communityView,
     pushScoreNotifications,
     puzzle,
     reset,
@@ -253,7 +255,6 @@
   }
 
   onMounted(() => {
-    console.log('puzzle mounted');
     $gsap.CustomWiggle.create('wiggle', { wiggles: 6 });
   });
 
@@ -303,8 +304,10 @@
           Zurücksetzen
         </AppButton>
         <template v-if="puzzle.solved.length !== 4">
-          <AppButton hierarchy="secondary" :disabled="animationRunning" @click="shuffleItems" class="animation-target">Mischen</AppButton>
-          <AppButton
+          <SwitchToggle v-model="communityView" id="show-community-turns">Community-Sicht</SwitchToggle>
+          <AppButton :disabled="!maxItemsSelected || animationRunning" @click="submitItems" class="animation-target submit">Absenden</AppButton>
+          <!-- <AppButton hierarchy="secondary" :disabled="animationRunning" @click="shuffleItems" class="animation-target">Mischen</AppButton> -->
+          <!-- <AppButton
             hierarchy="secondary"
             :disabled="puzzle.selected.length === 0 || animationRunning"
             @click="deselectAllItems"
@@ -312,7 +315,7 @@
           >
             Alle abwählen
           </AppButton>
-          <AppButton :disabled="!maxItemsSelected || animationRunning" @click="submitItems" class="animation-target">Absenden</AppButton>
+          <AppButton hierarchy="secondary" :disabled="animationRunning">Community</AppButton> -->
         </template>
         <template v-else>
           <AppButton @click="showResults" class="animation-target">Statistik anzeigen</AppButton>
@@ -379,8 +382,10 @@
   .button-container {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: spacing('xs');
+    align-items: center;
+    // flex-wrap: wrap;
+    flex-direction: column;
+    gap: spacing('m');
     margin-top: spacing('m');
   }
 
@@ -394,5 +399,9 @@
 
   .puzzle-group {
     grid-column: span 4;
+  }
+
+  .submit {
+    width: 100%;
   }
 </style>

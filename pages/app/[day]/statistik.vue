@@ -9,7 +9,12 @@
   const user = useSupabaseUser();
   const { getScoreFromSavegame } = usePuzzle();
   const { getSavegames } = useSavegames();
+
   const puzzleId = route.params.day as string;
+
+  useHead({
+    title: `${puzzleId}.Dezember / Statistik`,
+  });
 
   const { data: savegame } = useAsyncData('savegame', () => getSavegames({ userId: user.value?.sub ?? '', puzzleId }), {
     transform: (result) => (result ? result[0] : undefined),
