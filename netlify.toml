@@ -1,2 +1,17 @@
 [build]
-  command = "NUXT_PUBLIC_BUILD_ID=$BUILD_ID npm run build"
+  command = """
+    # Fetch tags (Netlify shallow clones by default)
+    git fetch --tags
+
+    # Get latest tag
+    export LATEST_TAG=$(git describe --tags --abbrev=0)
+
+    # Build date in ISO format (UTC)
+    export BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+    # Pass values to Nuxt as public runtime variables
+    NUXT_PUBLIC_BUILD_GIT_TAG=$LATEST_TAG \
+    NUXT_PUBLIC_BUILD_DATE=$BUILD_DATE \
+    NUXT_PUBLIC_BUILD_ID=$BUILD_ID \
+    npm run build
+  """

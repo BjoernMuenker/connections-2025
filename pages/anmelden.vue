@@ -13,14 +13,15 @@
 
   const errorMessage = ref('');
 
-  watch(
-    () => user.value,
-    (value) => {
-      if (!value) return;
-      navigateTo('/app');
-    },
-    { immediate: true }
-  );
+  // dangerous... do it as a one time watcher instead?
+  // watch(
+  //   () => user.value,
+  //   (value) => {
+  //     if (!value) return;
+  //     navigateTo('/app');
+  //   },
+  //   { immediate: true }
+  // );
 
   async function handleLogin() {
     errorMessage.value = '';
@@ -29,6 +30,8 @@
     try {
       const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
       if (error) throw error;
+      await sleep(100);
+      navigateTo(routes.app);
     } catch (error) {
       errorMessage.value = useAuth().getErrorMessage(error.code);
     } finally {

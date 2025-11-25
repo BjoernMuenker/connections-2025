@@ -110,7 +110,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      NUXT_PUBLIC_BUILD_ID: process.env.NUXT_PUBLIC_BUILD_ID || 'buildId',
+      NUXT_PUBLIC_BUILD_ID: process.env.NUXT_PUBLIC_BUILD_ID || '6925efbb0fd3c500086a6114',
+      NUXT_PUBLIC_BUILD_TIMESTAMP: process.env.NUXT_PUBLIC_BUILD_TIMESTAMP || '25.11.2025 11:33',
+      NUXT_PUBLIC_BUILD_GIT_TAG: process.env.NUXT_PUBLIC_BUILD_GIT_TAG || '1.0',
     },
   },
 });

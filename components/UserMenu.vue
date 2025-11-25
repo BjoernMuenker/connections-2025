@@ -25,7 +25,10 @@
       <button @click="signOut">Abmelden</button>
       <NuxtLink :to="routes.deleteAccount">Account löschen</NuxtLink>
     </nav>
-    <div class="build-info copy-small">Build {{ runtimeConfig.public.NUXT_PUBLIC_BUILD_ID }}</div>
+    <div class="build-info copy-small">
+      <div>v{{ runtimeConfig.public.NUXT_PUBLIC_BUILD_GIT_TAG }} / {{ runtimeConfig.public.NUXT_PUBLIC_BUILD_TIMESTAMP }}</div>
+      <div>Build {{ runtimeConfig.public.NUXT_PUBLIC_BUILD_ID }}</div>
+    </div>
   </div>
 </template>
 

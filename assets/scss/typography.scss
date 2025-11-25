@@ -4,7 +4,11 @@ h3,
 h4,
 h5,
 h6,
-[class*='heading'] {
+.heading-xxlarge,
+.heading-xlarge,
+.heading-large,
+.heading-medium,
+.heading-small {
   margin: 0;
   font-weight: normal;
   @include var-font-weight(600);

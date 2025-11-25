@@ -1,24 +1,26 @@
 <script setup lang="ts">
+  import BaseTile from './BaseTile.vue';
+
   const props = defineProps<{ scores: { id: string; username: string | null; score: number }[] }>();
 </script>
 <template>
   <div class="leaderboard">
     <div class="top-ranks">
-      <div class="entry" v-for="(entry, index) in scores.slice(0, 3)">
-        <div class="rank">{{ index + 1 }}</div>
+      <BaseTile class="entry" v-for="(entry, index) in scores.slice(0, 3)">
+        <div class="rank heading-medium">{{ index + 1 }}</div>
         <div>
           <div class="player heading-medium">{{ entry.username }}</div>
-          <div class="score">{{ entry.score }}</div>
+          <div class="score heading-medium">{{ formatNumber(entry.score) }}</div>
         </div>
-      </div>
+      </BaseTile>
     </div>
-    <div class="lower-ranks">
+    <BaseTile class="lower-ranks copy-default">
       <div v-for="(entry, index) in scores" class="entry">
         <div class="rank">{{ index + 1 }}</div>
         <div class="player">{{ entry.username }}</div>
-        <div class="score">{{ entry.score }}</div>
+        <div class="score">{{ formatNumber(entry.score) }}</div>
       </div>
-    </div>
+    </BaseTile>
   </div>
 </template>
 
@@ -26,6 +28,7 @@
   .leaderboard {
     display: flex;
     flex-direction: column;
+    font-variant-numeric: tabular-nums;
   }
 
   .top-ranks {
@@ -34,22 +37,48 @@
     gap: spacing('m');
     margin-bottom: spacing('xl');
 
-    .entry {
-      border-radius: spacing('s');
-      padding: spacing('s');
+    .rank {
+      text-align: center;
+    }
 
-      &:first-of-type {
+    .score {
+      margin-top: spacing('xxs');
+      @include var-font-weight(400);
+    }
+
+    .entry {
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 16px;
+        height: 100%;
+        content: '';
+        background: red;
+        z-index: 1;
+      }
+
+      &:first-of-type::after {
         background: #ffd779;
       }
 
-      &:nth-of-type(2) {
+      &:nth-of-type(2)::after {
         background: #cecece;
       }
 
-      &:nth-of-type(3) {
+      &:nth-of-type(3)::after {
         background: #d1ad49;
       }
     }
+  }
+
+  .player {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .lower-ranks {
@@ -58,9 +87,6 @@
     gap: spacing('xs');
 
     .player {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       width: calc(100% - 120px);
       padding-right: spacing('m');
     }
@@ -69,12 +95,16 @@
       width: 80px;
       text-align: right;
     }
+
+    .rank {
+      @include var-font-weight(600);
+    }
   }
 
   .rank {
-    width: 40px;
-    padding-right: spacing('m');
-    @include var-font-weight(700);
+    width: 35px;
+    margin-right: spacing('m');
+    flex-shrink: 0;
   }
 
   .entry {

@@ -20,7 +20,7 @@
   button,
   a {
     font-size: 18px;
-    padding: spacing('xs') spacing('s');
+    padding: spacing('s') spacing('s');
     border-radius: border-radius('default');
     transition: transform 0.2s;
     border-width: 2px;
@@ -31,7 +31,6 @@
 
     @include breakpoint('medium') {
       font-size: 20px;
-      padding: spacing('s') spacing('s');
     }
 
     &:active:not(:disabled):not(.disabled) {

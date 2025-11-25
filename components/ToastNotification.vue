@@ -45,10 +45,11 @@
     background: color('grey-dark');
     display: flex;
     gap: spacing('xs');
+    align-items: center;
     font-size: 15px;
 
     @include breakpoint('medium') {
-      font-size: 16px;
+      font-size: 17px;
       padding: spacing('s') spacing('s');
     }
   }
@@ -61,6 +62,6 @@
     line-height: 1em;
     display: flex;
     align-items: center;
-    @include var-font-weight(800);
+    @include var-font-weight(600);
   }
 </style>

@@ -5,6 +5,7 @@
   import UserProgress from '~/components/UserProgress.vue';
   import UserRank from '~/components/UserRank.vue';
   import UserScore from '~/components/UserScore.vue';
+  import UserStatistics from '~/components/UserStatistics.vue';
   import { puzzles as puzzlesData } from '~/content/puzzles';
   import { useAppStore } from '~/store/appStore';
 
@@ -168,7 +169,13 @@
     <div class="stats">
       <div class="heading">
         <div class="heading-large">Dein Fortschritt</div>
-        <NuxtLink :to="routes.statistics">Mehr</NuxtLink>
+        <NuxtLink :to="routes.statistics" class="statistics-link">
+          Statistik
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </NuxtLink>
       </div>
       <UserProgress v-if="savegames" :states="savegames.map((savegame) => savegame.data)" :show-pending="true" />
       <div class="items">
@@ -267,6 +274,19 @@
     .heading {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .statistics-link {
+      display: flex;
+      align-items: center;
+      gap: spacing('xxs');
+      font-size: 18px;
+      @include var-font-weight(600);
+
+      @include breakpoint('medium') {
+        font-size: 20px;
+      }
     }
 
     .heading-large {
