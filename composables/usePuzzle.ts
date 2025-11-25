@@ -93,6 +93,7 @@ export const usePuzzle = (puzzleId?: string) => {
 
     const puzzle: Puzzle = {
       id: config.id,
+      font: config.font ?? 'Inter',
       groups: config.groups.map((group, groupIndex) => {
         return {
           ...group,
@@ -124,6 +125,8 @@ export const usePuzzle = (puzzleId?: string) => {
       onLoadComplete(loadingStarted);
       return;
     }
+
+    store.lastPlayedPuzzleId = _puzzle.id;
 
     const { data, error } = await client
       .from('savegames')
@@ -194,22 +197,24 @@ export const usePuzzle = (puzzleId?: string) => {
       }
     );
 
+    if (errorA) {
+      console.error('unable to save game');
+    }
+
     const scoreIncrement = sumArray(Object.values(scores).map((entry) => entry.total));
+
+    if (scoreIncrement === 0) return;
+
+    console.log('update score');
 
     const { data: dataB, error: errorB } = await client.rpc('increment_profile_score', {
       p_user_id: user.value.sub,
       p_increment: scoreIncrement,
     });
 
-    if (errorA) {
-      console.error('unable to save game');
-    }
-
-    if (errorB) {
+    if (errorB || dataB === null) {
       console.error('unable to update score');
     }
-
-    console.log(dataB);
   }
 
   function pushScoreNotifications() {

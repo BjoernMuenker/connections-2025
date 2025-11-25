@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { useAppStore } from '~/store/appStore';
-  import UserMenu from './UserMenu.vue';
   import OffCanvas from './OffCanvas.vue';
 
   const store = useAppStore();

@@ -3,7 +3,7 @@ import type { PuzzleConfig } from '~/types/PuzzleConfig';
 export const puzzles: { [key: string]: PuzzleConfig } = {
   '1': {
     id: '1',
-    unlocksAt: new Date('2025-11-01T00:00:00').getTime(),
+    unlocksAt: new Date('2025-12-01T00:00:00').getTime(),
     groups: [
       { caption: 'Kopfbedeckungen', items: ['Krone', 'Mütze', 'Toupet', 'Hut'] },
       { caption: 'Schachfiguren', items: ['Dame', 'Läufer', 'König', 'Turm'] },
@@ -13,7 +13,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '2': {
     id: '2',
-    unlocksAt: new Date('2025-11-02T00:00:00').getTime(),
+    unlocksAt: new Date('2025-12-02T00:00:00').getTime(),
     groups: [
       { caption: 'Nicht unbedenklich', items: ['Heikel', 'Riskant', 'Delikat', 'Wacklig'] },
       { caption: 'Olympia-Disziplinen 2026', items: ['Bob', 'Golf', 'Boxen', 'Wasserball'] },
@@ -23,27 +23,27 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '3': {
     id: '3',
-    unlocksAt: new Date('2025-11-03T00:00:00').getTime(),
+    unlocksAt: new Date('2025-12-03T00:00:00').getTime(),
     groups: [
       { caption: 'Betrunken', items: ['Voll', 'Blau', 'Hacke', 'Dicht'] },
-      { caption: 'Kartoffel-Erzeugnisse', items: ['Vodka', 'Stärke', 'Stempel', 'Pommes'] },
       { caption: 'Berühmte Theorien', items: ['String', 'Relativität', 'Evolution', 'Multiversum'] },
-      { caption: 'Typische Symbole auf Festnetztelefonen', items: ['Sternchen', 'Raute', 'Glocke', 'Hörer'] },
+      { caption: 'Kartoffel-Erzeugnisse', items: ['Vodka', 'Stärke', 'Stempel', 'Pommes'] },
+      { caption: 'Typische Symbole auf Telefonen', items: ['Stern', 'Raute', 'Plus', 'Hörer'] },
     ],
   },
   '4': {
     id: '4',
-    unlocksAt: new Date('2025-11-04T00:00:00').getTime(),
+    unlocksAt: new Date('2025-12-04T00:00:00').getTime(),
     groups: [
       { caption: 'Mahlzeit', items: ['Schmaus', 'Essen', 'Speise', 'Kost'] },
       { caption: 'Deutsche Millionenstädte', items: ['Köln', 'Hamburg', 'München', 'Berlin'] },
       { caption: 'Bestandteiles eines Schiffs', items: ['Heck', 'Kiel', 'Bug', 'Deck'] },
-      { caption: '"4x4"', items: ['Allradantrieb', 'Ritter Sport Tafel', 'Dieses Spielfeld', 'Sechszehn'] },
+      { caption: 'Städte mit einem vertauschten Buchstaben', items: ['Genau', 'Wein', 'Keil', 'Solo'] },
     ],
   },
   '5': {
     id: '5',
-    unlocksAt: new Date('2025-11-05T00:00:00').getTime(),
+    unlocksAt: new Date('2025-12-05T00:00:00').getTime(),
     groups: [
       { caption: 'Folien', items: ['Alu', 'Maler', 'Klarsicht', 'Luftpolster'] },
       { caption: 'Nagel___', items: ['Lack', 'Neu', 'Brett', 'Schere'] },
@@ -53,7 +53,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '6': {
     id: '6',
-    unlocksAt: new Date('2025-11-06T00:00:00').getTime(),
+    unlocksAt: new Date('2025-12-06T00:00:00').getTime(),
     groups: [
       { caption: 'Groß', items: ['Riesig', 'Mega', 'Gewaltig', 'Enorm'] },
       { caption: 'Antike Waffen', items: ['Katana', 'Speer', 'Schwert', 'Morgenstern'] },
@@ -63,7 +63,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '7': {
     id: '7',
-    unlocksAt: new Date('2025-11-07T00:00:00').getTime(),
+    unlocksAt: new Date('2025-12-07T00:00:00').getTime(),
     groups: [
       { caption: 'Maltechniken', items: ['Fresko', 'Aquarell', 'Airbrush', 'Öl'] },
       { caption: 'Legierungen', items: ['Bronze', 'Messing', 'Stahl', 'Weißgold'] },
@@ -73,7 +73,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '8': {
     id: '8',
-    unlocksAt: new Date('2025-11-08T00:00:00').getTime(),
+    unlocksAt: new Date('2025-12-08T00:00:00').getTime(),
     groups: [
       { caption: 'Nobelpreis-Disziplinen', items: ['Frieden', 'Literatur', 'Physik', 'Medizin'] },
       { caption: 'Kryptowährungen', items: ['Tether', 'Bitcoin', 'Ethereum', 'Ripple'] },
@@ -83,7 +83,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '9': {
     id: '9',
-    unlocksAt: new Date('2025-11-09T00:00:00').getTime(),
+    unlocksAt: new Date('2025-12-09T00:00:00').getTime(),
     groups: [
       { caption: 'Ehemalige deutsche Längenmaße', items: ['Zoll', 'Rute', 'Elle', 'Fuß'] },
       { caption: 'Fellfarben von Pferden', items: ['Fuchs', 'Schimmel', 'Brauner', 'Rappe'] },
@@ -95,18 +95,18 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '10',
     unlocksAt: new Date('2025-11-10T00:00:00').getTime(),
     groups: [
-      { caption: 'Häufige Themen von Verschwörungstheorien', items: ['9/11', 'Mondlandung', 'Erdkrümmung', 'Corona'] },
+      { caption: 'Häufige Themen von Verschwörungstheorien', items: ['9/11', 'Mondlandung', 'Chemtrails', 'Corona'] },
       { caption: 'Mythologische Fabelwesen', items: ['Hydra', 'Drache', 'Sirene', 'Zyklop'] },
       { caption: 'Deutsche Magazine', items: ['Spiegel', 'Stern', 'Focus', 'Gala'] },
-      { caption: 'Beläge', items: ['Moos', 'Zahn', 'Teppich', 'Asphalt'] },
+      { caption: 'Beläge', items: ['Moos', 'Käse', 'Plaque', 'Asphalt'] },
     ],
   },
   '11': {
     id: '11',
     unlocksAt: new Date('2025-11-11T00:00:00').getTime(),
     groups: [
-      { caption: 'Wichtige Erfindungen', items: ['Rad', 'Buchdruck', 'Impfung', 'Elektrizität'] },
-      { caption: 'Hülle', items: ['Schale', 'Panzer', 'Gehäuse', 'Mantel'] },
+      { caption: 'Wichtige Erfindungen', items: ['Rad', 'Buchdruck', 'Impfung', 'Auto'] }, // gefährlich mit Atom?
+      { caption: 'Hülle', items: ['Schale', 'Pelle', 'Gehäuse', 'Mantel'] },
       { caption: 'Arten von Uhren', items: ['Sand', 'Sonne', 'Atom', 'Stopp'] },
       { caption: '', items: ['', '', '', ''] },
     ],
@@ -115,20 +115,20 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '12',
     unlocksAt: new Date('2025-11-12T00:00:00').getTime(),
     groups: [
-      { caption: 'Leuchtet im Dunkeln', items: ['Mond', 'Laterne', 'Phosphor', 'Glühwürmchen'] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Leuchtet im Dunkeln', items: ['Mond', 'Laterne', 'Phosphor', 'Knicklicht'] },
+      { caption: 'Notizbuch-Lineaturen', items: ['Blanko', 'Kästchen', 'Linien', 'Punkte'] },
       { caption: 'Messinstrumente', items: ['Uhr', 'Waage', 'Kompass', 'Lineal'] },
-      { caption: 'Opern-Protagonistinnen', items: ['Carmen', 'Aida', 'Violetta', 'Isolde'] },
+      { caption: 'Opern-Protagonistinnen', items: ['Carmen', 'Aida', 'Violetta', 'Isolde'] }, // zu schwer?
     ],
   },
   '13': {
     id: '13',
     unlocksAt: new Date('2025-11-13T00:00:00').getTime(),
     groups: [
-      { caption: 'Saucen', items: ['Béchamel', 'Soja', 'Cocktail', 'Tabasco'] },
+      { caption: 'Dips', items: ['Aioli', 'Salsa', 'Mojo', 'Hummus'] },
       { caption: 'Vorschrift', items: ['Codex', 'Gesetz', 'Erlass', 'Gebot'] },
       { caption: 'Ohne Anfang und Ende', items: ['Gerade', 'Kreis', 'Ewigkeit', 'Schleife'] },
-      { caption: 'Violett', items: ['Milkakuh', 'Veilchen', 'Aubergine', 'Amethyst'] },
+      { caption: 'Versteckte Farben', items: ['Bügelbrett', 'Gründer', 'Ablauf', 'Violetta'] },
     ],
   },
   '14': {
@@ -136,17 +136,17 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-11-14T00:00:00').getTime(),
     groups: [
       { caption: 'Weihnachtsbaumschmuck', items: ['Kugel', 'Stern', 'Lametta', 'Kerze'] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: 'Jupiter-Monde', items: ['Ganymed', 'Callisto', 'Europa', 'Kallisto'] },
+      { caption: 'KI-Tools', items: ['Claude', 'Gemini', 'Copilot', 'ChatGPT'] },
+      { caption: 'Todsünden', items: ['Hochmut', 'Geiz', 'Zorn', 'Neid'] },
+      { caption: 'Jupiter-Monde', items: ['Io', 'Europa', 'Ganymed', 'Kallisto'] },
     ],
   },
   '15': {
     id: '15',
     unlocksAt: new Date('2025-11-15T00:00:00').getTime(),
     groups: [
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Stille Gewässer', items: ['Teich', 'Pfütze', 'Weiher', 'Tümpel'] },
+      { caption: 'Waschmaschinen-Programme', items: ['Wolle', 'Fein', 'Eco', 'Bunt'] },
       { caption: 'Diagramm-Arten', items: ['Säule', 'Linie', 'Balken', 'Kreis'] },
       { caption: 'Berühmte Skulpturen', items: ['David', 'Venus', 'Nofretete', 'Denker'] },
     ],
@@ -155,8 +155,8 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '16',
     unlocksAt: new Date('2025-11-16T00:00:00').getTime(),
     groups: [
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Temporale Präpositionen', items: ['Ab', 'In', 'Um', 'An'] },
+      { caption: '', items: ['HH', '', '', ''] },
       { caption: '', items: ['', '', '', ''] },
       { caption: '', items: ['', '', '', ''] },
     ],
@@ -175,27 +175,28 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '18',
     unlocksAt: new Date('2025-11-18T00:00:00').getTime(),
     groups: [
+      { caption: 'Gliederungselemente von Gesetzen', items: ['Paragraph', 'Artikel', 'Absatz', 'Präambel'] },
       { caption: '', items: ['', '', '', ''] },
       { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: '___Stadt', items: ['Alt', 'Darm', 'Vor', 'Haupt'] },
     ],
   },
   '19': {
     id: '19',
     unlocksAt: new Date('2025-11-19T00:00:00').getTime(),
     groups: [
-      { caption: 'Notruf-Nummern', items: ['911', '112', '110', '117'] },
-      { caption: '', items: ['', '', '', ''] }, // viel zu viele...
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Zweierpotenzen', items: ['32', '64', '256', '1024'] },
+      { caption: 'Palindrome', items: ['11', '33', '2002', '9119'] },
+      { caption: 'Quersumme 7', items: ['25', '52', '61', '70'] },
+      { caption: 'Worte, wenn um 180° gedreht', items: ['8739', '07734', '7353', '38317'] },
     ],
+    font: 'DSEG',
   },
   '20': {
     id: '20',
     unlocksAt: new Date('2025-11-20T00:00:00').getTime(),
     groups: [
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Einstieg', items: ['Intro', 'Prolog', 'Auftakt', 'Ouvertüre'] },
       { caption: '', items: ['', '', '', ''] },
       { caption: '', items: ['', '', '', ''] },
       { caption: '', items: ['', '', '', ''] },
@@ -206,8 +207,8 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-10-21T00:00:00').getTime(),
     groups: [
       { caption: 'Die Bremer Stadtmusikanten', items: ['🫏', '🐔', '🐈', '🐶'] },
-      { caption: 'Rotkäppchen', items: ['🔴', '👧', '👵', '🐺'] },
-      { caption: 'Hänsel und Gretel', items: ['👫', '🌳', '🧙‍♀️', '🔥'] },
+      { caption: 'Rotkäppchen', items: ['🔴', '🧢', '👧', '🐺'] },
+      { caption: 'Hänsel und Gretel', items: ['👫', '🏡', '🧙‍♀️', '🔥'] },
       { caption: 'Dornröschen', items: ['👸', '🌹', '🪡', '💤'] },
     ],
   },
@@ -215,8 +216,8 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '22',
     unlocksAt: new Date('2025-11-22T00:00:00').getTime(),
     groups: [
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Naturkatastrophen', items: ['Dürre', 'Erdbeben', 'Sturm', 'Lawine'] },
+      { caption: '"Notrufe"', items: ['112', 'S.O.S', 'Mayday', 'Hilfe!'] },
       { caption: '', items: ['', '', '', ''] },
       { caption: '___Jahr', items: ['Vor', 'Bau', 'Früh', 'Neu'] }, // Fest? // gefährlich, weil SEHR viele Optionen
     ],

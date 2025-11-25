@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <div class="user-score">
+  <div class="user-rank">
     <StatisticItem caption="Platzierung">
       <span class="heading-large">{{ rank }}</span>
       <span class="total-ranks heading-small"> / {{ totalRanks }}</span>

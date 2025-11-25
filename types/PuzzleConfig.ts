@@ -7,4 +7,5 @@ export type PuzzleConfig = {
     { caption: string; items: [string, string, string, string] },
     { caption: string; items: [string, string, string, string] }
   ];
+  font?: 'Inter' | 'DSEG';
 };

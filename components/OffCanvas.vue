@@ -6,13 +6,13 @@
   const store = useAppStore();
 
   function open() {
-    $gsap.to('.off-canvas', { translateY: 0, duration: 0.3 });
-    $gsap.to('.non-off-canvas', { scale: 0.9, duration: 0.3 });
+    $gsap.to('.off-canvas', { translateY: 0, duration: 0.5, ease: 'power4.out' });
+    $gsap.to('.non-off-canvas', { scale: 0.9, duration: 0.5, ease: 'power4.out' });
   }
 
   function close() {
-    $gsap.to('.off-canvas', { translateY: '100%', duration: 0.3 });
-    $gsap.to('.non-off-canvas', { scale: 1, duration: 0.3 });
+    $gsap.to('.off-canvas', { translateY: '100%', duration: 0.5, ease: 'power4.out' });
+    $gsap.to('.non-off-canvas', { scale: 1, duration: 0.5, ease: 'power4.out' });
   }
 
   watch(
@@ -54,15 +54,15 @@
   }
 
   .off-canvas-inner {
-    // position: relative;
     display: flex;
     flex-direction: column;
-    padding: spacing('l') spacing('m');
+    padding: spacing('l');
     width: 100%;
     height: 100%;
     overflow: auto;
 
     @include breakpoint('large') {
+      padding: spacing('xxl') 0;
       width: 616px;
       margin: 0 auto;
     }
@@ -83,6 +83,11 @@
     @include breakpoint('medium') {
       width: 48px;
       height: 48px;
+    }
+
+    @include breakpoint('large') {
+      right: spacing('l');
+      top: spacing('l');
     }
   }
 </style>

@@ -76,7 +76,7 @@
     overflow: hidden;
     user-select: none;
     border-radius: border-radius('default');
-
+    // text-transform: uppercase;
     @include var-font-weight(500);
     @include fluid-value('font-size', 16, 22);
 

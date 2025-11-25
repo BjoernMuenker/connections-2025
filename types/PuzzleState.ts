@@ -8,4 +8,5 @@ export interface PuzzleState extends PuzzlePersistedState {
   selected: PuzzleGroupItemId[];
   groups: [PuzzleGroup, PuzzleGroup, PuzzleGroup, PuzzleGroup];
   items: PuzzleGroupItem[];
+  font: 'Inter' | 'DSEG';
 }

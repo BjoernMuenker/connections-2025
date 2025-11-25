@@ -1,15 +1,12 @@
 import { scoreActions } from '~/content/scoreActions';
 import type { OffCanvas } from '~/types/OffCanvas';
 import type { OffCanvasComponent } from '~/types/OffCanvasComponent';
-import type { ScoreAction } from '~/types/ScoreAction';
 import type { ScoreActionId } from '~/types/ScoreActionId';
 import type { ToastNotification } from '~/types/ToastNotification';
 
 export const useAppStore = defineStore(
   'appStore',
   () => {
-    const { $gsap } = useNuxtApp();
-
     const debug = ref(false);
     const fullscreen = ref(false);
     const supportsFullscreen = ref(false);
@@ -17,6 +14,7 @@ export const useAppStore = defineStore(
     const toastNotifications = ref<ToastNotification[]>([]);
     const offCanvasVisible = ref(false);
     const offCanvas = ref<OffCanvas>();
+    const lastPlayedPuzzleId = ref<string>();
 
     function pushToastNotification(text: string) {
       toastNotifications.value.push({ id: generateUUID(), text, type: 'info' });
@@ -55,6 +53,7 @@ export const useAppStore = defineStore(
       closeOffCanvas,
       debug,
       fullscreen,
+      lastPlayedPuzzleId,
       offCanvas,
       offCanvasVisible,
       openOffCanvas,

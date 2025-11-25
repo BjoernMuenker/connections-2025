@@ -2,23 +2,14 @@
   import { computed, ref } from 'vue';
   import type { PuzzleGroup } from '~/types/PuzzleGroup';
 
-  const props = defineProps<{ group: PuzzleGroup }>();
+  const props = withDefaults(defineProps<{ group: PuzzleGroup; font?: 'Inter' | 'DSEG' }>(), { font: 'Inter' });
 
   const { getColorByGroupId } = usePuzzle();
-
-  const route = useRoute();
 
   const rootRef = ref<HTMLElement>();
 
   const color = computed(() => {
     return getColorByGroupId(props.group.id);
-  });
-
-  const joinedItems = computed(() => {
-    return props.group.items
-      .map((item) => item.caption)
-      .flat()
-      .join(', ');
   });
 </script>
 
@@ -26,7 +17,7 @@
   <div ref="rootRef" class="puzzle-group" :class="`background-${color}`" :data-group-id="group.id">
     <div class="title">{{ group.caption }}</div>
     <div class="items">
-      <span class="item-wrapper" v-for="(item, index) in props.group.items" :key="item.id">
+      <span class="item-wrapper" v-for="(item, index) in props.group.items" :key="item.id" :class="`font-${font.toLowerCase()}`">
         <span class="item">{{ item.caption }} </span>
         <span class="separator" v-if="index < props.group.items.length - 1">, </span>
       </span>

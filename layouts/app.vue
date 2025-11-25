@@ -139,7 +139,7 @@
     padding: 100px spacing('m') spacing('m') spacing('m');
     overflow-x: hidden;
 
-    @include breakpoint('large') {
+    @include breakpoint('small') {
       max-width: 616px;
       margin: 0 auto;
     }

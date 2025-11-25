@@ -4,7 +4,7 @@ import type { Savegame } from '~/types/Savegame';
 export function useSavegames() {
   const client = useSupabaseClient();
 
-  async function getSavegames(options: { userId?: string; puzzleId?: string }): Promise<Savegame[] | undefined> {
+  async function getSavegames(options: { userId?: string; puzzleId?: string; sortBy?: 'updated_at' }): Promise<Savegame[] | undefined> {
     let query = client.from('savegames').select('*');
 
     if (options.userId) {
@@ -13,6 +13,10 @@ export function useSavegames() {
 
     if (options.puzzleId) {
       query = query.eq('puzzle_id', options.puzzleId);
+    }
+
+    if (options.sortBy) {
+      query = query.order('updated_at', { ascending: false });
     }
 
     const { data, error } = await query;

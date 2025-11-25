@@ -10,7 +10,6 @@
 
   const store = useAppStore();
   const user = useSupabaseUser();
-  const { $gsap } = useNuxtApp();
   const { getServerTime } = useServerTime();
   const { getScore } = useStats();
   const { getSavegames } = useSavegames();
@@ -24,10 +23,38 @@
 
   const { data: serverTime } = useAsyncData('serverTime', () => getServerTime());
   const { data: scores } = useAsyncData('score', () => getScore(user.value?.sub ?? ''));
-  const { data: savegames } = useAsyncData('savegames', () => getSavegames({ userId: user.value?.sub ?? '' }));
+  const { data: savegames } = useAsyncData('savegames', async () => {
+    const savegames = await getSavegames({ userId: user.value?.sub ?? '', sortBy: 'updated_at' });
+    if (!savegames) return [];
+
+    if (!store.lastPlayedPuzzleId) {
+      store.lastPlayedPuzzleId = savegames[0].puzzleId;
+    }
+
+    slider.value?.moveToIdx(Number(store.lastPlayedPuzzleId ?? '1') - 1, false, { duration: 0 });
+    return savegames;
+  });
 
   const sliderRef = ref<HTMLElement | null>(null);
   const slider = ref<KeenSliderInstance | null>(null);
+  const activeSlideIndex = ref(0);
+
+  let toastIndex = 0;
+
+  const lockedToasts = [
+    'Noch nicht!',
+    'Immer noch nicht.',
+    'Auch jetzt nicht.',
+    'Nein.',
+    'Vergiss es.',
+    'Du Tür bleibt zu.',
+    'Na, wie oft noch?',
+    'Okay reicht jetzt.',
+    'Noch mal und du fliegst raus.',
+    'Ernsthaft.',
+    'Letzte Warnung.',
+    'Bye Bye!',
+  ];
 
   const currentDay = computed(() => {
     if (!serverTime.value) return;
@@ -47,26 +74,65 @@
         },
         ...(savegame && { won: savegame?.data.won && savegame.data.remainingMistakes !== 0 }),
         lost: savegame?.data.solved.length === 4 && !savegame.data.won, // TODO: should this be part of the savegame?
+        locked: !serverTime.value || serverTime.value < puzzle.unlocksAt,
       };
     });
   });
 
+  async function onPuzzleClick(puzzle: { id: string; locked: boolean }) {
+    const puzzleIndex = Number(puzzle.id) - 1;
+
+    if (activeSlideIndex.value !== puzzleIndex) {
+      slider.value?.moveToIdx(puzzleIndex);
+      return;
+    }
+
+    if (puzzle.locked) {
+      if (toastIndex > lockedToasts.length - 1) {
+        store.pushToastNotification(lockedToasts[lockedToasts.length - 1]);
+        return;
+      }
+
+      store.pushToastNotification(lockedToasts[toastIndex]);
+
+      if (toastIndex === lockedToasts.length - 1) {
+        toastIndex++;
+        await sleep(2000);
+        await useSupabaseClient().auth.signOut();
+        router.push(routes.signIn);
+        return;
+      }
+
+      toastIndex++;
+      return;
+    }
+
+    router.push(`/app/${puzzle.id}`);
+  }
+
   onMounted(() => {
     if (!sliderRef.value) return;
+
     slider.value = new KeenSlider(sliderRef.value, {
       selector: '.slide',
       mode: 'free-snap',
+      initial: Number(store.lastPlayedPuzzleId ?? '1') - 1,
+      slideChanged(slider) {
+        activeSlideIndex.value = slider.track.details.rel;
+      },
       slides: {
         origin: 'center',
         perView: 'auto',
-        spacing: 16,
+        // spacing: 16,
       },
-      breakpoints: {
-        '(min-width: 480px)': {
-          slides: { origin: 'auto', perView: 'auto', spacing: 16 },
-        },
-      },
+      // breakpoints: {
+      //   '(min-width: 480px)': {
+      //     slides: { origin: 'center', perView: 'auto' },
+      //   },
+      // },
     });
+
+    activeSlideIndex.value = slider.value.track.details.rel;
   });
 </script>
 
@@ -76,22 +142,26 @@
     {{ useDebug().getMissingItemsCount() }}
     {{ useDebug().getDuplicatedItemGroups() }} -->
     <div class="puzzles" ref="sliderRef">
-      <div class="slide" v-for="puzzle in puzzles" :key="puzzle.id">
+      <div class="slide" v-for="(puzzle, index) in puzzles" :key="puzzle.id" :class="{ active: activeSlideIndex === index }">
         <button
           class="puzzle"
-          @click="router.push(`/app/${puzzle.id}`)"
-          :disabled="!serverTime || serverTime < puzzle.unlocksAt"
-          :class="{ today: currentDay?.toString() === puzzle.id, won: puzzle.won, lost: puzzle.lost }"
+          @click="onPuzzleClick(puzzle)"
+          :class="{
+            today: currentDay?.toString() === puzzle.id,
+            won: puzzle.won,
+            lost: puzzle.lost,
+            locked: puzzle.locked,
+          }"
         >
-          <div class="id">{{ puzzle.id }}</div>
-          <div class="solved">
-            <div
+          <span class="id">{{ puzzle.id }}</span>
+          <span class="solved">
+            <span
               v-for="index in 4"
               :key="index"
               class="group"
               :class="[puzzle.solved[index - 1] ? `background-${getColorByGroupId(puzzle.solved[index - 1])}` : '']"
-            ></div>
-          </div>
+            ></span>
+          </span>
         </button>
       </div>
     </div>
@@ -114,6 +184,16 @@
     display: flex;
   }
 
+  .slide:not(.active) {
+    .puzzle {
+      transform: scale(0.84);
+
+      @include breakpoint('small') {
+        transform: scale(0.86);
+      }
+    }
+  }
+
   .puzzle {
     display: block;
     width: 200px;
@@ -123,17 +203,23 @@
     border-radius: spacing('s');
     padding: spacing('l');
     font-size: 50px;
+    user-select: none;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    transition: transform 0.2s;
 
-    &.today {
-      box-shadow: 0 0 0 3px inset;
+    @include breakpoint('small') {
+      width: 260px;
+      height: 260px;
     }
 
-    &:disabled {
+    &.locked {
       opacity: 0.3;
-      pointer-events: none;
+    }
+
+    &:active {
+      transform: scale(0.9);
     }
 
     .id {
@@ -194,6 +280,11 @@
 
   .user-progress {
     margin-bottom: spacing('xl');
+  }
+
+  .user-score,
+  .user-rank {
+    cursor: pointer;
   }
 
   .items {

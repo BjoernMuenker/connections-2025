@@ -6,5 +6,6 @@ export default defineNuxtPlugin(() => {
 
   router.afterEach((_to, from) => {
     store.closeOffCanvas();
+    store.removeAllToastNotifications();
   });
 });

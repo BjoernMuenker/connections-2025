@@ -257,26 +257,6 @@
   onMounted(() => {
     $gsap.CustomWiggle.create('wiggle', { wiggles: 6 });
   });
-
-  // debug function
-  //   function checkDuplicates() {
-  //     const allItems = playersConfig[route.params.player as Player]
-  //       .flat()
-  //       .map((puzzle) => puzzle.groups.map((group) => sortAlphabetically(group.items).join('-')))
-  //       .flat();
-
-  //     const duplicates = [];
-
-  //     for (const puzzle of playersConfig[route.params.player as Player]) {
-  //       for (const group of puzzle.groups) {
-  //         if (allItems.filter((item) => item === sortAlphabetically(group.items).join('-')).length > 1) {
-  //           duplicates.push(group);
-  //         }
-  //       }
-  //     }
-
-  //     return duplicates;
-  //   }
 </script>
 
 <template>
@@ -286,7 +266,7 @@
     </div>
     <div v-else-if="puzzle" class="puzzle">
       <div class="board">
-        <PuzzleGroupComponent v-for="group in solvedGroups" :group="group" :key="group.id" class="animation-target" />
+        <PuzzleGroupComponent v-for="group in solvedGroups" :group="group" :key="group.id" class="animation-target" :font="puzzle.font" />
         <PuzzleTile
           v-for="item in puzzle.items"
           :key="item.id"
@@ -296,6 +276,7 @@
           :caption="item.caption"
           :disabled="(maxItemsSelected && !puzzle.selected.includes(item.id)) || animationRunning"
           class="animation-target"
+          :class="`font-${puzzle.font.toLowerCase()}`"
         />
       </div>
       <PuzzleMistakes v-if="puzzle.solved.length !== 4" :remaining-mistakes="puzzle.remainingMistakes" class="animation-target" />

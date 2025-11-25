@@ -15,7 +15,10 @@
 
 <template>
   <div class="user-menu">
-    <div class="heading-medium">{{ user?.user_metadata?.display_name }}</div>
+    <div class="user">
+      <div class="heading-medium">{{ user?.user_metadata?.display_name }}</div>
+      <div>{{ user?.user_metadata?.email }}</div>
+    </div>
     <nav>
       <NuxtLink :to="routes.changePasswordAuthorized">Passwort ändern</NuxtLink>
       <NuxtLink :to="routes.changeEmail">E-Mail ändern</NuxtLink>
@@ -34,7 +37,18 @@
     gap: spacing('s');
   }
 
+  @include hover-only {
+    button:hover,
+    a:hover {
+      color: color('blue-dark');
+    }
+  }
+
   .heading-medium {
+    margin-bottom: spacing('xxs');
+  }
+
+  .user {
     margin-bottom: spacing('l');
   }
 
