@@ -4,7 +4,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const { routes, isAppRoute } = useRoutes();
 
   if (!isAppRoute(to.path)) {
-    console.log('to.path', to.path);
     return;
   }
 
@@ -19,9 +18,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   if (import.meta.client) {
+    console.log('hello');
     const user = useSupabaseUser();
 
     if (!user.value) {
+      console.log('no user');
       return navigateTo(routes.signIn);
     }
   }

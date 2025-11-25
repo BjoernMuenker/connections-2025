@@ -4,6 +4,7 @@
   import MessageBox from '~/components/MessageBox.vue';
 
   const supabase = useSupabaseClient();
+  const user = useSupabaseUser();
   const { routes } = useRoutes();
 
   const submitting = ref(false);
@@ -12,6 +13,15 @@
 
   const errorMessage = ref('');
 
+  watch(
+    () => user.value,
+    (value) => {
+      if (!value) return;
+      navigateTo('/app');
+    },
+    { immediate: true }
+  );
+
   async function handleLogin() {
     errorMessage.value = '';
     submitting.value = true;
@@ -19,7 +29,6 @@
     try {
       const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
       if (error) throw error;
-      navigateTo('/app');
     } catch (error) {
       errorMessage.value = useAuth().getErrorMessage(error.code);
     } finally {
