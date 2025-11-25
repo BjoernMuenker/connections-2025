@@ -101,10 +101,10 @@ export default defineNuxtConfig({
   css: ['@/assets/scss/global-once.scss'],
   supabase: {
     redirectOptions: {
-      login: '/sign-in',
-      callback: '/app',
+      login: '',
+      callback: '',
       exclude: ['*'],
-      saveRedirectToCookie: true,
+      saveRedirectToCookie: false,
     },
     types: './types/database.types.ts',
   },

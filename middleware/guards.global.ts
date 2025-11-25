@@ -4,34 +4,41 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const { routes, isAppRoute } = useRoutes();
 
   if (!isAppRoute(to.path)) {
+    console.log('to.path', to.path);
     return;
   }
 
-  const client = useSupabaseClient();
-
   const { getServerTime } = useServerTime();
 
-  const {
-    data: { user },
-  } = await client.auth.getUser();
+  if (import.meta.server) {
+    const { data } = await useFetch<boolean>('/api/check-auth');
 
-  if (!user) {
-    return navigateTo(routes.signIn);
+    if (!data.value) {
+      return navigateTo(routes.signIn);
+    }
+  }
+
+  if (import.meta.client) {
+    const user = useSupabaseUser();
+
+    if (!user.value) {
+      return navigateTo(routes.signIn);
+    }
   }
 
   const day = to.params.day as string | undefined;
 
-  if (day) {
-    const puzzle = puzzles[day];
+  if (!day) return;
 
-    if (!puzzle) {
-      return navigateTo(routes.app);
-    }
+  const puzzle = puzzles[day];
 
-    const serverTime = await getServerTime();
+  if (!puzzle) {
+    return navigateTo(routes.app);
+  }
 
-    if (!serverTime || serverTime < puzzle.unlocksAt) {
-      return navigateTo(routes.app);
-    }
+  const serverTime = await getServerTime();
+
+  if (!serverTime || serverTime < puzzle.unlocksAt) {
+    return navigateTo(routes.app);
   }
 });

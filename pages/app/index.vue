@@ -207,7 +207,7 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    transition: transform 0.2s;
+    transition: transform 0.3s;
 
     @include breakpoint('small') {
       width: 260px;
