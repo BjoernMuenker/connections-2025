@@ -9,7 +9,7 @@
 <template>
   <div class="off-canvas-area">
     <div class="off-canvas-backdrop" :class="{ visible: store.offCanvasVisible }" @click="store.closeOffCanvas"></div>
-    <OffCanvas ref="offCanvasRef" />
+    <OffCanvas ref="offCanvasRef" v-bind="store.offCanvas" />
   </div>
 </template>
 

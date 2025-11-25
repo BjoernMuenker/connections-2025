@@ -1,8 +1,10 @@
 <script setup lang="ts">
   import { useAppStore } from '~/store/appStore';
-  import UserMenu from './UserMenu.vue';
+  import type { OffCanvas } from '~/types/OffCanvas';
+  import type { OffCanvasComponent } from '~/types/OffCanvasComponent';
 
   const { $gsap } = useNuxtApp();
+  const props = defineProps<{ component?: OffCanvasComponent }>();
   const store = useAppStore();
 
   function open() {
@@ -15,13 +17,34 @@
     $gsap.to('.non-off-canvas', { scale: 1, duration: 0.5, ease: 'power4.out' });
   }
 
+  let dynamicComponent: any = null;
+
+  function loadComponent() {
+    if (!props.component) return;
+
+    switch (props.component) {
+      case 'Tutorial':
+        console.log('load tut');
+        dynamicComponent = defineAsyncComponent(() => import('./Tutorial.vue'));
+        break;
+
+      case 'UserMenu':
+        console.log('load user menu');
+        dynamicComponent = defineAsyncComponent(() => import('./UserMenu.vue'));
+        break;
+    }
+  }
+
   watch(
     () => store.offCanvasVisible,
-    () => {
-      if (store.offCanvasVisible) {
+    async (value: boolean) => {
+      if (value) {
+        loadComponent();
+        await nextTick();
         open();
         return;
       }
+
       close();
     }
   );
@@ -32,7 +55,9 @@
     <div class="off-canvas-inner">
       <button class="close-button" @click="store.closeOffCanvas">×</button>
       <div class="scroll-area">
-        <UserMenu />
+        <template v-if="component">
+          <component :is="dynamicComponent" />
+        </template>
       </div>
     </div>
   </div>

@@ -1,1 +1,1 @@
-export type OffCanvasComponent = 'UserMenu';
+export type OffCanvasComponent = 'UserMenu' | 'Tutorial';

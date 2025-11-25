@@ -18,6 +18,7 @@ export const usePuzzle = (puzzleId?: string) => {
   const store = useAppStore();
   const { $gsap } = useNuxtApp();
 
+  const { showTutorial } = useTutorial();
   const { getSavegames } = useSavegames();
 
   const loading = ref(false);
@@ -174,6 +175,8 @@ export const usePuzzle = (puzzleId?: string) => {
     }
 
     loading.value = false;
+
+    showTutorial('puzzle');
   }
 
   async function save() {

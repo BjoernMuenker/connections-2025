@@ -3,6 +3,7 @@
 
   const route = useRoute();
   const puzzleId = computed(() => route.params.day as string);
+  const { showTutorial } = useTutorial();
 
   definePageMeta({
     layout: 'app',

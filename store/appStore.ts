@@ -29,8 +29,11 @@ export const useAppStore = defineStore(
       });
     }
 
-    function openOffCanvas(component: OffCanvasComponent) {
+    function openOffCanvas(component?: OffCanvasComponent) {
       offCanvasVisible.value = true;
+
+      if (!component) return;
+
       offCanvas.value = {
         id: generateUUID(),
         component,
