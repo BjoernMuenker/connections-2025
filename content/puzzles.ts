@@ -16,7 +16,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-12-02T00:00:00').getTime(),
     groups: [
       { caption: 'Nicht unbedenklich', items: ['Heikel', 'Riskant', 'Delikat', 'Wacklig'] },
-      { caption: 'Olympia-Disziplinen 2026', items: ['Bob', 'Golf', 'Boxen', 'Wasserball'] },
+      { caption: 'Olympia-Disziplinen 2026', items: ['Bob', 'Golf', 'Boxen', 'Reiten'] },
       { caption: 'Buchstaben-Homophone', items: ['Zeh', 'Tee', 'Er', 'Es'] },
       { caption: 'Buch-Bestandteile', items: ['Rücken', 'Deckel', 'Vorsatz', 'Blatt'] },
     ],
@@ -26,9 +26,9 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-12-03T00:00:00').getTime(),
     groups: [
       { caption: 'Betrunken', items: ['Voll', 'Blau', 'Hacke', 'Dicht'] },
-      { caption: 'Berühmte Theorien', items: ['String', 'Relativität', 'Evolution', 'Multiversum'] },
+      { caption: 'Bestandteile eines Dreiecks', items: ['Ecke', 'Schenkel', 'Winkel', 'Seite'] },
       { caption: 'Kartoffel-Erzeugnisse', items: ['Vodka', 'Stärke', 'Stempel', 'Pommes'] },
-      { caption: 'Typische Symbole auf Telefonen', items: ['Stern', 'Raute', 'Plus', 'Hörer'] },
+      { caption: 'Symbole auf Telefon-Tasten', items: ['Stern', 'Raute', 'Plus', 'Hörer'] },
     ],
   },
   '4': {
@@ -36,8 +36,8 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-12-04T00:00:00').getTime(),
     groups: [
       { caption: 'Mahlzeit', items: ['Schmaus', 'Essen', 'Speise', 'Kost'] },
-      { caption: 'Deutsche Millionenstädte', items: ['Köln', 'Hamburg', 'München', 'Berlin'] },
       { caption: 'Bestandteiles eines Schiffs', items: ['Heck', 'Kiel', 'Bug', 'Deck'] },
+      { caption: 'Diäten', items: ['Glyx', 'Paleo', 'Dash', 'Keto'] },
       { caption: 'Städte mit einem vertauschten Buchstaben', items: ['Genau', 'Wein', 'Keil', 'Solo'] },
     ],
   },
@@ -45,7 +45,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '5',
     unlocksAt: new Date('2025-12-05T00:00:00').getTime(),
     groups: [
-      { caption: 'Folien', items: ['Alu', 'Maler', 'Klarsicht', 'Luftpolster'] },
+      { caption: 'Deutsche Magazine', items: ['Spiegel', 'Geo', 'Focus', 'Gala'] },
       { caption: 'Nagel___', items: ['Lack', 'Neu', 'Brett', 'Schere'] },
       { caption: 'Paarweise vorhanden', items: ['Niere', 'Ohrring', 'Ski', 'Socke'] },
       { caption: 'Kann "stechen"', items: ['Mücke', 'Kaktus', 'Sonne', 'Trumpf'] },
@@ -57,7 +57,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     groups: [
       { caption: 'Groß', items: ['Riesig', 'Mega', 'Gewaltig', 'Enorm'] },
       { caption: 'Antike Waffen', items: ['Katana', 'Speer', 'Schwert', 'Morgenstern'] },
-      { caption: 'Himmelserscheinungen', items: ['Meteor', 'Komet', 'Neumond', 'Polarlicht'] },
+      { caption: 'Himmelserscheinungen', items: ['Meteor', 'Komet', 'Neumond', 'Blitz'] },
       { caption: 'Stroh___', items: ['Doof', 'Mann', 'Halm', 'Blond'] },
     ],
   },
@@ -66,9 +66,9 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-12-07T00:00:00').getTime(),
     groups: [
       { caption: 'Maltechniken', items: ['Fresko', 'Aquarell', 'Airbrush', 'Öl'] },
+      { caption: 'Werk', items: ['Opus', 'Arbeit', 'Kreation', 'Produkt'] },
       { caption: 'Legierungen', items: ['Bronze', 'Messing', 'Stahl', 'Weißgold'] },
       { caption: 'Abwehrmittel gegen Vampire', items: ['Knoblauch', 'Kreuz', 'Sonne', 'Pflock'] },
-      { caption: '___Säure', items: ['Ameisen', 'Salz', 'Fluss', 'Essig'] },
     ],
   },
   '8': {
@@ -94,31 +94,32 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   '10': {
     id: '10',
     unlocksAt: new Date('2025-11-10T00:00:00').getTime(),
+
     groups: [
-      { caption: 'Häufige Themen von Verschwörungstheorien', items: ['9/11', 'Mondlandung', 'Chemtrails', 'Corona'] },
-      { caption: 'Mythologische Fabelwesen', items: ['Hydra', 'Drache', 'Sirene', 'Zyklop'] },
-      { caption: 'Deutsche Magazine', items: ['Spiegel', 'Stern', 'Focus', 'Gala'] },
-      { caption: 'Beläge', items: ['Moos', 'Käse', 'Plaque', 'Asphalt'] },
+      { caption: 'Fortbewegungsmittel', items: ['ICE', 'TGV', 'PKW', 'SUV'] },
+      { caption: 'Deutsche Privatsender', items: ['RTL', 'HSE', 'NTV', 'VOX'] },
+      { caption: 'ISO-Ländercodes', items: ['DEU', 'JPN', 'ITA', 'USA'] },
+      { caption: 'Auslandsgeheimdienste', items: ['SWR', 'NSA', 'MI6', 'BND'] },
     ],
   },
   '11': {
     id: '11',
     unlocksAt: new Date('2025-11-11T00:00:00').getTime(),
     groups: [
-      { caption: 'Wichtige Erfindungen', items: ['Rad', 'Buchdruck', 'Impfung', 'Auto'] }, // gefährlich mit Atom?
+      { caption: 'Wichtige Erfindungen', items: ['Rad', 'Buchdruck', 'Impfung', 'Auto'] },
       { caption: 'Hülle', items: ['Schale', 'Pelle', 'Gehäuse', 'Mantel'] },
-      { caption: 'Arten von Uhren', items: ['Sand', 'Sonne', 'Atom', 'Stopp'] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: '12 Stück', items: ['Monate', 'Halbtöne', 'Dutzend', 'Apostel'] },
+      { caption: 'Titelgebende Opern-Protagonistinnen', items: ['Carmen', 'Aida', 'Norma', 'Tosca'] },
     ],
   },
   '12': {
     id: '12',
     unlocksAt: new Date('2025-11-12T00:00:00').getTime(),
     groups: [
-      { caption: 'Leuchtet im Dunkeln', items: ['Mond', 'Laterne', 'Phosphor', 'Knicklicht'] },
+      { caption: 'Mythologische Fabelwesen', items: ['Hydra', 'Drache', 'Sirene', 'Zyklop'] },
       { caption: 'Notizbuch-Lineaturen', items: ['Blanko', 'Kästchen', 'Linien', 'Punkte'] },
-      { caption: 'Messinstrumente', items: ['Uhr', 'Waage', 'Kompass', 'Lineal'] },
-      { caption: 'Opern-Protagonistinnen', items: ['Carmen', 'Aida', 'Violetta', 'Isolde'] }, // zu schwer?
+      { caption: 'Arten von Uhren', items: ['Sand', 'Sonne', 'Atom', 'Stern'] },
+      { caption: 'Beläge', items: ['Moos', 'Käse', 'Plaque', 'Asphalt'] },
     ],
   },
   '13': {
@@ -127,7 +128,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     groups: [
       { caption: 'Dips', items: ['Aioli', 'Salsa', 'Mojo', 'Hummus'] },
       { caption: 'Vorschrift', items: ['Codex', 'Gesetz', 'Erlass', 'Gebot'] },
-      { caption: 'Ohne Anfang und Ende', items: ['Gerade', 'Kreis', 'Ewigkeit', 'Schleife'] },
+      { caption: 'Messinstrumente', items: ['Uhr', 'Waage', 'Kompass', 'Lineal'] },
       { caption: 'Versteckte Farben', items: ['Bügelbrett', 'Gründer', 'Ablauf', 'Violetta'] },
     ],
   },
@@ -155,20 +156,20 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '16',
     unlocksAt: new Date('2025-11-16T00:00:00').getTime(),
     groups: [
+      { caption: 'Ausrufe', items: ['Ah', 'Oh', 'Au', 'Uh'] },
+      { caption: 'Zustimmung', items: ['Ja', 'Ok', 'Jo', 'Si'] },
+      { caption: 'Tonsilben', items: ['Do', 'Re', 'Mi', 'Fa'] },
       { caption: 'Temporale Präpositionen', items: ['Ab', 'In', 'Um', 'An'] },
-      { caption: '', items: ['HH', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
     ],
   },
   '17': {
     id: '17',
     unlocksAt: new Date('2025-11-17T00:00:00').getTime(),
     groups: [
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Absperrungen', items: ['Zaun', 'Kette', 'Mauer', 'Gitter'] },
+      { caption: 'Typische Endungen von Straßennamen', items: ['Platz', 'Allee', 'Weg', 'Straße'] },
+      { caption: 'Hollywood-Blockbuster', items: ['Avatar', 'Titanic', 'Barbie', 'Minions'] },
+      { caption: 'Autovermietung mit einem fehlendem Buchstaben', items: ['Herz', 'Six', 'Vis', 'Mies'] },
     ],
   },
   '18': {
@@ -176,9 +177,9 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-11-18T00:00:00').getTime(),
     groups: [
       { caption: 'Gliederungselemente von Gesetzen', items: ['Paragraph', 'Artikel', 'Absatz', 'Präambel'] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '___Stadt', items: ['Alt', 'Darm', 'Vor', 'Haupt'] },
+      { caption: 'Tierkreiszeichen', items: ['Schütze', 'Waage', 'Fische', 'Krebs'] },
+      { caption: 'Nussarten im Studentfutter', items: ['Hasel', 'Para', 'Cashew', 'Wal'] },
+      { caption: 'Worte mit 4 aufeinander folgenden Vokalen', items: ['Queue', 'Sequoia', 'Seeaal', 'Louie'] },
     ],
   },
   '19': {
@@ -197,9 +198,9 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-11-20T00:00:00').getTime(),
     groups: [
       { caption: 'Einstieg', items: ['Intro', 'Prolog', 'Auftakt', 'Ouvertüre'] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Füllwörter', items: ['Halt', 'Also', 'Eben', 'Ja'] },
+      { caption: '___Säure', items: ['Ameisen', 'Salz', 'Fluss', 'Essig'] },
+      { caption: 'Dinge, die man sinnbildlich bricht', items: ['Rekord', 'Stille', 'Lanze', 'Wort'] },
     ],
   },
   '21': {
@@ -217,9 +218,9 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: new Date('2025-11-22T00:00:00').getTime(),
     groups: [
       { caption: 'Naturkatastrophen', items: ['Dürre', 'Erdbeben', 'Sturm', 'Lawine'] },
-      { caption: '"Notrufe"', items: ['112', 'S.O.S', 'Mayday', 'Hilfe!'] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '___Jahr', items: ['Vor', 'Bau', 'Früh', 'Neu'] }, // Fest? // gefährlich, weil SEHR viele Optionen
+      { caption: '"Notrufe"', items: ['112', 'SOS', 'Mayday', 'Hilfe!'] },
+      { caption: 'Themen von Verschwörungstheorien', items: ['9/11', 'Area 51', 'Chemtrails', 'Corona'] },
+      { caption: 'Begriffe ohne Einzahl', items: ['Eltern', 'Finanzen', 'Daten', 'Masern'] }, // schwierig unter zu bekommen!
     ],
   },
   '23': {
@@ -236,10 +237,10 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '24',
     unlocksAt: new Date('2025-11-24T00:00:00').getTime(),
     groups: [
-      { caption: 'Prost!', items: ['Wohlsein', 'Cheers', 'Skal', 'Cin cin'] },
-      { caption: 'Typische Weihnachtsbaumarten', items: ['Fichte', 'Tanne', 'Douglasie', 'Kiefer'] },
-      { caption: '', items: ['', '', '', ''] },
-      { caption: '', items: ['', '', '', ''] },
+      { caption: 'Weihnachtsbaumarten', items: ['Fichte', 'Tanne', 'Douglasie', 'Kiefer'] },
+      { caption: 'Prost!', items: ['Wohlsein', 'Cheers', 'Skål', 'Salud'] },
+      { caption: '"Stille Nacht, heilige Nacht"', items: ['Stille', 'Nacht', 'Heilige', 'Nacht'] },
+      { caption: '___Kuchen', items: ['Marmor', 'Baum', 'Käse', 'Puste'] },
     ],
   },
 };

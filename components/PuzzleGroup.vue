@@ -39,7 +39,7 @@
     gap: spacing('xxs');
     user-select: none;
     padding: 0 spacing('s');
-    @include fluid-value('font-size', 17, 22);
+    @include fluid-value('font-size', 16, 24);
 
     .title {
       @include var-font-weight(600);

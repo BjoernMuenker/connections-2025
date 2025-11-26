@@ -8,6 +8,7 @@
   const store = useAppStore();
 
   function open() {
+    console.log('open');
     $gsap.to('.off-canvas', { translateY: 0, duration: 0.5, ease: 'power4.out' });
     $gsap.to('.non-off-canvas', { scale: 0.9, duration: 0.5, ease: 'power4.out' });
   }
@@ -17,10 +18,16 @@
     $gsap.to('.non-off-canvas', { scale: 1, duration: 0.5, ease: 'power4.out' });
   }
 
+  function onComponentMounted() {
+    open();
+  }
+
   let dynamicComponent: any = null;
+  let componentName: OffCanvasComponent;
 
   function loadComponent() {
     if (!props.component) return;
+    componentName = props.component;
 
     switch (props.component) {
       case 'Tutorial':
@@ -39,8 +46,13 @@
     () => store.offCanvasVisible,
     async (value: boolean) => {
       if (value) {
-        loadComponent();
-        await nextTick();
+        if (props.component !== componentName) {
+          console.log('yes, new comp injected');
+          loadComponent();
+          return;
+        }
+
+        console.log('same comp');
         open();
         return;
       }
@@ -56,7 +68,7 @@
       <button class="close-button" @click="store.closeOffCanvas">×</button>
       <div class="scroll-area">
         <template v-if="component">
-          <component :is="dynamicComponent" />
+          <component :is="dynamicComponent" @vue:mounted="onComponentMounted" />
         </template>
       </div>
     </div>

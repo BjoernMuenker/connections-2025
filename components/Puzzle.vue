@@ -285,18 +285,8 @@
           Zurücksetzen
         </AppButton>
         <template v-if="puzzle.solved.length !== 4">
-          <SwitchToggle v-model="communityView" id="show-community-turns">Community-Sicht</SwitchToggle>
+          <SwitchToggle v-model="communityView" :disabled="animationRunning" id="show-community-turns">Community-Sicht</SwitchToggle>
           <AppButton :disabled="!maxItemsSelected || animationRunning" @click="submitItems" class="animation-target submit">Absenden</AppButton>
-          <!-- <AppButton hierarchy="secondary" :disabled="animationRunning" @click="shuffleItems" class="animation-target">Mischen</AppButton> -->
-          <!-- <AppButton
-            hierarchy="secondary"
-            :disabled="puzzle.selected.length === 0 || animationRunning"
-            @click="deselectAllItems"
-            class="animation-target"
-          >
-            Alle abwählen
-          </AppButton>
-          <AppButton hierarchy="secondary" :disabled="animationRunning">Community</AppButton> -->
         </template>
         <template v-else>
           <AppButton @click="showResults" class="animation-target">Statistik anzeigen</AppButton>
@@ -347,7 +337,7 @@
     height: calc(100vw - #{spacing('m') * 2});
     gap: 8px;
 
-    @media all and (min-width: 769px) {
+    @media all and (min-width: 616px) {
       height: calc(3 * 8px + 4 * 140px);
     }
   }

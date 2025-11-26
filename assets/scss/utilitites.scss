@@ -80,24 +80,6 @@
   @return $value / ($value * 0 + 1);
 }
 
-@mixin fluid-value($property, $min, $max, $axis: 'x', $screen-min: 480, $screen-max: 3000) {
-  #{$property}: #{$min}px;
-
-  $base: '100vw';
-
-  @if ($axis == 'y') {
-    $base: '100vh';
-  }
-
-  @media only screen and (min-width: #{$screen-min}px) {
-    #{$property}: calc(#{$min}px + #{($max - $min)} * (#{$base} - #{$screen-min}px) / (#{$screen-max} - #{$screen-min}));
-  }
-
-  @media only screen and (min-width: #{$screen-max}px) {
-    #{$property}: #{$max}px;
-  }
-}
-
 @mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
   $src: null;
 
@@ -229,7 +211,7 @@
   }
 }
 
-@mixin fluid-value($property, $min, $max, $axis: 'x', $screen-min: 480, $screen-max: 768) {
+@mixin fluid-value($property, $min, $max, $axis: 'x', $screen-min: 320, $screen-max: 616) {
   #{$property}: #{$min}px;
 
   $base: '100vw';

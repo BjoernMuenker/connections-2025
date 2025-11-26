@@ -78,7 +78,6 @@
     border-radius: border-radius('default');
     // text-transform: uppercase;
     @include var-font-weight(500);
-    @include fluid-value('font-size', 16, 22);
 
     &.disabled {
       cursor: not-allowed;
@@ -97,11 +96,16 @@
     }
 
     &.extrashort {
-      @include fluid-value('font-size', 24, 36);
+      @include fluid-value('font-size', 30, 40);
     }
 
+    // &.short {
+    //   @include fluid-value('font-size', 18, 28);
+    // }
+
+    &.short,
     &.medium {
-      @include fluid-value('font-size', 16, 22);
+      @include fluid-value('font-size', 15, 24);
     }
 
     &.long {
