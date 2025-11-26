@@ -5,7 +5,7 @@ export function useTutorial() {
   const store = useAppStore();
 
   function showTutorial(id: TutorialId) {
-    store.openOffCanvas('Tutorial');
+    store.openOffCanvas('Tutorial', 'Das erste Puzzle');
     // persist that this tutorial has been show before
   }
 

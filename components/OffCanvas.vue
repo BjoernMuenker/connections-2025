@@ -4,7 +4,7 @@
   import type { OffCanvasComponent } from '~/types/OffCanvasComponent';
 
   const { $gsap } = useNuxtApp();
-  const props = defineProps<{ component?: OffCanvasComponent }>();
+  const props = defineProps<{ component?: OffCanvasComponent; heading?: string }>();
   const store = useAppStore();
 
   function open() {
@@ -31,12 +31,10 @@
 
     switch (props.component) {
       case 'Tutorial':
-        console.log('load tut');
-        dynamicComponent = defineAsyncComponent(() => import('./Tutorial.vue'));
+        dynamicComponent = defineAsyncComponent(() => import('./TutorialFirstPuzzle.vue'));
         break;
 
       case 'UserMenu':
-        console.log('load user menu');
         dynamicComponent = defineAsyncComponent(() => import('./UserMenu.vue'));
         break;
     }
@@ -47,12 +45,10 @@
     async (value: boolean) => {
       if (value) {
         if (props.component !== componentName) {
-          console.log('yes, new comp injected');
           loadComponent();
           return;
         }
 
-        console.log('same comp');
         open();
         return;
       }
@@ -63,7 +59,10 @@
 </script>
 
 <template>
-  <div class="off-canvas">
+  <div class="off-canvas" :class="{ heading }">
+    <div v-if="heading" class="off-canvas-header">
+      <div class="heading-medium">{{ heading }}</div>
+    </div>
     <div class="off-canvas-inner">
       <button class="close-button" @click="store.closeOffCanvas">×</button>
       <div class="scroll-area">
@@ -88,6 +87,28 @@
     display: flex;
     flex-direction: column;
     transform: translateY(100%);
+
+    &.heading {
+      .off-canvas-inner {
+        padding: 0 spacing('l') spacing('l') spacing('l');
+      }
+
+      .scroll-area {
+        @include breakpoint('large') {
+          padding-top: spacing('xl');
+        }
+      }
+    }
+  }
+
+  .off-canvas-header {
+    padding: spacing('l');
+
+    @include breakpoint('large') {
+      padding: spacing('xxl') 0 spacing('xl') 0;
+      width: 616px;
+      margin: 0 auto;
+    }
   }
 
   .off-canvas-inner {
@@ -97,6 +118,14 @@
     width: 100%;
     height: 100%;
     overflow: auto;
+
+    @include breakpoint('large') {
+      padding: 0;
+    }
+  }
+
+  .scroll-area {
+    width: 100%;
 
     @include breakpoint('large') {
       padding: spacing('xxl') 0;

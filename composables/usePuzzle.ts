@@ -359,7 +359,7 @@ export const usePuzzle = (puzzleId?: string) => {
     }
 
     if (savegames.length === 0) {
-      store.pushToastNotification('Noch keine Daten anderer Spieler vorhanden');
+      store.pushToastNotification('Noch keine Daten vorhanden');
     }
 
     resetHeatmap();
