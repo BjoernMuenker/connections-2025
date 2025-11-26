@@ -27,6 +27,7 @@
     border-style: solid;
     text-align: center;
     white-space: nowrap;
+    transition: background-color 0.3s, border 0.3s;
     @include var-font-weight(500);
 
     @include breakpoint('medium') {
@@ -52,8 +53,8 @@
 
       &:disabled,
       &.disabled {
-        background-color: #c2c2c2;
-        border-color: #c2c2c2;
+        background-color: color('grey-200');
+        border-color: color('grey-200');
       }
     }
 
@@ -70,8 +71,8 @@
 
       &:disabled,
       &.disabled {
-        border-color: #cdcdcd;
-        color: #cdcdcd;
+        border-color: color('grey-200');
+        color: color('grey-200');
       }
     }
 

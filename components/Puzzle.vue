@@ -281,9 +281,11 @@
       </div>
       <PuzzleMistakes v-if="puzzle.solved.length !== 4" :remaining-mistakes="puzzle.remainingMistakes" class="animation-target" />
       <div class="button-container">
+        <!-- START DEBUG -->
         <AppButton v-if="store.debug" hierarchy="secondary" :disabled="animationRunning" @click="reset" class="animation-target">
           Zurücksetzen
         </AppButton>
+        <!-- END DEBUG -->
         <template v-if="puzzle.solved.length !== 4">
           <SwitchToggle v-model="communityView" :disabled="animationRunning" id="show-community-turns">Community-Sicht</SwitchToggle>
           <AppButton :disabled="!maxItemsSelected || animationRunning" @click="submitItems" class="animation-target submit">Absenden</AppButton>

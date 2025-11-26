@@ -1,3 +1,5 @@
+import stripDebugCode from './stripDebug';
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   components: { global: false },
@@ -83,6 +85,7 @@ export default defineNuxtConfig({
     },
   },
   vite: {
+    plugins: [stripDebugCode()],
     resolve: {
       alias: {
         '@googlemaps/js-api-loader': '@googlemaps/js-api-loader/dist/index.mjs',

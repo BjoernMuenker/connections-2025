@@ -32,7 +32,7 @@
     <label v-if="$slots.default" :for="id"><slot /></label>
     <div class="checkbox">
       <input :id="id" ref="inputRef" v-model="model" type="checkbox" :disabled="disabled" />
-      <div class="toggle-ui" :class="model ? `background-grey-dark` : `background-grey-very-light`">
+      <div class="toggle-ui" :class="model ? `background-grey-dark` : `background-grey-300`">
         <div class="switch"></div>
       </div>
     </div>
@@ -66,8 +66,6 @@
       opacity: 0;
 
       &:checked + .toggle-ui {
-        border-color: color('grey-dark');
-
         .switch {
           left: 28px;
         }
@@ -77,17 +75,10 @@
         cursor: not-allowed;
 
         & + .toggle-ui {
-          border-color: grey;
+          background-color: color('grey-200') !important;
 
           .switch {
-            background-color: grey;
-            border-color: grey;
-            transform: translate(-3px, -3px);
-            color: grey;
-
-            &::after {
-              box-shadow: none;
-            }
+            opacity: 0.66;
           }
         }
       }
@@ -107,7 +98,7 @@
       border-radius: 32px;
       border-color: grey;
       overflow: visible;
-      transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      transition: background-color 0.3s;
 
       .switch {
         position: absolute;
@@ -117,8 +108,8 @@
         width: 24px;
         height: 24px;
         border-radius: 50%;
-        background-color: white;
-        transition: left 0.3s, transform 0.3s, color 0.3s, background-color 0.3s;
+        background-color: color('white');
+        transition: left 0.3s, background-color 0.3s;
       }
     }
 
