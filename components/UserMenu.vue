@@ -16,7 +16,7 @@
 <template>
   <div class="user-menu">
     <div class="user">
-      <div class="heading-medium">{{ user?.user_metadata?.display_name }}</div>
+      <div class="heading-large">{{ user?.user_metadata?.display_name }}</div>
       <div>{{ user?.email }}</div>
     </div>
     <nav>
@@ -61,7 +61,7 @@
     }
   }
 
-  .heading-medium {
+  .heading-large {
     margin-bottom: spacing('xxs');
   }
 

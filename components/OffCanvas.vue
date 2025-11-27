@@ -1,9 +1,10 @@
 <script setup lang="ts">
   import { useAppStore } from '~/store/appStore';
+  import type { OffCanvas } from '~/types/OffCanvas';
   import type { OffCanvasComponent } from '~/types/OffCanvasComponent';
 
   const { $gsap } = useNuxtApp();
-  const props = defineProps<{ component?: OffCanvasComponent; heading?: string }>();
+  const props = defineProps<OffCanvas>();
   const store = useAppStore();
 
   function open() {
@@ -30,7 +31,7 @@
 
     switch (props.component) {
       case 'Tutorial':
-        dynamicComponent = defineAsyncComponent(() => import('./TutorialFirstPuzzle.vue'));
+        dynamicComponent = defineAsyncComponent(() => import('./Tutorial.vue'));
         break;
 
       case 'UserMenu':
@@ -60,13 +61,13 @@
 <template>
   <div class="off-canvas" :class="{ heading }">
     <div v-if="heading" class="off-canvas-header">
-      <div class="heading-medium">{{ heading }}</div>
+      <div class="heading-xlarge">{{ heading }}</div>
     </div>
     <div class="off-canvas-inner">
       <button class="close-button" @click="store.closeOffCanvas">×</button>
       <div class="scroll-area">
         <template v-if="component">
-          <component :is="dynamicComponent" @vue:mounted="onComponentMounted" />
+          <component :is="dynamicComponent" @vue:mounted="onComponentMounted" v-bind="props.componentProps" />
         </template>
       </div>
     </div>
@@ -94,7 +95,7 @@
       }
 
       .scroll-area {
-        @include breakpoint('large') {
+        @include breakpoint('medium') {
           padding-top: spacing('xl');
         }
       }
@@ -102,9 +103,9 @@
   }
 
   .off-canvas-header {
-    padding: spacing('l');
+    padding: spacing('l') 88px spacing('l') spacing('l');
 
-    @include breakpoint('large') {
+    @include breakpoint('medium') {
       padding: spacing('xxl') 0 spacing('xl') 0;
       width: 616px;
       margin: 0 auto;
@@ -119,7 +120,7 @@
     height: 100%;
     overflow: auto;
 
-    @include breakpoint('large') {
+    @include breakpoint('medium') {
       padding: 0;
     }
   }
@@ -127,7 +128,7 @@
   .scroll-area {
     width: 100%;
 
-    @include breakpoint('large') {
+    @include breakpoint('medium') {
       padding: spacing('xxl') 0;
       width: 616px;
       margin: 0 auto;

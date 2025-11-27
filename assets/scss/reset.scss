@@ -84,6 +84,10 @@ button {
   }
 }
 
+strong {
+  @include var-font-weight(600);
+}
+
 select {
   appearance: none;
   background: color('white');

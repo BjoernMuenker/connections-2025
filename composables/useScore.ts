@@ -68,18 +68,7 @@ export function useScore() {
     return sortScoreActions(result);
   }
 
-  function sortScoreActions(
-    data: Partial<
-      Record<
-        ScoreActionId,
-        {
-          amount: number;
-          single: number;
-          total: number;
-        }
-      >
-    >
-  ) {
+  function sortScoreActions(data: Partial<Record<ScoreActionId, any>>) {
     const sortOrder: ScoreActionId[] = ['aSolved', 'bSolved', 'cSolved', 'cSolvedFirst', 'dSolved', 'dSolvedFirst', 'remainingMistake'];
     return sortObjectByCustomOrder(data, sortOrder);
   }
@@ -91,5 +80,5 @@ export function useScore() {
     return Object.fromEntries(Object.entries(toScore).filter(([key]) => !(key in fromScore))) as typeof toScore;
   }
 
-  return { getScoreFromSavegame, getScoreFromSavegames, getScoreDiff };
+  return { getScoreFromSavegame, getScoreFromSavegames, getScoreDiff, sortScoreActions };
 }

@@ -15,6 +15,7 @@
   const { $gsap } = useNuxtApp();
   const store = useAppStore();
   const router = useRouter();
+  const { showTutorial } = useTutorial();
 
   const {
     communityView,
@@ -104,14 +105,19 @@
 
     if (totalMatch) {
       puzzle.value!.solved.push(totalMatch[0].id);
-      if (puzzle.value.solved.length === 4) {
+
+      const won = puzzle.value.solved.length === 4;
+
+      if (won) {
         puzzle.value.won = true;
       }
+
       await save();
       await animateSelectedItems();
       await solveGroup(totalMatch[0].id);
       animationRunning.value = false;
       updateHeatmap();
+      showTutorial(won ? 'firstPuzzleWon' : 'firstGroup');
       return;
     }
 
@@ -131,6 +137,7 @@
         await solveGroup(groupId);
       }
 
+      showTutorial('firstPuzzleLost');
       animationRunning.value = false;
       return;
     }
@@ -146,6 +153,7 @@
     await animateSelectedItems();
     await animateSelectedItemsFail();
     updateHeatmap();
+    showTutorial('firstMistake');
 
     animationRunning.value = false;
   }

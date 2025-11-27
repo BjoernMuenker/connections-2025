@@ -1,9 +1,11 @@
 import type { TutorialId } from '~/types/TutorialId';
 
 export const tutorialTitles: { [key in TutorialId]: string } = {
-  communityView: 'Community View',
-  firstGroup: 'Deine erste Gruppe',
+  communityView: 'Die Community-Sicht',
+  firstGroup: 'Guter Start!',
   firstLogin: 'Schön, dass du da bist!',
-  firstPuzzleCompleted: '',
-  firstPuzzleStarted: 'Dein erstes Puzzle',
+  firstPuzzleLost: 'Passiert den Besten!',
+  firstPuzzleWon: 'Hervorragend!',
+  firstPuzzleStarted: 'Dein erstes Türchen',
+  firstMistake: 'Hoppla.',
 };

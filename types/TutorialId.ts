@@ -1,1 +1,1 @@
-export type TutorialId = 'firstPuzzleStarted' | 'firstPuzzleCompleted' | 'firstGroup' | 'communityView' | 'firstLogin';
+export type TutorialId = 'firstPuzzleStarted' | 'firstPuzzleWon' | 'firstPuzzleLost' | 'firstMistake' | 'firstGroup' | 'communityView' | 'firstLogin';

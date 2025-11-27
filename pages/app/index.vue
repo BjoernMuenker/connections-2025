@@ -1,11 +1,9 @@
 <script setup lang="ts">
   import { usePuzzle } from '#imports';
   import KeenSlider, { type KeenSliderInstance } from 'keen-slider';
-  import AppButton from '~/components/AppButton.vue';
   import UserProgress from '~/components/UserProgress.vue';
   import UserRank from '~/components/UserRank.vue';
   import UserScore from '~/components/UserScore.vue';
-  import UserStatistics from '~/components/UserStatistics.vue';
   import { puzzles as puzzlesData } from '~/content/puzzles';
   import { useAppStore } from '~/store/appStore';
 

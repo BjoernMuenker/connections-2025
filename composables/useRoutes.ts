@@ -21,7 +21,7 @@ export function useRoutes() {
     changeEmail: 'E-Mail ändern',
     changePassword: 'Passwort ändern',
     changePasswordAuthorized: 'Passwort ändern',
-    changeUsername: 'Nutername ändern',
+    changeUsername: 'Nutzername ändern',
     confirmEmail: 'E-Mail bestätigen',
     deleteAccount: 'Account löschen',
     home: 'Willkommen',
@@ -35,6 +35,7 @@ export function useRoutes() {
 
   function getTitle() {
     const routeName = getKeyByValue(routes, useRoute().path);
+
     if (!routeName) return;
 
     return titles[routeName];

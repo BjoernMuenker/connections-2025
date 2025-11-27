@@ -20,33 +20,35 @@
       return route.params.day + '.&thinsp;Dezember&thinsp;/&thinsp;Statistik';
     }
 
-    if (route.path === routes.leaderboard) {
-      return 'Bestenliste';
-    }
-
     if (route.path === routes.app) {
       return 'Hi, ' + (user.value?.user_metadata.display_name ?? 'Nutzer');
     }
 
-    if (route.path === routes.statistics) {
-      return 'Statistik';
-    }
+    return getTitle();
 
-    if (route.path === routes.changePasswordAuthorized) {
-      return 'Passwort ändern';
-    }
+    // if (route.path === routes.leaderboard) {
+    //   return 'Bestenliste';
+    // }
 
-    if (route.path === routes.changeEmail) {
-      return 'E-Mail ändern';
-    }
+    // if (route.path === routes.statistics) {
+    //   return 'Statistik';
+    // }
 
-    if (route.path === routes.deleteAccount) {
-      return 'Account löschen';
-    }
+    // if (route.path === routes.changePasswordAuthorized) {
+    //   return 'Passwort ändern';
+    // }
 
-    if (route.path === routes.score) {
-      return 'Score';
-    }
+    // if (route.path === routes.changeEmail) {
+    //   return 'E-Mail ändern';
+    // }
+
+    // if (route.path === routes.deleteAccount) {
+    //   return 'Account löschen';
+    // }
+
+    // if (route.path === routes.score) {
+    //   return 'Score';
+    // }
   }
 
   watch(
@@ -85,7 +87,7 @@
       <TransitionGroup name="elevator" tag="div" class="title-wrapper">
         <div :key="title" class="title heading-large" v-html="title"></div>
       </TransitionGroup>
-      <button class="avatar" @click="store.openOffCanvas('UserMenu')">
+      <button class="avatar" @click="store.openOffCanvas({ component: 'UserMenu' })">
         {{ user?.user_metadata?.display_name?.slice(0, 1) }}
       </button>
     </header>
