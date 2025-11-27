@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { useAppStore } from '~/store/appStore';
-  import type { OffCanvas } from '~/types/OffCanvas';
   import type { OffCanvasComponent } from '~/types/OffCanvasComponent';
 
   const { $gsap } = useNuxtApp();
@@ -46,7 +45,6 @@
       if (value) {
         if (props.component !== componentName) {
           loadComponent();
-          return;
         }
 
         open();

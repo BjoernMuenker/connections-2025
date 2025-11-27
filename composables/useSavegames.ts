@@ -5,7 +5,7 @@ export function useSavegames() {
   const client = useSupabaseClient();
 
   async function getSavegames(options: { userId?: string; puzzleId?: string; sortBy?: 'updated_at' }): Promise<Savegame[] | undefined> {
-    let query = client.from('savegames').select('*');
+    let query = client.from('savegames').select('created_at, updated_at, puzzle_id, data, id');
 
     if (options.userId) {
       query = query.eq('user_id', options.userId);
@@ -29,9 +29,8 @@ export function useSavegames() {
     return data.map((entry) => {
       return {
         createdAt: entry.created_at,
-        updatedAt: entry.updated_at!, // TODO: This has to be populated at all times!
+        updatedAt: entry.updated_at,
         puzzleId: entry.puzzle_id,
-        userId: entry.user_id,
         data: entry.data as unknown as PuzzlePersistedState,
       };
     });

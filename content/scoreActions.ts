@@ -2,18 +2,18 @@ import type { ScoreAction } from '~/types/ScoreAction';
 import type { ScoreActionId } from '~/types/ScoreActionId';
 
 export const scoreActions: { [key in ScoreActionId]: ScoreAction } = {
-  blueSolved: {
-    id: 'blueSolved',
+  cSolved: {
+    id: 'cSolved',
     name: 'Blau gelöst',
     score: 300,
   },
-  blueSolvedFirst: {
-    id: 'blueSolvedFirst',
+  cSolvedFirst: {
+    id: 'cSolvedFirst',
     name: 'Blau zuerst gelöst',
     score: 150,
   },
-  greenSolved: {
-    id: 'greenSolved',
+  bSolved: {
+    id: 'bSolved',
     name: 'Grün gelöst',
     score: 200,
   },
@@ -22,18 +22,18 @@ export const scoreActions: { [key in ScoreActionId]: ScoreAction } = {
     name: 'Verbleibende Fehler',
     score: 100,
   },
-  violetSolved: {
-    id: 'violetSolved',
+  dSolved: {
+    id: 'dSolved',
     name: 'Violett gelöst',
     score: 400,
   },
-  violetSolvedFirst: {
-    id: 'violetSolvedFirst',
+  dSolvedFirst: {
+    id: 'dSolvedFirst',
     name: 'Violett zuerst gelöst',
     score: 200,
   },
-  yellowSolved: {
-    id: 'yellowSolved',
+  aSolved: {
+    id: 'aSolved',
     name: 'Gelb gelöst',
     score: 100,
   },

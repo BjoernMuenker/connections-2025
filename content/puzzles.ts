@@ -3,17 +3,17 @@ import type { PuzzleConfig } from '~/types/PuzzleConfig';
 export const puzzles: { [key: string]: PuzzleConfig } = {
   '1': {
     id: '1',
-    unlocksAt: new Date('2025-12-01T00:00:00').getTime(),
+    unlocksAt: new Date('2025-11-01T00:00:00').getTime(),
     groups: [
       { caption: 'Absperrungen', items: ['Zaun', 'Kette', 'Mauer', 'Gitter'] },
       { caption: 'Typische Endungen von Straßennamen', items: ['Platz', 'Allee', 'Weg', 'Straße'] },
       { caption: 'Hollywood-Blockbuster', items: ['Avatar', 'Titanic', 'Barbie', 'Minions'] }, // eher meh
-      { caption: 'Autovermietung mit einem fehlendem Buchstaben', items: ['Herz', 'Six', 'Vis', 'Mies'] },
+      { caption: 'Autovermietung mit einem fehlenden Buchstaben', items: ['Herz', 'Six', 'Vis', 'Mies'] },
     ],
   },
   '2': {
     id: '2',
-    unlocksAt: new Date('2025-12-02T00:00:00').getTime(),
+    unlocksAt: new Date('2025-11-02T00:00:00').getTime(),
     groups: [
       { caption: 'Nicht unbedenklich', items: ['Heikel', 'Riskant', 'Delikat', 'Wacklig'] },
       { caption: 'Olympia-Disziplinen 2026', items: ['Bob', 'Golf', 'Boxen', 'Reiten'] },
@@ -23,7 +23,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '3': {
     id: '3',
-    unlocksAt: new Date('2025-12-03T00:00:00').getTime(),
+    unlocksAt: new Date('2025-11-03T00:00:00').getTime(),
     groups: [
       { caption: 'Ehemalige deutsche Längenmaße', items: ['Zoll', 'Rute', 'Elle', 'Fuß'] },
       { caption: 'Fellfarben von Pferden', items: ['Fuchs', 'Schimmel', 'Brauner', 'Rappe'] },
@@ -33,7 +33,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '4': {
     id: '4',
-    unlocksAt: new Date('2025-12-04T00:00:00').getTime(),
+    unlocksAt: new Date('2025-11-04T00:00:00').getTime(),
     groups: [
       { caption: 'Deutsche Magazine', items: ['Spiegel', 'Geo', 'Focus', 'Gala'] },
       { caption: 'Nagel___', items: ['Lack', 'Neu', 'Brett', 'Schere'] },
@@ -43,7 +43,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '5': {
     id: '5',
-    unlocksAt: new Date('2025-12-05T00:00:00').getTime(),
+    unlocksAt: new Date('2025-11-05T00:00:00').getTime(),
     groups: [
       { caption: 'Mahlzeit', items: ['Schmaus', 'Essen', 'Speise', 'Kost'] },
       { caption: 'Bestandteiles eines Schiffs', items: ['Heck', 'Kiel', 'Bug', 'Deck'] },
@@ -53,7 +53,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '6': {
     id: '6',
-    unlocksAt: new Date('2025-12-06T00:00:00').getTime(),
+    unlocksAt: new Date('2025-11-06T00:00:00').getTime(),
     groups: [
       { caption: 'Groß', items: ['Riesig', 'Mega', 'Gewaltig', 'Enorm'] },
       { caption: 'Antike Waffen', items: ['Katana', 'Speer', 'Schwert', 'Bogen'] },
@@ -63,7 +63,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '7': {
     id: '7',
-    unlocksAt: new Date('2025-12-07T00:00:00').getTime(),
+    unlocksAt: new Date('2025-11-07T00:00:00').getTime(),
     groups: [
       { caption: 'Maltechniken', items: ['Fresko', 'Aquarell', 'Airbrush', 'Öl'] },
       { caption: 'Werk', items: ['Opus', 'Arbeit', 'Kreation', 'Produkt'] },
@@ -73,7 +73,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '8': {
     id: '8',
-    unlocksAt: new Date('2025-12-08T00:00:00').getTime(),
+    unlocksAt: new Date('2025-11-08T00:00:00').getTime(),
     groups: [
       { caption: 'Nobelpreis-Disziplinen', items: ['Frieden', 'Literatur', 'Physik', 'Medizin'] },
       { caption: 'Kryptowährungen', items: ['Tether', 'Bitcoin', 'Ethereum', 'Ripple'] },
@@ -83,7 +83,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
   },
   '9': {
     id: '9',
-    unlocksAt: new Date('2025-12-09T00:00:00').getTime(),
+    unlocksAt: new Date('2025-11-09T00:00:00').getTime(),
     groups: [
       { caption: 'Betrunken', items: ['Voll', 'Blau', 'Hacke', 'Dicht'] },
       { caption: 'Bestandteile eines Dreiecks', items: ['Ecke', 'Schenkel', 'Winkel', 'Seite'] },
@@ -118,7 +118,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     groups: [
       { caption: 'Mythologische Fabelwesen', items: ['Hydra', 'Drache', 'Sirene', 'Zyklop'] },
       { caption: 'Notizbuch-Lineaturen', items: ['Blanko', 'Kästchen', 'Linien', 'Punkte'] },
-      { caption: 'Arten von Uhren', items: ['Sand', 'Sonne', 'Atom', 'Stern'] },
+      { caption: 'Arten von Uhren', items: ['Sand', 'Sonne', 'Atom', 'Stern'] }, // könnte mit Beläge kollidieren
       { caption: 'Beläge', items: ['Moos', 'Käse', 'Plaque', 'Asphalt'] },
     ],
   },

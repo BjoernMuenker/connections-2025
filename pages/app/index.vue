@@ -15,6 +15,7 @@
   const { getScore } = useStats();
   const { getSavegames } = useSavegames();
   const { getColorByGroupId } = usePuzzle();
+  const { showTutorial } = useTutorial();
   const router = useRouter();
   const { routes } = useRoutes();
 
@@ -23,7 +24,7 @@
   });
 
   const { data: serverTime } = useAsyncData('serverTime', () => getServerTime());
-  const { data: scores } = useAsyncData('score', () => getScore(user.value?.sub ?? ''));
+  const { data: scores } = useAsyncData('score', () => getScore(user.value?.user_metadata.display_name ?? ''));
   const { data: savegames } = useAsyncData('savegames', async () => {
     const savegames = await getSavegames({ userId: user.value?.sub ?? '', sortBy: 'updated_at' });
     if (!savegames) return [];
@@ -124,16 +125,12 @@
       slides: {
         origin: 'center',
         perView: 'auto',
-        // spacing: 16,
       },
-      // breakpoints: {
-      //   '(min-width: 480px)': {
-      //     slides: { origin: 'center', perView: 'auto' },
-      //   },
-      // },
     });
 
     activeSlideIndex.value = slider.value.track.details.rel;
+
+    showTutorial('firstLogin');
   });
 </script>
 

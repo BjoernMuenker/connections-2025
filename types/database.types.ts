@@ -10,25 +10,28 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           id: string;
           score: number;
-          updated_at: string | null;
-          username: string | null;
+          tutorials: string[] | null;
+          updated_at: string;
+          username: string;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           id: string;
           score?: number;
-          updated_at?: string | null;
-          username?: string | null;
+          tutorials?: string[] | null;
+          updated_at?: string;
+          username: string;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           id?: string;
           score?: number;
-          updated_at?: string | null;
-          username?: string | null;
+          tutorials?: string[] | null;
+          updated_at?: string;
+          username?: string;
         };
         Relationships: [];
       };
@@ -36,25 +39,25 @@ export type Database = {
         Row: {
           created_at: string;
           data: Json;
-          id: string | null;
+          id: string;
           puzzle_id: string;
-          updated_at: string | null;
+          updated_at: string;
           user_id: string;
         };
         Insert: {
           created_at?: string;
           data: Json;
-          id?: string | null;
+          id?: string;
           puzzle_id: string;
-          updated_at?: string | null;
+          updated_at?: string;
           user_id: string;
         };
         Update: {
           created_at?: string;
           data?: Json;
-          id?: string | null;
+          id?: string;
           puzzle_id?: string;
-          updated_at?: string | null;
+          updated_at?: string;
           user_id?: string;
         };
         Relationships: [];

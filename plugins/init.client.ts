@@ -1,19 +1,25 @@
 import { onLongPress } from '@vueuse/core';
 import { useAppStore } from '~/store/appStore';
 
-export default defineNuxtPlugin((nuxtApp) => {
-  /* START DEBUG */
-  const appStore = useAppStore();
+export default defineNuxtPlugin(async (nuxtApp) => {
+  const store = useAppStore();
+  const { fetchTutorials } = useTutorial();
 
+  const tutorials = await fetchTutorials();
+  if (!tutorials) return;
+
+  store.tutorials = tutorials;
+
+  /* START DEBUG */
   const attachGlobalEventListeners = () => {
     document.body.addEventListener('keydown', (e) => {
-      if (e.key === 'Dead' || e.key === '`') appStore.debug = !appStore.debug;
+      if (e.key === 'Dead' || e.key === '`') store.debug = !store.debug;
     });
 
     onLongPress(
       document.body,
       () => {
-        appStore.debug = !appStore.debug;
+        store.debug = !store.debug;
       },
       { delay: 2000 }
     );

@@ -6,6 +6,7 @@
   import UserRank from './UserRank.vue';
   import StackedBarChart from './StackedBarChart.vue';
   import type { PuzzleGroupId } from '~/types/PuzzleGroupId';
+  import { groupNames } from '~/content/groupNames';
 
   const props = defineProps<{
     states: PuzzlePersistedState[];
@@ -45,7 +46,7 @@
     return Object.entries(counts).map(([key, value]) => {
       return {
         id: key,
-        caption: getNameByGroupId(key as PuzzleGroupId),
+        caption: groupNames[key as PuzzleGroupId],
         color: getColorByGroupId(key as PuzzleGroupId),
         amount: value,
       };
@@ -53,9 +54,22 @@
   }
 
   const items = computed(() => {
-    const totalMistakes = sumArray(props.states.map((state) => 4 - state.remainingMistakes));
+    function getMistakesPerPuzzle(data: PuzzlePersistedState[]) {
+      const aggregated = data.reduce<Record<string, number>>((acc, item) => {
+        if (item.guesses.length === 0) return acc;
+        acc[item.id] = (acc[item.id] ?? 0) + (4 - item.remainingMistakes);
+        return acc;
+      }, {});
+
+      return aggregated;
+    }
+
+    const mistakesPerPuzzle = getMistakesPerPuzzle(props.states);
+    const totalMistakes = sumArray(Object.values(mistakesPerPuzzle));
     const averageMistakesPerDay = props.states.length === 0 ? 0 : totalMistakes / props.states.length;
-    const daysWithoutMistake = props.states.filter((state) => state.won && state.remainingMistakes === 4).length;
+    const daysWithoutMistake = Object.values(mistakesPerPuzzle).filter((value) => value === 0).length;
+    const [dayWithMostMistakes, mostMistakesPerDay] = Object.entries(mistakesPerPuzzle).reduce((max, entry) => (entry[1] > max[1] ? entry : max));
+    const [dayWithLeastMistakes, leastMistakesPerDay] = Object.entries(mistakesPerPuzzle).reduce((min, entry) => (entry[1] < min[1] ? entry : min));
 
     return [
       {
@@ -69,12 +83,20 @@
         value: averageMistakesPerDay,
       },
       {
+        key: 'dayWithMostMistake',
+        caption: 'Wenigste Fehler',
+        value: `${dayWithLeastMistakes}.12. (${leastMistakesPerDay})`,
+      },
+      {
+        key: 'dayWithLeastMistake',
+        caption: 'Meiste Fehler',
+        value: `${dayWithMostMistakes}.12. (${mostMistakesPerDay})`,
+      },
+      {
         key: 'daysWithoutMistake',
         caption: 'Fehlerfreie Tage',
         value: daysWithoutMistake,
       },
-
-      // day with most / less mistakes?
     ];
   });
 </script>
@@ -106,7 +128,6 @@
     gap: spacing('s');
 
     > div {
-      // width: calc(50% - spacing('s') / 2);
       flex: 1 1;
       flex-shrink: 0;
       min-width: 200px;

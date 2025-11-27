@@ -7,7 +7,7 @@
     layout: 'app',
   });
 
-  const { getScoreFromSavegames } = usePuzzle();
+  const { getScoreFromSavegames } = useScore();
   const { getSavegames } = useSavegames();
   const user = useSupabaseUser();
 

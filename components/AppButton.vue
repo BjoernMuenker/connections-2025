@@ -28,12 +28,11 @@
     font-size: 18px;
     padding: spacing('s') spacing('s');
     border-radius: border-radius('default');
-    transition: transform 0.2s;
     border-width: 2px;
     border-style: solid;
     text-align: center;
     white-space: nowrap;
-    transition: background-color 0.3s, border 0.3s;
+    transition: transform 0.3s, background-color 0.3s, border 0.3s;
     @include var-font-weight(500);
 
     @include breakpoint('medium') {

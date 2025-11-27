@@ -7,7 +7,8 @@
 
   const props = defineProps<{ state: PuzzlePersistedState }>();
 
-  const { getColorByGroupItemId, getScoreFromSavegame, initPuzzleById } = usePuzzle();
+  const { getColorByGroupItemId, initPuzzleById } = usePuzzle();
+  const { getScoreFromSavegame } = useScore();
 
   const message = computed(() => {
     const mistakes = props.state.won ? props.state.guesses.length - 4 : 4;
@@ -37,12 +38,12 @@
       <BaseTile class="score">
         <div class="score-heading heading-large">
           <div>Score</div>
-          <div class="total">{{ sumArray(Object.values(score).map((entry) => entry.total)) }}</div>
+          <div class="total">{{ formatNumber(sumArray(Object.values(score).map((entry) => entry.total))) }}</div>
         </div>
         <div class="score-items">
           <div v-for="[key, value] in Object.entries(score)" class="item">
             <div>{{ value.amount }} × {{ scoreActions[key as ScoreActionId]?.name }}</div>
-            <div>{{ value.total }}</div>
+            <div>{{ formatNumber(value.total) }}</div>
           </div>
           <template v-if="Object.values(score).length === 0">
             Du hast diesmal leider keine Aktionen abgeschlossen, die deinen Score erhöhen.

@@ -7,7 +7,6 @@
 
   const route = useRoute();
   const user = useSupabaseUser();
-  const { getScoreFromSavegame } = usePuzzle();
   const { getSavegames } = useSavegames();
 
   const puzzleId = route.params.day as string;

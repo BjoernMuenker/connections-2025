@@ -85,7 +85,7 @@ export default defineNuxtConfig({
     },
   },
   vite: {
-    plugins: [stripDebugCode()],
+    plugins: [...(process.env.NODE_ENV === 'production' ? [stripDebugCode()] : [])],
     resolve: {
       alias: {
         '@googlemaps/js-api-loader': '@googlemaps/js-api-loader/dist/index.mjs',

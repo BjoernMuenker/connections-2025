@@ -3,11 +3,31 @@ import type { TutorialId } from '~/types/TutorialId';
 
 export function useTutorial() {
   const store = useAppStore();
+  const client = useSupabaseClient();
+  const user = useSupabaseUser();
 
-  function showTutorial(id: TutorialId) {
+  async function showTutorial(id: TutorialId) {
+    if (!user.value || store.tutorials?.includes(id)) return;
+
     store.openOffCanvas('Tutorial', 'Das erste Puzzle');
-    // persist that this tutorial has been show before
+
+    const newArray = Array.from(new Set([...store.tutorials, id]));
+
+    const { data, error } = await client
+      .from('profiles')
+      .update({
+        tutorials: newArray,
+      })
+      .eq('id', user.value?.sub);
+
+    store.tutorials = newArray;
   }
 
-  return { showTutorial };
+  async function fetchTutorials() {
+    if (!user.value) return;
+    const { data } = await client.from('profiles').select('tutorials').eq('id', user.value?.sub).single();
+    return (data?.tutorials ?? []) as TutorialId[];
+  }
+
+  return { fetchTutorials, showTutorial };
 }

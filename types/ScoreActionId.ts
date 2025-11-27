@@ -1,8 +1,1 @@
-export type ScoreActionId =
-  | 'blueSolved'
-  | 'blueSolvedFirst'
-  | 'greenSolved'
-  | 'remainingMistake'
-  | 'violetSolved'
-  | 'violetSolvedFirst'
-  | 'yellowSolved';
+export type ScoreActionId = 'aSolved' | 'bSolved' | 'cSolved' | 'cSolvedFirst' | 'dSolved' | 'dSolvedFirst' | 'remainingMistake';

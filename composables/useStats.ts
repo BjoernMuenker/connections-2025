@@ -2,27 +2,29 @@ export const useStats = () => {
   const user = useSupabaseUser();
   const client = useSupabaseClient();
 
-  async function getScores() {
-    const { data, error } = await client.from('profiles').select('id, username, score').order('score', { ascending: false });
+  async function getScores(options?: { exclude: string[] }) {
+    let query = client.from('profiles').select('username, score').order('score', { ascending: false });
+
+    if (options?.exclude) {
+      query.not('username', 'in', `(${options?.exclude.map((u) => `"${u}"`).join(',')})`);
+    }
+
+    const { data, error } = await query;
+
     if (error) {
       console.error('fail');
       return;
     }
 
     return data;
-
-    // return await client
-    //   .from('profiles')
-    //   .select('score', { count: 'exact' }) // 'exact' gives total row count
-    //   .eq('id', userId); // filter for specific user
   }
 
-  async function getScore(playerId: string) {
+  async function getScore(username: string) {
     const data = await getScores();
 
     if (!data) return;
 
-    const playerIndex = data?.findIndex((entry) => entry.id === playerId);
+    const playerIndex = data?.findIndex((entry) => entry.username === username);
     const rank = playerIndex + 1;
     const badge = getScoreBadge(rank, 50);
 
@@ -47,7 +49,6 @@ export const useStats = () => {
 
   function getScoreBadge(rank: number, totalRanks: number) {
     const percentage = (rank / totalRanks) * 100;
-    console.log(percentage);
 
     if (percentage > 20) {
       return undefined;

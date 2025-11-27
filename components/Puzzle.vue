@@ -17,18 +17,19 @@
   const router = useRouter();
 
   const {
+    communityView,
     deselectAllItems,
     getGroupById,
     getGroupByItemId,
     getItemIndexById,
     loading,
     maxItemsSelected,
-    communityView,
     pushScoreNotifications,
     puzzle,
     reset,
     save,
     solvedGroups,
+    updateHeatmap,
   } = usePuzzle(props.puzzleId);
 
   const animationRunning = ref(false);
@@ -110,6 +111,7 @@
       await animateSelectedItems();
       await solveGroup(totalMatch[0].id);
       animationRunning.value = false;
+      updateHeatmap();
       return;
     }
 
@@ -135,14 +137,17 @@
 
     await save();
 
-    await animateSelectedItems();
-    animateSelectedItemsFail();
-    animationRunning.value = false;
-
     const closeMatch = Object.values(sortedGroups).find((group) => group.length === 3);
+
     if (closeMatch) {
-      return store.pushToastNotification('Einer falsch!');
+      store.pushToastNotification('Einer falsch!');
     }
+
+    await animateSelectedItems();
+    await animateSelectedItemsFail();
+    updateHeatmap();
+
+    animationRunning.value = false;
   }
 
   function getSelectedItemDomElements() {

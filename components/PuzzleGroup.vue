@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <div ref="rootRef" class="puzzle-group" :class="`background-${color}`" :data-group-id="group.id">
+  <div ref="rootRef" class="puzzle-group" :class="[`background-${color}`, font.toLowerCase()]" :data-group-id="group.id">
     <div class="title">{{ group.caption }}</div>
     <div class="items">
       <span class="item-wrapper" v-for="(item, index) in props.group.items" :key="item.id" :class="`font-${font.toLowerCase()}`">
@@ -30,7 +30,6 @@
     width: 100%;
     line-height: 1em;
     border-radius: border-radius('default');
-    // text-transform: uppercase;
     text-align: center;
     display: flex;
     align-items: center;
@@ -38,8 +37,12 @@
     flex-direction: column;
     gap: spacing('xxs');
     user-select: none;
-    padding: 0 spacing('s');
+    padding: 0 spacing('m');
     @include fluid-value('font-size', 16, 24);
+
+    &.dseg {
+      gap: spacing('xs');
+    }
 
     .title {
       @include var-font-weight(600);

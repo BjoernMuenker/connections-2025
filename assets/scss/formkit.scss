@@ -99,7 +99,7 @@ button.formkit-input[type='submit'] {
   background: color('grey-600');
   color: color('white');
   border-radius: 8px;
-  transition: transform 0.2s;
+  transition: transform 0.3s;
   @include var-font-weight(500);
 
   @include breakpoint('medium') {

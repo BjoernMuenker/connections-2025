@@ -1,5 +1,4 @@
 import { puzzles } from '~/content/puzzles';
-import { scoreActions } from '~/content/scoreActions';
 import { useAppStore } from '~/store/appStore';
 import type { Color } from '~/types/Color';
 import type { Json } from '~/types/database.types';
@@ -20,6 +19,7 @@ export const usePuzzle = (puzzleId?: string) => {
 
   const { showTutorial } = useTutorial();
   const { getSavegames } = useSavegames();
+  const { getScoreDiff } = useScore();
 
   const loading = ref(false);
   const communityView = ref(false);
@@ -49,10 +49,10 @@ export const usePuzzle = (puzzleId?: string) => {
 
   function getNameByGroupId(id: PuzzleGroupId) {
     const idToName: { [key in PuzzleGroupId]: string } = {
-      a: 'gelb',
-      b: 'grün',
-      c: 'blau',
-      d: 'violett',
+      a: 'yellow',
+      b: 'green',
+      c: 'blue',
+      d: 'violet',
     };
 
     return idToName[id];
@@ -176,7 +176,7 @@ export const usePuzzle = (puzzleId?: string) => {
 
     loading.value = false;
 
-    showTutorial('puzzle');
+    showTutorial('firstPuzzleStarted');
   }
 
   async function save() {
@@ -244,93 +244,6 @@ export const usePuzzle = (puzzleId?: string) => {
     };
   }
 
-  function getScoreFromSavegame(savegame: PuzzlePersistedState): PuzzleScore {
-    const result: PuzzleScore = {};
-
-    if (savegame.won) {
-      const score = scoreActions['remainingMistake'].score;
-
-      result.remainingMistake = {
-        amount: savegame.remainingMistakes,
-        single: score,
-        total: score * savegame.remainingMistakes,
-      };
-    }
-
-    const groupsSolvedByUser = savegame.solved.filter((groupId) =>
-      savegame.guesses.find((guess) => guess.every((itemId) => itemId.startsWith(groupId)))
-    );
-
-    for (const groupId of groupsSolvedByUser) {
-      const action = `${getColorByGroupId(groupId)}Solved` as ScoreActionId;
-      const score = scoreActions[action].score;
-
-      result[action] = {
-        amount: 1,
-        single: score,
-        total: score,
-      };
-    }
-
-    const firstSolvedGroupId = groupsSolvedByUser[0];
-
-    if (['c', 'd'].includes(firstSolvedGroupId)) {
-      const action = `${getColorByGroupId(firstSolvedGroupId)}SolvedFirst` as ScoreActionId;
-      const score = scoreActions[action].score;
-
-      result[action] = {
-        amount: 1,
-        single: score,
-        total: score,
-      };
-    }
-
-    return sortObjectByCustomOrder(result, [
-      'yellowSolved',
-      'greenSolved',
-      'blueSolved',
-      'blueSolvedFirst',
-      'violetSolved',
-      'violetSolvedFirst',
-      'remainingMistake',
-    ]);
-  }
-
-  function getScoreFromSavegames(savegames: PuzzlePersistedState[]) {
-    const result: PuzzleScore = {};
-
-    for (const savegame of savegames) {
-      const partialResult = getScoreFromSavegame(savegame);
-
-      Object.entries(partialResult).forEach(([scoreAction, value]) => {
-        if (!result[scoreAction as ScoreActionId]) {
-          result[scoreAction as ScoreActionId] = value;
-        } else {
-          result[scoreAction as ScoreActionId]!.amount += value.amount;
-          result[scoreAction as ScoreActionId]!.single += value.single;
-          result[scoreAction as ScoreActionId]!.total += value.total;
-        }
-      });
-    }
-
-    return sortObjectByCustomOrder(result, [
-      'yellowSolved',
-      'greenSolved',
-      'blueSolved',
-      'blueSolvedFirst',
-      'violetSolved',
-      'violetSolvedFirst',
-      'remainingMistake',
-    ]);
-  }
-
-  function getScoreDiff(from: PuzzlePersistedState, to: PuzzlePersistedState) {
-    const fromScore = getScoreFromSavegame(from);
-    const toScore = getScoreFromSavegame(to);
-
-    return Object.fromEntries(Object.entries(toScore).filter(([key]) => !(key in fromScore))) as typeof toScore;
-  }
-
   function deselectAllItems() {
     if (!puzzle.value) return;
     puzzle.value.selected = [];
@@ -347,29 +260,27 @@ export const usePuzzle = (puzzleId?: string) => {
     await save();
   }
 
-  async function createHeatmap() {
-    if (!puzzle.value) return;
-    deselectAllItems();
+  async function createHeatmap(): Promise<boolean> {
+    if (!puzzle.value) return false;
 
-    // throw sth here
     const savegames = await getSavegames({ puzzleId: puzzle.value.id });
+
     if (!savegames) {
-      //
-      return;
+      store.pushToastNotification('Spielerdaten konnten nicht geladen werden.');
+      return false;
     }
-
-    if (savegames.length === 0) {
-      store.pushToastNotification('Noch keine Daten vorhanden');
-    }
-
-    resetHeatmap();
-
-    console.log(guessIndex.value);
 
     // extract the guesses
     const guesses = savegames?.map((savegame) => savegame.data.guesses[guessIndex.value] ?? []).flat();
 
-    console.log(guesses);
+    if (guesses.length === 0) {
+      store.pushToastNotification('Noch keine Spielerdaten');
+      communityView.value = false;
+      return false;
+    }
+
+    deselectAllItems();
+    resetHeatmap();
 
     console.warn(countOccurrences(guesses));
 
@@ -378,60 +289,63 @@ export const usePuzzle = (puzzleId?: string) => {
       const min = Math.min(...values);
       const max = Math.max(...values);
 
-      // Avoid division by zero if all tiles have the same count
       if (min === max) {
-        return Object.fromEntries(
-          Object.keys(counts).map((key) => [key, 0.5]) // all mid-intensity
-        );
+        return Object.fromEntries(Object.keys(counts).map((key) => [key, 0.5]));
       }
 
-      return Object.fromEntries(
-        Object.entries(counts).map(([key, value]) => [
-          key,
-          roundToMaxFractions((value - min) / (max - min)), // → 0 to 1
-        ])
-      );
+      return Object.fromEntries(Object.entries(counts).map(([key, value]) => [key, roundToMaxFractions((value - min) / (max - min))]));
     };
 
-    // const normalized = normalizeCounts(countOccurrences(guesses));
-    const normalized = {
-      a1: 0.3,
-      b2: 1,
-      d2: 0.5,
-      d3: 0.4,
-      d4: 0.5,
-      b3: 0.1,
-      c3: 0.2,
-    };
+    const normalized = normalizeCounts(countOccurrences(guesses));
+
+    // const normalized = {
+    //   a1: 0.3,
+    //   b2: 1,
+    //   d2: 0.5,
+    //   d3: 0.4,
+    //   d4: 0.5,
+    //   b3: 0.1,
+    //   c3: 0.2,
+    // };
 
     console.warn(normalized);
 
-    const timeline = $gsap.timeline();
-
-    for (const [tileId, percentage] of Object.entries(normalized)) {
-      const scaled = clamp(0.15, 0.65, percentage);
-
-      const max = 255;
-      const red = 255;
-
-      const greenBlue = Math.round(max * (1 - scaled)); // darker = more red
-
-      timeline.to(`.puzzle-tile[data-id="${tileId}"] .inner`, { background: `rgb(${red}, ${greenBlue}, ${greenBlue})` }, '<+=0.05');
+    const filteredRecords = Object.entries(normalized).filter(([tileId]) => !puzzle.value?.solved.includes(tileId.slice(0, 1) as PuzzleGroupId));
+    if (filteredRecords.length === 0) {
+      communityView.value = false;
+      store.pushToastNotification('Noch keine Spielerdaten');
+      return false;
     }
+
+    return new Promise((resolve) => {
+      const timeline = $gsap.timeline({
+        onComplete: () => {
+          showTutorial('communityView');
+          resolve(true);
+        },
+      });
+
+      for (const [tileId, percentage] of filteredRecords) {
+        const scaled = clamp(0.15, 0.65, percentage);
+
+        const max = 255;
+        const red = 255;
+
+        const greenBlue = Math.round(max * (1 - scaled));
+
+        timeline.to(`.puzzle-tile[data-id="${tileId}"] .inner`, { background: `rgb(${red}, ${greenBlue}, ${greenBlue})` }, '<+=0.05');
+      }
+    });
   }
 
   function resetHeatmap() {
     $gsap.to(`.puzzle-tile .inner`, { background: `white` });
   }
 
-  watch(
-    () => guessIndex.value,
-    () => {
-      if (communityView.value) {
-        createHeatmap();
-      }
-    }
-  );
+  function updateHeatmap() {
+    if (!communityView.value) return;
+    createHeatmap();
+  }
 
   watch(
     () => communityView.value,
@@ -460,8 +374,6 @@ export const usePuzzle = (puzzleId?: string) => {
     getGroupsSolvedByUser,
     getItemIndexById,
     getNameByGroupId,
-    getScoreFromSavegame,
-    getScoreFromSavegames,
     guessIndex,
     initPuzzleById,
     isGroupSolvedByUser,
@@ -474,5 +386,6 @@ export const usePuzzle = (puzzleId?: string) => {
     reset,
     save,
     solvedGroups,
+    updateHeatmap,
   };
 };
