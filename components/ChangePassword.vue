@@ -12,6 +12,7 @@
   const user = useSupabaseUser();
 
   const formData = ref<{ password: string; confirmPassword: string }>({ password: '', confirmPassword: '' });
+
   const errorMessage = ref('');
   const successMessage = ref('');
 
@@ -25,7 +26,7 @@
     });
 
     if (error) {
-      errorMessage.value = error.message;
+      errorMessage.value = useAuth().getErrorMessage(error.code);
       return;
     }
 
@@ -52,7 +53,7 @@
         </MessageBox>
       </template>
       <template v-else>
-        <FormKit type="form" @submit="resetPassword">
+        <FormKit type="form" @submit="resetPassword" v-slot="{ state: { loading } }">
           <MessageBox v-if="errorMessage" type="error">
             {{ errorMessage }}
           </MessageBox>
@@ -67,6 +68,7 @@
               v-model="formData.password"
               placeholder="Dein neues Passwort"
               autocomplete="new-password"
+              :disabled="loading"
             />
             <FormkitPassword
               validation="required|confirm:password"
@@ -75,8 +77,9 @@
               v-model="formData.confirmPassword"
               placeholder="Bestätige dein neues Passwort"
               autocomplete="new-password"
+              :disabled="loading"
             />
-            <AppButton type="submit" class="button block" :loading="false">Passwort ändern</AppButton>
+            <AppButton type="submit" class="button block" :loading="loading">Passwort ändern</AppButton>
           </template>
         </FormKit>
       </template>

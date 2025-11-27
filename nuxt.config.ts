@@ -20,12 +20,12 @@ export default defineNuxtConfig({
         {
           hid: 'apple-mobile-web-app-title',
           name: 'apple-mobile-web-app-title',
-          content: `Kompass`,
+          content: `Hohoho 2025`,
         },
         {
           hid: 'application-name',
           name: 'application-name',
-          content: `Connection 2025`,
+          content: `Hohoho 2025`,
         },
         {
           hid: 'msapplication-TileColor',
@@ -35,25 +35,25 @@ export default defineNuxtConfig({
         {
           hid: 'description',
           name: 'description',
-          content: `Eine digitale Karte voller Erinnerungen und Empfehlungen deiner Freunde.`,
+          content: `Bilde bis Heiligabend jeden Tag 4 Gruppen aus je 4 Wörtern.`,
         },
-        { hid: 'og:title', property: 'og:title', content: `Happy Birthday!` },
+        { hid: 'og:title', property: 'og:title', content: `Dein Rätsel-Adventskalender` },
         {
           hid: 'og:description',
           property: 'og:description',
-          content: `Eine digitale Karte voller Erinnerungen und Empfehlungen deiner Freunde.`,
+          content: `Bilde bis Heiligabend jeden Tag 4 Gruppen aus je 4 Wörtern.`,
         },
-        { hid: 'og:image', property: 'og:image', content: 'https://www.patricks-kompass.de/meta/open-graph-image.png' },
+        { hid: 'og:image', property: 'og:image', content: 'ttps://24.bjoernmuenker.de/meta/open-graph-image.jpg' },
         { hid: 'og:image:width', property: 'og:image:width', content: '1200' },
         { hid: 'og:image:height', property: 'og:image:height', content: '630' },
-        { hid: 'twitter:title', name: 'twitter:title', content: 'https://www.patricks-kompass.de/meta/twitter-image.png' },
+        { hid: 'twitter:title', name: 'twitter:title', content: 'Dein Rätsel-Adventskalender' },
         { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
         {
           hid: 'twitter:description',
           name: 'twitter:description',
-          content: ``,
+          content: `Bilde bis Heiligabend jeden Tag 4 Gruppen aus je 4 Wörtern.`,
         },
-        { hid: 'twitter:image', name: 'twitter:image', content: '' },
+        { hid: 'twitter:image', name: 'twitter:image', content: 'https://24.bjoernmuenker.de/meta/twitter-image.jpg' },
       ],
       link: [
         {

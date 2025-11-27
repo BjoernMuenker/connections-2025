@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
   import AppButton from '~/components/AppButton.vue';
   import FormkitPassword from '~/components/FormkitPassword.vue';
   import MessageBox from '~/components/MessageBox.vue';
@@ -6,7 +6,6 @@
   const supabase = useSupabaseClient();
   const { routes } = useRoutes();
 
-  const submitting = ref(false);
   const name = ref('');
   const email = ref('');
   const password = ref('');
@@ -15,25 +14,20 @@
   const errorMessage = ref('');
   const successMessage = ref('');
 
-  const createUser = async () => {
-    try {
-      submitting.value = true;
+  async function createUser(formData: { name: string; email: string; password: string; passwordRepeat: string }) {
+    const { error, data } = await supabase.auth.signUp({
+      email: email.value,
+      password: password.value,
+      options: { data: { display_name: name.value }, emailRedirectTo: `${window.location.origin}${routes.confirmEmail}` },
+    });
 
-      const response = await supabase.auth.signUp({
-        email: email.value,
-        password: password.value,
-        options: { data: { display_name: name.value }, emailRedirectTo: `${window.location.origin}${routes.confirmEmail}` },
-      });
-
-      if (response.error) throw response.error;
-
-      successMessage.value = 'Fast geschafft! Wir haben dir einen Bestätigungslink an deine Mailadresse geschickt.';
-    } catch (error) {
+    if (error) {
       errorMessage.value = useAuth().getErrorMessage(error.code);
-    } finally {
-      submitting.value = false;
+      return;
     }
-  };
+
+    successMessage.value = 'Fast geschafft! Wir haben dir einen Bestätigungslink an deine Mailadresse geschickt.';
+  }
 
   function resetMessages() {
     errorMessage.value = '';
@@ -43,7 +37,7 @@
 
 <template>
   <div class="wrapper">
-    <FormKit type="form" @submit="createUser">
+    <FormKit type="form" @submit="createUser" v-slot="{ state: { loading } }">
       <div class="header">
         <h1>Willkommen.</h1>
         <p class="description">Erstelle dir jetzt einen Account.</p>
@@ -57,8 +51,17 @@
           v-model="name"
           placeholder="Dein Nutzername"
           type="text"
+          :disabled="loading"
         />
-        <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" autocomplete />
+        <FormKit
+          validation="required|email"
+          label="E-Mail"
+          v-model="email"
+          placeholder="Deine E-Mail"
+          type="email"
+          autocomplete
+          :disabled="loading"
+        />
         <FormkitPassword
           validation="required|length:6"
           name="password"
@@ -66,6 +69,7 @@
           v-model="password"
           placeholder="Dein Passwort"
           autocomplete="new-password"
+          :disabled="loading"
         />
         <FormkitPassword
           validation="required|confirm:password"
@@ -73,10 +77,9 @@
           v-model="passwordRepeat"
           placeholder="Bestätige dein Passwort"
           autocomplete="new-password"
+          :disabled="loading"
         />
-        <div>
-          <AppButton type="submit" class="button block" @click="resetMessages" :disabled="submitting">Account erstellen</AppButton>
-        </div>
+        <AppButton type="submit" class="button block" @click="resetMessages" :disabled="loading">Account erstellen</AppButton>
       </template>
     </FormKit>
     <div class="account-exists copy-medium">Du hast schon einen Account?<br /><NuxtLink :to="routes.signIn">Melde dich jetzt an.</NuxtLink></div>

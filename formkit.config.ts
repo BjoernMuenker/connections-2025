@@ -65,6 +65,7 @@ export default defineFormKitConfig(() => {
 
             return `${name} muss mindestens ${args[0]} Zeichen lang sein.`;
           },
+          new_username: 'Diesen Nutzernamen verwendest du bereits.',
           unique_username: 'Dieser Nutzername ist leider schon vergeben.',
           trimmed: ({ name }) => `${name} enhält unerlaubte Leerzeichen.`,
         },
@@ -72,8 +73,12 @@ export default defineFormKitConfig(() => {
     },
     rules: {
       trimmed: (node: FormKitNode) => {
-        console.log(node.value);
         return (node.value as string).length === 0 || !!(node.value as string).match(/^\S+(?: +\S+)*$/);
+      },
+      new_username: (node: FormKitNode) => {
+        const user = useSupabaseUser();
+        if (!user.value) return false;
+        return user.value.user_metadata.display_name !== node.value;
       },
       unique_username: async (node: FormKitNode) => {
         const supabase = useSupabaseClient();

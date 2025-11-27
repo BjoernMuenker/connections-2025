@@ -24,6 +24,13 @@
   }
 }
 
+.formkit-outer[data-disabled='true'] {
+  .formkit-icon {
+    pointer-events: none;
+    color: color('grey-light');
+  }
+}
+
 .formkit-messages {
   padding: 0;
   margin-top: spacing('xs');

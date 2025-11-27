@@ -4,37 +4,38 @@
   import MessageBox from '~/components/MessageBox.vue';
 
   const supabase = useSupabaseClient();
-  const { routes } = useRoutes();
 
   const errorMessage = ref('');
   const successMessage = ref('');
 
-  async function resetPassword(formData: { email: string; confirmEmail: string }) {
+  async function changeUsername(formData: { username: string }) {
     errorMessage.value = '';
     successMessage.value = '';
 
-    const { data, error } = await supabase.auth.updateUser(
-      {
-        email: formData.email,
-      },
-      { emailRedirectTo: `${window.location.origin}${routes.confirmEmail}` }
-    );
+    try {
+      const { data, error } = await supabase.auth.updateUser({
+        data: {
+          display_name: formData.username,
+        },
+      });
 
-    if (error) {
+      if (error) throw error;
+
+      await supabase.auth.refreshSession();
+      successMessage.value = 'Dein Nutzername wurde erfolgreich geändert.';
+    } catch (error: any) {
       errorMessage.value = useAuth().getErrorMessage(error.code);
-      return;
     }
-
-    successMessage.value = 'Wir haben dir Bestätigungslinks an deine alte und deine neue E-Mailadresse geschickt.';
   }
 </script>
 
 <template>
   <BaseTile>
     <div class="header">
-      <h1 class="heading-xlarge">Ändere deine E-Mail</h1>
+      <h1 class="heading-xlarge">Neues Ich?</h1>
+      <p>Gib dir einen neuen Namen.</p>
     </div>
-    <FormKit type="form" @submit="resetPassword" v-slot="{ state: { loading } }">
+    <FormKit type="form" @submit="changeUsername" v-slot="{ state: { loading } }">
       <MessageBox v-if="errorMessage" type="error">
         {{ errorMessage }}
       </MessageBox>
@@ -42,16 +43,15 @@
         {{ successMessage }}
       </MessageBox>
       <template v-if="!successMessage">
-        <FormKit validation="required|email" name="email" label="E-Mail" placeholder="Deine neue E-Mail" type="email" :disabled="loading" />
         <FormKit
-          validation="required|confirm:email"
-          name="confirmEmail"
-          label="Neue E-Mail wiederholen"
-          placeholder="Bestätige deine neue E-Mail"
-          type="email"
+          validation="required|length:2,16|trimmed|new_username|(750)unique_username"
+          label="Neuer Nutzername"
+          name="username"
+          placeholder="Dein neuer Nutzername"
+          type="text"
           :disabled="loading"
         />
-        <AppButton type="submit" class="button block" :loading="loading">E-Mail ändern</AppButton>
+        <AppButton type="submit" class="button block" :loading="loading">Nutzername ändern</AppButton>
       </template>
     </FormKit>
   </BaseTile>
@@ -73,10 +73,5 @@
 
   form .message-box:not(.success) {
     margin-bottom: spacing('l');
-  }
-
-  .back-to-login {
-    padding: 0 spacing('xl');
-    margin-top: spacing('l');
   }
 </style>

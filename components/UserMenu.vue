@@ -17,13 +17,20 @@
   <div class="user-menu">
     <div class="user">
       <div class="heading-medium">{{ user?.user_metadata?.display_name }}</div>
-      <div>{{ user?.user_metadata?.email }}</div>
+      <div>{{ user?.email }}</div>
     </div>
     <nav>
-      <NuxtLink :to="routes.changePasswordAuthorized">Passwort ändern</NuxtLink>
-      <NuxtLink :to="routes.changeEmail">E-Mail ändern</NuxtLink>
-      <button @click="signOut">Abmelden</button>
-      <NuxtLink :to="routes.deleteAccount">Account löschen</NuxtLink>
+      <div class="nav-section">
+        <button @click="signOut">Abmelden</button>
+      </div>
+      <div class="nav-section">
+        <NuxtLink :to="routes.changeUsername">Nutzername ändern</NuxtLink>
+        <NuxtLink :to="routes.changePasswordAuthorized">Passwort ändern</NuxtLink>
+        <NuxtLink :to="routes.changeEmail">E-Mail ändern</NuxtLink>
+      </div>
+      <div class="nav-section">
+        <NuxtLink :to="routes.deleteAccount">Account löschen</NuxtLink>
+      </div>
     </nav>
     <div class="build-info copy-small">
       <div>v{{ runtimeConfig.public.NUXT_PUBLIC_BUILD_GIT_TAG }} / {{ runtimeConfig.public.NUXT_PUBLIC_BUILD_TIMESTAMP }}</div>
@@ -34,6 +41,13 @@
 
 <style lang="scss" scoped>
   nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: spacing('l');
+  }
+
+  .nav-section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -52,11 +66,11 @@
   }
 
   .user {
-    margin-bottom: spacing('l');
+    margin-bottom: spacing('xl');
   }
 
   .build-info {
-    margin-top: spacing('l');
+    margin-top: spacing('xl');
     color: color('grey-very-light');
   }
 </style>

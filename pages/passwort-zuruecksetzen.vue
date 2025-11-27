@@ -10,21 +10,17 @@
   const formData = ref({ email: '' });
   const errorMessage = ref('');
   const successMessage = ref('');
-  const submitting = ref(false);
 
   async function resetPassword(formData: { email: string }) {
     errorMessage.value = '';
     successMessage.value = '';
-    submitting.value = true;
 
     const { data, error } = await supabase.auth.resetPasswordForEmail(formData.email, {
       redirectTo: `${window.location.origin}${routes.changePassword}`,
     });
 
-    submitting.value = false;
-
     if (error) {
-      errorMessage.value = error.message;
+      errorMessage.value = useAuth().getErrorMessage(error.code);
       return;
     }
 
@@ -36,7 +32,7 @@
 <template>
   <div>
     <BaseTile>
-      <FormKit type="form" @submit="resetPassword" id="form" #default="slotProps">
+      <FormKit type="form" @submit="resetPassword" id="form" v-slot="{ state: { loading } }">
         <div class="header">
           <h1>Passiert den Besten.</h1>
           <p class="description">Du bekommst eine E-Mail, um dein Passwort zurückzusetzen.</p>
@@ -55,9 +51,9 @@
             v-model="formData.email"
             placeholder="Deine E-Mail"
             type="email"
-            :disabled="submitting"
+            :disabled="loading"
           />
-          <AppButton type="submit" :loading="submitting">Passwort zurücksetzen</AppButton>
+          <AppButton type="submit" :loading="loading">Passwort zurücksetzen</AppButton>
         </template>
       </FormKit>
     </BaseTile>

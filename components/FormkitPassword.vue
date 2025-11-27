@@ -4,6 +4,7 @@
   const props = defineProps<{
     includeResetPassword?: boolean;
     modelValue: string;
+    disabled?: boolean;
   }>();
 
   const { routes } = useRoutes();
@@ -22,13 +23,22 @@
   });
 
   function handleIconClick(node: FormKitNode) {
+    if (props.disabled) return;
     node.props.suffixIcon = node.props.suffixIcon === 'eye' ? 'eyeClosed' : 'eye';
     node.props.type = node.props.type === 'password' ? 'text' : 'password';
   }
 </script>
 
 <template>
-  <FormKit label="Passwort" v-model="model" placeholder="Dein Passwort" type="password" suffix-icon="eye" @suffix-icon-click="handleIconClick">
+  <FormKit
+    label="Passwort"
+    v-model="model"
+    placeholder="Dein Passwort"
+    type="password"
+    suffix-icon="eye"
+    @suffix-icon-click="handleIconClick"
+    :disabled="disabled"
+  >
     <template #label="{ label, id, state }">
       <div class="label-wrapper">
         <label class="formkit-label" :for="id"> {{ label }}<span v-if="state.required" class="formkit-asterisk">*</span></label>

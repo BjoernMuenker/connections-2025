@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
   import AppButton from '~/components/AppButton.vue';
   import FormkitPassword from '~/components/FormkitPassword.vue';
   import MessageBox from '~/components/MessageBox.vue';
@@ -7,7 +7,6 @@
   const user = useSupabaseUser();
   const { routes } = useRoutes();
 
-  const submitting = ref(false);
   const email = ref('');
   const password = ref('');
 
@@ -25,24 +24,21 @@
 
   async function handleLogin() {
     errorMessage.value = '';
-    submitting.value = true;
 
     try {
       const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
       if (error) throw error;
       await sleep(100);
       navigateTo(routes.app);
-    } catch (error) {
+    } catch (error: any) {
       errorMessage.value = useAuth().getErrorMessage(error.code);
-    } finally {
-      submitting.value = false;
     }
   }
 </script>
 
 <template>
   <div class="wrapper">
-    <FormKit type="form" @submit="handleLogin">
+    <FormKit type="form" @submit="handleLogin" v-slot="{ state: { loading } }">
       <div class="header">
         <h1>Wieder da?</h1>
         <p class="description">Melde dich mit deiner Mail und deinem Passwort an.</p>
@@ -50,11 +46,9 @@
       <MessageBox v-if="errorMessage" type="error">
         {{ errorMessage }}
       </MessageBox>
-      <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" autocomplete />
-      <FormkitPassword v-model="password" validation="required" :include-reset-password="true" autocomplete="current-password" />
-      <div>
-        <AppButton type="submit" class="button block" :loading="submitting">Anmelden</AppButton>
-      </div>
+      <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" autocomplete :disabled="loading" />
+      <FormkitPassword v-model="password" validation="required" :include-reset-password="true" autocomplete="current-password" :disabled="loading" />
+      <AppButton type="submit" class="button block" :loading="loading">Anmelden</AppButton>
     </FormKit>
     <div class="no-account copy-medium">
       Du hast noch keinen Account?<br /><NuxtLink :to="routes.signUp" class="text-link">Erstell dir jetzt einen.</NuxtLink>
