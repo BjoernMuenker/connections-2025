@@ -45,6 +45,7 @@
       if (value) {
         if (props.component !== componentName) {
           loadComponent();
+          return;
         }
 
         open();
@@ -85,6 +86,7 @@
     display: flex;
     flex-direction: column;
     transform: translateY(100%);
+    z-index: 2;
 
     &.heading {
       .off-canvas-inner {

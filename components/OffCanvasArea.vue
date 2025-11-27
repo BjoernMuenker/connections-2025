@@ -24,6 +24,7 @@
     left: 0;
     transition: opacity 0.2s;
     pointer-events: none;
+    z-index: 1;
 
     &.visible {
       opacity: 1;
