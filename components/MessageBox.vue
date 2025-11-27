@@ -20,13 +20,13 @@
     }
 
     &.error {
-      border-color: color('red');
-      background: color('red-light');
+      background: color('red-100');
+      border-color: color('red-200');
     }
 
     &.success {
-      border-color: color('green-dark');
-      background: color('green-light');
+      background: color('green-100');
+      border-color: color('green-300');
     }
   }
 </style>

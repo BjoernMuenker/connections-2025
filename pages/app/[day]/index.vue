@@ -40,7 +40,7 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    color: white;
+    color: color('white');
   }
 
   .puzzles {

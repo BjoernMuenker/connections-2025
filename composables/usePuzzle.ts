@@ -35,8 +35,8 @@ export const usePuzzle = (puzzleId?: string) => {
   function getColorByGroupId(id: PuzzleGroupId) {
     const idToColor: { [key in PuzzleGroupId]: Color } = {
       a: 'yellow',
-      b: 'green',
-      c: 'blue',
+      b: 'green-200',
+      c: 'blue-100',
       d: 'violet',
     };
 

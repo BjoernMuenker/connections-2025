@@ -57,7 +57,7 @@
   @include hover-only {
     button:hover,
     a:hover {
-      color: color('blue-dark');
+      color: color('blue-300');
     }
   }
 
@@ -71,6 +71,6 @@
 
   .build-info {
     margin-top: spacing('xl');
-    color: color('grey-very-light');
+    color: color('grey-200');
   }
 </style>

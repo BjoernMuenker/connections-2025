@@ -15,13 +15,13 @@
         id: 'won',
         caption: 'gewonnen',
         amount: won,
-        color: 'green',
+        color: 'green-200',
       },
       {
         id: 'lost',
         caption: 'verloren',
         amount: lost,
-        color: 'red',
+        color: 'red-200',
       },
     ];
 
@@ -53,18 +53,6 @@
     height: 12px;
     overflow: hidden;
     margin-bottom: spacing('xs');
-  }
-
-  .won {
-    background: color('green');
-  }
-
-  .lost {
-    background: color('red');
-  }
-
-  .pending {
-    background: color('white');
   }
 
   .counts {

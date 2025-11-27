@@ -16,10 +16,10 @@
 
 .formkit-outer[data-invalid='true'] {
   input:not(:disabled) {
-    border-color: rgb(224, 0, 0);
+    border-color: color('red-300');
 
     &:focus {
-      box-shadow: 0 0 0 4px rgb(242, 166, 166);
+      box-shadow: 0 0 0 4px color('red-100');
     }
   }
 }
@@ -27,7 +27,7 @@
 .formkit-outer[data-disabled='true'] {
   .formkit-icon {
     pointer-events: none;
-    color: color('grey-light');
+    color: color('grey-200');
   }
 }
 
@@ -41,27 +41,43 @@
   list-style-type: none;
 
   &[data-message-type='validation'] {
-    color: rgb(224, 0, 0);
+    color: color('red-300');
   }
 }
 
 input {
   font-family: inherit;
   font-size: 18px;
-  border: 2px solid black;
+  border: 2px solid color('grey-600');
   border-radius: border-radius('default');
   transition: border-color 0.2s, box-shadow 0.2s;
+  color: color('black');
+
+  &::placeholder {
+    color: color('grey-500');
+  }
 
   &:focus:not(:disabled) {
     outline: 0;
-    border-color: rgb(48, 48, 255);
-    box-shadow: 0 0 0 4px rgb(174, 174, 255);
+    border-color: color('blue-300');
+    box-shadow: 0 0 0 4px color('blue-200');
   }
 
   &:disabled {
-    border-color: color('grey-light');
-    background: #f2f2f2;
+    border-color: color('grey-200');
+    background: color('grey-100');
+    color: color('grey-200');
     cursor: not-allowed;
+
+    &::placeholder {
+      color: color('grey-200');
+    }
+  }
+
+  @include hover-only {
+    &:hover:not(:disabled) {
+      border-color: color('blue-300');
+    }
   }
 }
 
@@ -78,17 +94,21 @@ input[type='password'] {
 }
 
 button.formkit-input[type='submit'] {
-  font-size: 20px;
+  font-size: 18px;
   padding: 14px 20px;
-  background: color('grey-dark');
-  color: #fff;
-  font-weight: bold;
+  background: color('grey-600');
+  color: color('white');
   border-radius: 8px;
   transition: transform 0.2s;
+  @include var-font-weight(500);
+
+  @include breakpoint('medium') {
+    font-size: 20px;
+  }
 
   &:disabled {
     cursor: not-allowed;
-    background: #cdcdcd;
+    background: color('grey-200');
   }
 
   &:active:not(:disabled) {
@@ -110,10 +130,13 @@ button.formkit-input[type='submit'] {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: color('grey-600');
 
-  &:hover {
-    cursor: pointer;
-    color: blue;
+  @include hover-only {
+    &:hover {
+      cursor: pointer;
+      color: color('blue-300');
+    }
   }
 
   svg {

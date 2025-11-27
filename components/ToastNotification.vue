@@ -39,10 +39,10 @@
 
 <style lang="scss" scoped>
   .toast-notification {
-    color: white;
+    color: color('white');
     border-radius: spacing('xs');
     padding: spacing('xs') spacing('s');
-    background: color('grey-dark');
+    background: color('grey-600');
     display: flex;
     gap: spacing('xs');
     align-items: center;
@@ -55,7 +55,7 @@
   }
 
   .score-badge {
-    color: color('grey-dark');
+    color: color('grey-600');
     background: color('white');
     padding: 0 spacing('xxs');
     border-radius: 50px;

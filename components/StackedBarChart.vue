@@ -36,7 +36,7 @@
     margin-bottom: spacing('xs');
 
     &.empty {
-      background: #efefef;
+      background: color('grey-100');
     }
 
     &.large {

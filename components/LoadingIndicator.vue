@@ -39,13 +39,13 @@
       <div class="background-yellow"></div>
     </div>
     <div class="b tile" ref="bRef">
-      <div class="background-green"></div>
+      <div class="background-green-200"></div>
     </div>
     <div class="c tile" ref="cRef">
       <div class="background-violet"></div>
     </div>
     <div class="d tile" ref="dRef">
-      <div class="background-blue"></div>
+      <div class="background-blue-100"></div>
     </div>
   </div>
 </template>

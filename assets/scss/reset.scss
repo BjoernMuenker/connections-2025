@@ -88,7 +88,7 @@ select {
   appearance: none;
   background: color('white');
   color: color('black');
-  border: 1px solid color('grey');
+  border: 2px solid color('grey-600');
   border-radius: 4px;
   padding: spacing('xs') spacing('l') spacing('xs') spacing('s');
   font-size: 14px;
@@ -102,7 +102,7 @@ select {
 }
 
 .text-link {
-  color: blue;
+  color: color('blue-300');
   text-decoration: underline;
 }
 

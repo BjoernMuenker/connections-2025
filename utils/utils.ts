@@ -1,3 +1,6 @@
+import { colors } from '~/content/colors';
+import type { Color } from '~/types/Color';
+
 export function shuffleArray<T>(a: Array<T>) {
   let j, x, i;
   for (i = a.length - 1; i > 0; i--) {
@@ -256,4 +259,8 @@ export function formatNumber(number: number) {
 
 export function getKeyByValue<T extends Record<string, any>>(obj: T, value: T[keyof T]): keyof T | undefined {
   return (Object.keys(obj) as (keyof T)[]).find((key) => obj[key] === value);
+}
+
+export function getColor(color: Color) {
+  return colors[color];
 }

@@ -1,1 +1,21 @@
-export type Color = 'green' | 'violet' | 'yellow' | 'blue' | 'red' | 'white';
+export type Color =
+  | 'black'
+  | 'blue-100'
+  | 'blue-200'
+  | 'blue-300'
+  | 'blue-400'
+  | 'green-100'
+  | 'green-200'
+  | 'green-300'
+  | 'grey-100'
+  | 'grey-200'
+  | 'grey-300'
+  | 'grey-400'
+  | 'grey-500'
+  | 'grey-600'
+  | 'red-100'
+  | 'red-200'
+  | 'red-300'
+  | 'violet'
+  | 'white'
+  | 'yellow';

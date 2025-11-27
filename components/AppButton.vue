@@ -1,10 +1,16 @@
 <script setup lang="ts">
   const props = withDefaults(
-    defineProps<{ tag?: 'a' | 'button'; loading?: boolean; disabled?: boolean; hierarchy?: 'primary' | 'secondary'; color?: 'grey-dark' | 'red' }>(),
+    defineProps<{
+      tag?: 'a' | 'button';
+      loading?: boolean;
+      disabled?: boolean;
+      hierarchy?: 'primary' | 'secondary';
+      color?: 'grey-600' | 'red-300';
+    }>(),
     {
       tag: 'button',
       hierarchy: 'primary',
-      color: 'grey-dark',
+      color: 'grey-600',
     }
   );
 </script>
@@ -39,16 +45,16 @@
     }
 
     &.primary {
-      color: #fff;
+      color: color('white');
 
-      &.grey-dark {
-        background: color('grey-dark');
-        border-color: color('grey-dark');
+      &.grey-600 {
+        background: color('grey-600');
+        border-color: color('grey-600');
       }
 
-      &.red {
-        background: color('red');
-        border-color: color('red');
+      &.red-300 {
+        background: color('red-300');
+        border-color: color('red-300');
       }
 
       &:disabled,
@@ -59,14 +65,14 @@
     }
 
     &.secondary {
-      &.grey-dark {
-        color: color('grey-dark');
-        border-color: color('grey-dark');
+      &.grey-600 {
+        color: color('grey-600');
+        border-color: color('grey-600');
       }
 
-      &.red {
-        color: color('red');
-        border-color: color('red');
+      &.red-300 {
+        color: color('red-300');
+        border-color: color('red-300');
       }
 
       &:disabled,

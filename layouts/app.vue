@@ -164,7 +164,6 @@
   .back-button {
     width: 40px;
     height: 40px;
-    background: color('beige');
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -186,7 +185,7 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    color: white;
+    color: color('white');
     font-size: 14px;
 
     @include breakpoint('medium') {

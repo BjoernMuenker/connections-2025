@@ -49,13 +49,13 @@
       });
 
       $gsap.to(btnRefs.value, {
-        color: '#333',
+        color: getColor('grey-600'),
         ease,
         duration,
       });
 
       $gsap.to(btn, {
-        color: 'white',
+        color: getColor('white'),
         ease,
         duration,
       });
@@ -91,7 +91,7 @@
       position: absolute;
       top: spacing('xs');
       bottom: spacing('xs');
-      background: color('grey-dark');
+      background: color('grey-600');
       border-radius: spacing('xs');
       z-index: 0;
     }

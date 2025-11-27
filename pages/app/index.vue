@@ -247,11 +247,11 @@
     }
 
     &.lost::after {
-      background: color('red');
+      background: color('red-200');
     }
 
     &.won::after {
-      background: color('green');
+      background: color('green-200');
     }
   }
 

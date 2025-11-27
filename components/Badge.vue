@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  const props = defineProps<{ color: 'green' }>();
+  const props = defineProps<{ color: 'green-200' }>();
 </script>
 
 <template>
@@ -15,9 +15,9 @@
     padding: spacing('xxs');
     border-radius: 4px;
 
-    &.green {
-      color: color('green-dark');
-      background: color('green-light');
+    &.green-200 {
+      color: color('green-200');
+      background: color('green-100');
     }
   }
 </style>

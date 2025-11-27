@@ -67,6 +67,7 @@ export default defineFormKitConfig(() => {
           },
           new_username: 'Diesen Nutzernamen verwendest du bereits.',
           unique_username: 'Dieser Nutzername ist leider schon vergeben.',
+          email: `E-Mail ist ungültig.`,
           trimmed: ({ name }) => `${name} enhält unerlaubte Leerzeichen.`,
         },
       },

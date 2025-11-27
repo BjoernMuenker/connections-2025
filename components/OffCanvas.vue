@@ -140,7 +140,7 @@
     top: spacing('m');
     width: 40px;
     height: 40px;
-    background: color('beige');
+    background: color('grey-100');
     border-radius: 50%;
     display: flex;
     align-items: center;

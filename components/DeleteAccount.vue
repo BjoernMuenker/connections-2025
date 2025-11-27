@@ -42,7 +42,7 @@
         <NuxtLink :to="routes.app" v-slot="{ href, navigate }" custom>
           <AppButton tag="a" :href="href" hierarchy="secondary" :disabled="submitting" @click="navigate">Abbrechen</AppButton>
         </NuxtLink>
-        <AppButton color="red" @click="deleteAccount" :disabled="submitting">Ja, Account löschen</AppButton>
+        <AppButton color="red-300" @click="deleteAccount" :disabled="submitting">Ja, Account löschen</AppButton>
       </div>
     </BaseTile>
   </div>

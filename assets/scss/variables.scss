@@ -1,30 +1,26 @@
 @use 'sass:map';
 
 $colors: (
-  'beige': #efefe6,
   'black': #000000,
-  'blue': #b0c4ef,
-  'green': #a0c35a,
-  'grey-dark': #404040,
-  // grey-500 (darkest)
-  'grey': #5a594e,
+  'blue-100': #b0c4ef,
+  'blue-200': #aeaeff,
+  'blue-300': #3030ff,
+  'blue-400': #3860b6,
+  'green-100': #cffad9,
+  'green-200': #a0c35a,
+  'green-300': #0f882b,
   'grey-100': #efefef,
   'grey-200': #c2c2c2,
   'grey-300': #bdbdbd,
   'grey-400': #a3a3a3,
   'grey-500': #82837a,
   'grey-600': #404040,
-  'grey-light': #7f7f7f,
-  'grey-medium': #82837a,
-  'grey-very-light': #bdbdbd,
-  'blue-dark': #3860b6,
-  'red': #ff6961,
-  'red-light': #ffc8c8,
+  'red-100': #ffc8c8,
+  'red-200': #ff6961,
+  'red-300': #e00000,
   'violet': #ba81c5,
   'white': #ffffff,
   'yellow': #f9df6d,
-  'green-dark': #0f882b,
-  'green-light': #cffad9,
 );
 
 $border-radius: (

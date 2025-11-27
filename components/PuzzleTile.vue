@@ -91,7 +91,7 @@
       color: color('white');
 
       .selected-indicator {
-        background-color: color('grey-dark');
+        background-color: color('grey-600');
       }
     }
 

@@ -82,7 +82,9 @@
         <AppButton type="submit" class="button block" @click="resetMessages" :disabled="loading">Account erstellen</AppButton>
       </template>
     </FormKit>
-    <div class="account-exists copy-medium">Du hast schon einen Account?<br /><NuxtLink :to="routes.signIn">Melde dich jetzt an.</NuxtLink></div>
+    <div class="account-exists copy-medium">
+      Du hast schon einen Account?<br /><NuxtLink :to="routes.signIn" class="text-link">Melde dich jetzt an.</NuxtLink>
+    </div>
   </div>
 </template>
 
@@ -123,10 +125,5 @@
     padding: 0 spacing('xl');
     margin-top: spacing('l');
     width: 100%;
-  }
-
-  a {
-    color: blue;
-    text-decoration: underline;
   }
 </style>

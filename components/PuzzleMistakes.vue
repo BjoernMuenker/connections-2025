@@ -66,7 +66,7 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background: color('grey');
+      background: color('grey-600');
     }
 
     .mistake-bubble {
@@ -86,7 +86,7 @@
       height: 100%;
       top: 0;
       left: 0;
-      background-color: color('grey-very-light');
+      background-color: color('grey-200');
     }
   }
 </style>
