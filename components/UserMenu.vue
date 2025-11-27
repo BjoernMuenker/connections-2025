@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { useAppStore } from '~/store/appStore';
-
   const user = useSupabaseUser();
   const supabase = useSupabaseClient();
   const runtimeConfig = useRuntimeConfig();
@@ -24,11 +22,12 @@
         <button @click="signOut">Abmelden</button>
       </div>
       <div class="nav-section">
+        <NuxtLink :to="routes.tutorial">Tipps & Tricks</NuxtLink>
+      </div>
+      <div class="nav-section">
         <NuxtLink :to="routes.changeUsername">Nutzername ändern</NuxtLink>
         <NuxtLink :to="routes.changePasswordAuthorized">Passwort ändern</NuxtLink>
         <NuxtLink :to="routes.changeEmail">E-Mail ändern</NuxtLink>
-      </div>
-      <div class="nav-section">
         <NuxtLink :to="routes.deleteAccount">Account löschen</NuxtLink>
       </div>
     </nav>
@@ -67,10 +66,23 @@
 
   .user {
     margin-bottom: spacing('xl');
+    padding-right: 56px;
+
+    * {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   .build-info {
     margin-top: spacing('xl');
     color: color('grey-200');
+
+    * {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 </style>

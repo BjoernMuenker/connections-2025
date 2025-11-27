@@ -1,1 +1,8 @@
-export type ErrorCode = 'otp_expired' | 'email_not_confirmed' | 'invalid_credentials' | 'user_already_exists' | 'unknown' | 'same_password';
+export type ErrorCode =
+  | 'email_not_confirmed'
+  | 'invalid_credentials'
+  | 'otp_expired'
+  | 'same_password'
+  | 'unknown'
+  | 'user_already_exists'
+  | 'weak_password';

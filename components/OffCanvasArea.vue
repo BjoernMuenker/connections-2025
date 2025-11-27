@@ -4,12 +4,19 @@
 
   const store = useAppStore();
   const offCanvasRef = ref();
+
+  const showBackdrop = ref(false);
+
+  function onBackdropClick() {
+    if (!store.offCanvas?.clickOutside) return;
+    store.closeOffCanvas();
+  }
 </script>
 
 <template>
   <div class="off-canvas-area">
-    <div class="off-canvas-backdrop" :class="{ visible: store.offCanvasVisible }" @click="store.closeOffCanvas"></div>
-    <OffCanvas ref="offCanvasRef" v-bind="store.offCanvas" />
+    <div class="off-canvas-backdrop" :class="{ visible: showBackdrop }" @click="onBackdropClick"></div>
+    <OffCanvas ref="offCanvasRef" v-bind="store.offCanvas" @on-open="showBackdrop = true" @on-close="showBackdrop = false" />
   </div>
 </template>
 

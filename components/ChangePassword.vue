@@ -62,7 +62,7 @@
           </MessageBox>
           <template v-if="!successMessage">
             <FormkitPassword
-              validation="required|user_password"
+              validation="required|length:6"
               name="password"
               label="Neues Passwort"
               v-model="formData.password"

@@ -8,8 +8,7 @@ export function useTutorial() {
   const user = useSupabaseUser();
 
   async function showTutorial(id: TutorialId) {
-    if (store.offCanvasVisible) return;
-    // if (!user.value || store.tutorials?.includes(id)) return;
+    if (store.offCanvasVisible || !user.value || store.tutorials?.includes(id)) return;
 
     await sleep(500);
 

@@ -29,6 +29,7 @@
     puzzle,
     reset,
     save,
+    showMistakesAndCommunityView,
     solvedGroups,
     updateHeatmap,
   } = usePuzzle(props.puzzleId);
@@ -104,7 +105,7 @@
     const totalMatch = Object.values(sortedGroups).find((group) => group.length === 4);
 
     if (totalMatch) {
-      puzzle.value!.solved.push(totalMatch[0].id);
+      puzzle.value.solved.push(totalMatch[0].id);
 
       const won = puzzle.value.solved.length === 4;
 
@@ -114,6 +115,11 @@
 
       await save();
       await animateSelectedItems();
+
+      if (won) {
+        animateMistakesAndCommunityView();
+      }
+
       await solveGroup(totalMatch[0].id);
       animationRunning.value = false;
       updateHeatmap();
@@ -127,8 +133,8 @@
       const remainingGroupIds = (['a', 'b', 'c', 'd'] as PuzzleGroupId[]).filter((groupId) => !puzzle.value?.solved.includes(groupId));
       puzzle.value.solved = [...puzzle.value.solved, ...remainingGroupIds];
       await save();
-
       await animateSelectedItems();
+      animateMistakesAndCommunityView();
       store.pushToastNotification('Vielleicht nächstes Mal!');
       deselectAllItems();
 
@@ -156,6 +162,20 @@
     showTutorial('firstMistake');
 
     animationRunning.value = false;
+  }
+
+  async function animateMistakesAndCommunityView() {
+    const flipState = $gsap.Flip.getState('.ui-wrapper');
+
+    $gsap.to('.puzzle-mistakes, .switch-toggle', {
+      opacity: 0,
+      onComplete: () => {
+        showMistakesAndCommunityView.value = false;
+        nextTick(() => {
+          $gsap.Flip.from(flipState, { duration: 0.5, ease: 'power2.inOut' });
+        });
+      },
+    });
   }
 
   function getSelectedItemDomElements() {
@@ -267,6 +287,15 @@
     router.push(`/app/${props.puzzleId}/statistik`);
   }
 
+  function onPrimaryButtonClick() {
+    if (puzzle.value?.solved.length !== 4) {
+      submitItems();
+      return;
+    }
+
+    showResults();
+  }
+
   onMounted(() => {
     $gsap.CustomWiggle.create('wiggle', { wiggles: 6 });
   });
@@ -292,21 +321,27 @@
           :class="`font-${puzzle.font.toLowerCase()}`"
         />
       </div>
-      <PuzzleMistakes v-if="puzzle.solved.length !== 4" :remaining-mistakes="puzzle.remainingMistakes" class="animation-target" />
-      <div class="button-container">
+      <div class="ui-wrapper">
+        <template v-if="showMistakesAndCommunityView">
+          <PuzzleMistakes :remaining-mistakes="puzzle.remainingMistakes" class="animation-target" />
+          <SwitchToggle v-if="showMistakesAndCommunityView" v-model="communityView" :disabled="animationRunning" id="show-community-turns">
+            Community-Sicht
+          </SwitchToggle>
+        </template>
+        <AppButton
+          :disabled="(!maxItemsSelected && puzzle.solved.length !== 4) || animationRunning"
+          @click="onPrimaryButtonClick"
+          class="animation-target"
+        >
+          {{ puzzle.solved.length !== 4 ? 'Absenden' : 'Statistik anzeigen' }}
+        </AppButton>
         <!-- START DEBUG -->
         <AppButton v-if="store.debug" hierarchy="secondary" :disabled="animationRunning" @click="reset" class="animation-target">
           Zurücksetzen
         </AppButton>
         <!-- END DEBUG -->
-        <template v-if="puzzle.solved.length !== 4">
-          <SwitchToggle v-model="communityView" :disabled="animationRunning" id="show-community-turns">Community-Sicht</SwitchToggle>
-          <AppButton :disabled="!maxItemsSelected || animationRunning" @click="submitItems" class="animation-target submit">Absenden</AppButton>
-        </template>
-        <template v-else>
-          <AppButton @click="showResults" class="animation-target">Statistik anzeigen</AppButton>
-        </template>
       </div>
+      <div class="button-container"></div>
     </div>
   </ClientOnly>
 </template>
@@ -368,14 +403,17 @@
     flex: 1;
   }
 
-  .button-container {
+  .ui-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    // flex-wrap: wrap;
     flex-direction: column;
-    gap: spacing('m');
-    margin-top: spacing('m');
+    margin-top: spacing('l');
+  }
+
+  .switch-toggle {
+    margin-top: spacing('s');
+    margin-bottom: spacing('m');
   }
 
   .toast-area {
@@ -388,10 +426,6 @@
 
   .puzzle-group {
     grid-column: span 4;
-  }
-
-  .submit {
-    width: 100%;
   }
 
   button {

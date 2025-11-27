@@ -25,30 +25,6 @@
     }
 
     return getTitle();
-
-    // if (route.path === routes.leaderboard) {
-    //   return 'Bestenliste';
-    // }
-
-    // if (route.path === routes.statistics) {
-    //   return 'Statistik';
-    // }
-
-    // if (route.path === routes.changePasswordAuthorized) {
-    //   return 'Passwort ändern';
-    // }
-
-    // if (route.path === routes.changeEmail) {
-    //   return 'E-Mail ändern';
-    // }
-
-    // if (route.path === routes.deleteAccount) {
-    //   return 'Account löschen';
-    // }
-
-    // if (route.path === routes.score) {
-    //   return 'Score';
-    // }
   }
 
   watch(
@@ -87,7 +63,7 @@
       <TransitionGroup name="elevator" tag="div" class="title-wrapper">
         <div :key="title" class="title heading-large" v-html="title"></div>
       </TransitionGroup>
-      <button class="avatar" @click="store.openOffCanvas({ component: 'UserMenu' })">
+      <button class="avatar" @click="store.openOffCanvas({ component: 'UserMenu', clickOutside: true })">
         {{ user?.user_metadata?.display_name?.slice(0, 1) }}
       </button>
     </header>
@@ -139,7 +115,6 @@
 
   .page-content {
     padding: 100px spacing('m') spacing('m') spacing('m');
-    overflow-x: hidden;
 
     @include breakpoint('small') {
       max-width: 616px;
@@ -171,6 +146,11 @@
     align-items: center;
     justify-content: center;
     background: color('white');
+    transition: transform 0.3s;
+
+    &:active:not(:disabled) {
+      transform: scale(0.85);
+    }
 
     @include breakpoint('medium') {
       width: 48px;
@@ -181,7 +161,7 @@
   .avatar {
     width: 40px;
     height: 40px;
-    background: linear-gradient(#5c5c5c, #000);
+    background: linear-gradient(color('grey-500'), color('black'));
     border-radius: 50%;
     display: flex;
     align-items: center;

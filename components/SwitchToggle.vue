@@ -50,7 +50,7 @@
       margin: 0;
       cursor: pointer;
       line-height: 1.3em;
-      color: color('grey-600');
+      color: color('black');
 
       .disabled & {
         cursor: not-allowed;

@@ -11,6 +11,7 @@ export default defineNuxtConfig({
         lang: 'de',
       },
       meta: [
+        { name: 'robots', content: 'noindex,nofollow' },
         { charset: 'utf-8' },
         {
           hid: 'viewport',

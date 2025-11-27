@@ -11,6 +11,7 @@
   const password = ref('');
 
   const errorMessage = ref('');
+  const redirecting = ref(false);
 
   // dangerous... do it as a one time watcher instead?
   // watch(
@@ -28,6 +29,7 @@
     try {
       const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
       if (error) throw error;
+      redirecting.value = true;
       await sleep(100);
       navigateTo(routes.app);
     } catch (error: any) {
@@ -46,9 +48,23 @@
       <MessageBox v-if="errorMessage" type="error">
         {{ errorMessage }}
       </MessageBox>
-      <FormKit validation="required|email" label="E-Mail" v-model="email" placeholder="Deine E-Mail" type="email" autocomplete :disabled="loading" />
-      <FormkitPassword v-model="password" validation="required" :include-reset-password="true" autocomplete="current-password" :disabled="loading" />
-      <AppButton type="submit" class="button block" :loading="loading">Anmelden</AppButton>
+      <FormKit
+        validation="required|email"
+        label="E-Mail"
+        v-model="email"
+        placeholder="Deine E-Mail"
+        type="email"
+        autocomplete
+        :disabled="loading || redirecting"
+      />
+      <FormkitPassword
+        v-model="password"
+        validation="required"
+        :include-reset-password="true"
+        autocomplete="current-password"
+        :disabled="loading || redirecting"
+      />
+      <AppButton type="submit" class="button block" :loading="loading || redirecting">Anmelden</AppButton>
     </FormKit>
     <div class="no-account copy-medium">
       Du hast noch keinen Account?<br /><NuxtLink :to="routes.signUp" class="text-link">Erstell dir jetzt einen.</NuxtLink>

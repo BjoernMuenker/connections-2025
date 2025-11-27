@@ -14,6 +14,7 @@ export function useRoutes() {
     signIn: '/anmelden',
     signUp: '/account-erstellen',
     statistics: '/app/statistik',
+    tutorial: '/app/tipps-und-tricks',
   };
 
   const titles: { [key in keyof typeof routes]: string } = {
@@ -31,6 +32,7 @@ export function useRoutes() {
     signIn: 'Anmelden',
     signUp: 'Account erstellen',
     statistics: 'Statistik',
+    tutorial: 'Tipps & Tricks',
   };
 
   function getTitle() {

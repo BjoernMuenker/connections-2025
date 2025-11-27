@@ -49,12 +49,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: spacing('m');
     gap: spacing('xs');
-
-    .mistakes-caption {
-      font-size: 16px;
-    }
 
     .mistakes-bubbles {
       display: flex;

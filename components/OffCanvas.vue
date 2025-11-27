@@ -7,13 +7,19 @@
   const props = defineProps<OffCanvas>();
   const store = useAppStore();
 
+  const emit = defineEmits<{
+    (e: 'onOpen'): void;
+    (e: 'onClose'): void;
+  }>();
+
   function open() {
-    console.log('open');
+    emit('onOpen');
     $gsap.to('.off-canvas', { translateY: 0, duration: 0.5, ease: 'power4.out' });
     $gsap.to('.non-off-canvas', { scale: 0.9, duration: 0.5, ease: 'power4.out' });
   }
 
   function close() {
+    emit('onClose');
     $gsap.to('.off-canvas', { translateY: '100%', duration: 0.5, ease: 'power4.out' });
     $gsap.to('.non-off-canvas', { scale: 1, duration: 0.5, ease: 'power4.out' });
   }

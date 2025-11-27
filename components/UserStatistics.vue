@@ -14,7 +14,7 @@
     scope?: 'player' | 'global';
   }>();
 
-  const { getColorByGroupId, getNameByGroupId, getGroupsSolvedByUser } = usePuzzle();
+  const { getColorByGroupId, getGroupsSolvedByUser } = usePuzzle();
 
   const solvedFirst = computed(() => {
     return getSolveOrder(props.states, 'first');
@@ -68,8 +68,12 @@
     const totalMistakes = sumArray(Object.values(mistakesPerPuzzle));
     const averageMistakesPerDay = props.states.length === 0 ? 0 : totalMistakes / props.states.length;
     const daysWithoutMistake = Object.values(mistakesPerPuzzle).filter((value) => value === 0).length;
-    const [dayWithMostMistakes, mostMistakesPerDay] = Object.entries(mistakesPerPuzzle).reduce((max, entry) => (entry[1] > max[1] ? entry : max));
-    const [dayWithLeastMistakes, leastMistakesPerDay] = Object.entries(mistakesPerPuzzle).reduce((min, entry) => (entry[1] < min[1] ? entry : min));
+
+    const [dayWithMostMistakes, mostMistakesPerDay] = Object.entries(mistakesPerPuzzle).sort((a, b) => b[1] - a[1] || Number(b[0]) - Number(a[0]))[0];
+
+    const [dayWithLeastMistakes, leastMistakesPerDay] = Object.entries(mistakesPerPuzzle).sort(
+      (a, b) => a[1] - b[1] || Number(b[0]) - Number(a[0])
+    )[0];
 
     return [
       {

@@ -1,26 +1,34 @@
 <script setup lang="ts">
   import BaseTile from './BaseTile.vue';
 
-  const props = defineProps<{ scores: { id: string; username: string | null; score: number }[] }>();
+  const props = defineProps<{ scores: { username: string | null; score: number }[] }>();
+
+  const upperRanks = computed(() => props.scores.slice(0, 3));
+  const lowerRanks = computed(() => props.scores.slice(0, 2));
 </script>
 <template>
   <div class="leaderboard">
-    <div class="top-ranks">
-      <BaseTile class="entry" v-for="(entry, index) in scores.slice(0, 3)">
-        <div class="rank heading-medium">{{ index + 1 }}</div>
-        <div>
-          <div class="player heading-medium">{{ entry.username }}</div>
-          <div class="score heading-medium">{{ formatNumber(entry.score) }}</div>
+    <template v-if="!scores || scores.length === 0">
+      <BaseTile>Noch keine Einträge.</BaseTile>
+    </template>
+    <template v-else>
+      <div class="top-ranks">
+        <BaseTile class="entry" v-for="(entry, index) in upperRanks" padding="small">
+          <div class="rank heading-medium">{{ index + 1 }}</div>
+          <div>
+            <div class="player heading-medium">{{ entry.username }}</div>
+            <div class="score heading-medium">{{ formatNumber(entry.score) }}</div>
+          </div>
+        </BaseTile>
+      </div>
+      <BaseTile v-if="lowerRanks.length !== 0" class="lower-ranks copy-default" padding="small">
+        <div v-for="(entry, index) in lowerRanks" class="entry">
+          <div class="rank">{{ index + 4 }}</div>
+          <div class="player">{{ entry.username }}</div>
+          <div class="score">{{ formatNumber(entry.score) }}</div>
         </div>
       </BaseTile>
-    </div>
-    <BaseTile class="lower-ranks copy-default">
-      <div v-for="(entry, index) in scores" class="entry">
-        <div class="rank">{{ index + 1 }}</div>
-        <div class="player">{{ entry.username }}</div>
-        <div class="score">{{ formatNumber(entry.score) }}</div>
-      </div>
-    </BaseTile>
+    </template>
   </div>
 </template>
 
@@ -37,10 +45,6 @@
     gap: spacing('m');
     margin-bottom: spacing('xl');
 
-    .rank {
-      text-align: center;
-    }
-
     .score {
       margin-top: spacing('xxs');
       @include var-font-weight(400);
@@ -54,10 +58,9 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 16px;
+        width: 12px;
         height: 100%;
         content: '';
-        background: red;
         z-index: 1;
       }
 
@@ -105,6 +108,7 @@
     width: 35px;
     margin-right: spacing('m');
     flex-shrink: 0;
+    text-align: right;
   }
 
   .entry {

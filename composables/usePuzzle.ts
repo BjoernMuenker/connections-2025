@@ -24,6 +24,7 @@ export const usePuzzle = (puzzleId?: string) => {
   const loading = ref(false);
   const communityView = ref(false);
   const puzzle = ref<PuzzleState>();
+  const showMistakesAndCommunityView = ref(true);
   let lastPersistedState: PuzzlePersistedState | undefined;
   let scores: PuzzleScore | undefined;
 
@@ -159,6 +160,8 @@ export const usePuzzle = (puzzleId?: string) => {
   }
 
   async function onLoadComplete(startedAt: number) {
+    showMistakesAndCommunityView.value = puzzle.value?.solved.length !== 4;
+
     const savegame = createSavegame();
 
     if (savegame) {
@@ -257,6 +260,7 @@ export const usePuzzle = (puzzleId?: string) => {
 
     puzzle.value = defaultPuzzle;
     solvedGroups.value = [];
+    showMistakesAndCommunityView.value = true;
     await save();
   }
 
@@ -385,6 +389,7 @@ export const usePuzzle = (puzzleId?: string) => {
     puzzle,
     reset,
     save,
+    showMistakesAndCommunityView,
     solvedGroups,
     updateHeatmap,
   };

@@ -182,6 +182,10 @@
 </template>
 
 <style lang="scss" scoped>
+  .wrapper {
+    overflow-x: hidden;
+  }
+
   .puzzles {
     display: flex;
   }
@@ -197,6 +201,7 @@
   }
 
   .puzzle {
+    position: relative;
     display: block;
     width: 200px;
     height: 200px;
@@ -281,6 +286,12 @@
 
       @include breakpoint('medium') {
         font-size: 20px;
+      }
+
+      @include hover-only {
+        &:hover {
+          color: color('blue-300');
+        }
       }
     }
 
