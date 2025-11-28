@@ -13,16 +13,6 @@
   const errorMessage = ref('');
   const redirecting = ref(false);
 
-  // dangerous... do it as a one time watcher instead?
-  // watch(
-  //   () => user.value,
-  //   (value) => {
-  //     if (!value) return;
-  //     navigateTo('/app');
-  //   },
-  //   { immediate: true }
-  // );
-
   async function handleLogin() {
     errorMessage.value = '';
 

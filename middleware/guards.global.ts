@@ -2,12 +2,23 @@ import { puzzles } from '~/content/puzzles';
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const { routes, isAppRoute } = useRoutes();
+  const { getServerTime } = useServerTime();
+  const user = useSupabaseUser();
+
+  if (to.path === routes.signUp) {
+    const serverTime = await getServerTime();
+    if (!serverTime || serverTime < new Date('2025-12-01T00:00:00').getTime()) {
+      return navigateTo(routes.signUpGuard);
+    }
+  }
+
+  if (to.path === routes.signIn && user.value) {
+    return navigateTo(routes.app);
+  }
 
   if (!isAppRoute(to.path)) {
     return;
   }
-
-  const { getServerTime } = useServerTime();
 
   if (import.meta.server) {
     const { data } = await useFetch<boolean>('/api/check-auth');
