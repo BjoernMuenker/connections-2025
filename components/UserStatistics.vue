@@ -38,7 +38,7 @@
 
     for (const state of props.states) {
       const solvedGroups = getGroupsSolvedByUser(state);
-      if (solvedGroups.length === 0) continue;
+      if (solvedGroups.length === 0 || (position === 'last' && state.solved.length !== 4)) continue;
       const index = position === 'first' ? 0 : solvedGroups.length - 1;
       counts[solvedGroups[index]]++;
     }
@@ -65,15 +65,19 @@
     }
 
     const mistakesPerPuzzle = getMistakesPerPuzzle(props.states);
+
     const totalMistakes = sumArray(Object.values(mistakesPerPuzzle));
+
     const averageMistakesPerDay = props.states.length === 0 ? 0 : totalMistakes / props.states.length;
     const daysWithoutMistake = Object.values(mistakesPerPuzzle).filter((value) => value === 0).length;
 
-    const [dayWithMostMistakes, mostMistakesPerDay] = Object.entries(mistakesPerPuzzle).sort((a, b) => b[1] - a[1] || Number(b[0]) - Number(a[0]))[0];
+    const [dayWithMostMistakes, mostMistakesPerDay] = Object.entries(mistakesPerPuzzle).sort(
+      (a, b) => b[1] - a[1] || Number(b[0]) - Number(a[0])
+    )?.[0] ?? [undefined, 0];
 
     const [dayWithLeastMistakes, leastMistakesPerDay] = Object.entries(mistakesPerPuzzle).sort(
       (a, b) => a[1] - b[1] || Number(b[0]) - Number(a[0])
-    )[0];
+    )?.[0] ?? [undefined, 0];
 
     return [
       {
@@ -89,12 +93,12 @@
       {
         key: 'dayWithMostMistake',
         caption: 'Wenigste Fehler',
-        value: `${dayWithLeastMistakes}.12. (${leastMistakesPerDay})`,
+        value: dayWithMostMistakes ? `${dayWithLeastMistakes}.12. (${leastMistakesPerDay})` : 'n/a',
       },
       {
         key: 'dayWithLeastMistake',
         caption: 'Meiste Fehler',
-        value: `${dayWithMostMistakes}.12. (${mostMistakesPerDay})`,
+        value: dayWithMostMistakes ? `${dayWithMostMistakes}.12. (${mostMistakesPerDay})` : 'n/a',
       },
       {
         key: 'daysWithoutMistake',

@@ -16,7 +16,9 @@ export const useStats = () => {
       return;
     }
 
-    return data;
+    return data.map((entry) => {
+      return { ...entry, username: entry.username ?? 'n/a' };
+    });
   }
 
   async function getScore(username: string) {

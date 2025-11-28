@@ -30,7 +30,7 @@
           <div class="key">{{ value.amount }} × {{ scoreActions[key as ScoreActionId]?.name }}</div>
           <div class="value">{{ formatNumber(value.total) }}</div>
         </div>
-        <template v-if="Object.values(score).length === 0"> Du hast diesmal leider keine Aktionen abgeschlossen, die deinen Score erhöhen. </template>
+        <template v-if="Object.values(score).length === 0"> Du hast noch keine Aktion abgeschlossen, die deinen Score erhöht. </template>
       </div>
     </BaseTile>
   </div>

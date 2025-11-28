@@ -65,16 +65,4 @@
       margin-bottom: spacing('m');
     }
   }
-
-  :deep(.base-tile) {
-    p + p,
-    p + ul,
-    ul + p {
-      margin-top: spacing('m');
-    }
-
-    ul {
-      padding-left: spacing('m');
-    }
-  }
 </style>

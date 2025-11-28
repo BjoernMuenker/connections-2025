@@ -20,32 +20,24 @@
 </script>
 
 <template>
-  <TutorialFirstLogin v-if="id === 'firstLogin'" />
-  <TutorialFirstPuzzleStarted v-if="id === 'firstPuzzleStarted'" />
-  <TutorialCommunityView v-if="id === 'communityView'" />
-  <TutorialFirstMistake v-if="id === 'firstMistake'" />
-  <TutorialFirstPuzzleLost v-if="id === 'firstPuzzleLost'" />
-  <TutorialFirstPuzzleWon v-if="id === 'firstPuzzleWon'" />
-  <TutorialFirstGroup v-if="id === 'firstGroup'" />
+  <div class="wrapper">
+    <TutorialFirstLogin v-if="id === 'firstLogin'" />
+    <TutorialFirstPuzzleStarted v-if="id === 'firstPuzzleStarted'" />
+    <TutorialCommunityView v-if="id === 'communityView'" />
+    <TutorialFirstMistake v-if="id === 'firstMistake'" />
+    <TutorialFirstPuzzleLost v-if="id === 'firstPuzzleLost'" />
+    <TutorialFirstPuzzleWon v-if="id === 'firstPuzzleWon'" />
+    <TutorialFirstGroup v-if="id === 'firstGroup'" />
 
-  <template v-if="id === 'firstLogin'">
-    <AppButton @click="closeOffCanvas">Auf geht's</AppButton>
-  </template>
+    <template v-if="id === 'firstLogin'">
+      <AppButton @click="closeOffCanvas">Auf geht's</AppButton>
+    </template>
 
-  <AppButton v-if="id !== 'firstLogin'" @click="closeOffCanvas">Alles klar</AppButton>
+    <AppButton v-if="id !== 'firstLogin'" @click="closeOffCanvas">Alles klar</AppButton>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-  p + p,
-  p + ul,
-  ul + p {
-    margin-top: spacing('m');
-  }
-
-  ul {
-    padding-left: spacing('m');
-  }
-
   button {
     margin-top: spacing('l');
     width: 100%;

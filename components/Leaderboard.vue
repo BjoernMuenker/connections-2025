@@ -4,7 +4,7 @@
   const props = defineProps<{ scores: { username: string | null; score: number }[] }>();
 
   const upperRanks = computed(() => props.scores.slice(0, 3));
-  const lowerRanks = computed(() => props.scores.slice(0, 2));
+  const lowerRanks = computed(() => props.scores.slice(3));
 </script>
 <template>
   <div class="leaderboard">

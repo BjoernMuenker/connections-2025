@@ -15,7 +15,7 @@ export type Database = {
           score: number;
           tutorials: string[] | null;
           updated_at: string;
-          username: string;
+          username: string | null;
         };
         Insert: {
           created_at?: string;
@@ -23,7 +23,7 @@ export type Database = {
           score?: number;
           tutorials?: string[] | null;
           updated_at?: string;
-          username: string;
+          username?: string | null;
         };
         Update: {
           created_at?: string;
@@ -31,7 +31,7 @@ export type Database = {
           score?: number;
           tutorials?: string[] | null;
           updated_at?: string;
-          username?: string;
+          username?: string | null;
         };
         Relationships: [];
       };
