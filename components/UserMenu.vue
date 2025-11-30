@@ -4,11 +4,7 @@
   const runtimeConfig = useRuntimeConfig();
 
   const { routes } = useRoutes();
-
-  async function signOut() {
-    await supabase.auth.signOut();
-    navigateTo(routes.signIn);
-  }
+  const { signOut } = useAuth();
 </script>
 
 <template>

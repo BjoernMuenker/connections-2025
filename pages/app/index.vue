@@ -9,6 +9,7 @@
 
   const store = useAppStore();
   const user = useSupabaseUser();
+  const { signOut } = useAuth();
   const { getServerTime } = useServerTime();
   const { getScore } = useStats();
   const { getSavegames } = useSavegames();
@@ -98,8 +99,7 @@
       if (toastIndex === lockedToasts.length - 1) {
         toastIndex++;
         await sleep(2000);
-        await useSupabaseClient().auth.signOut();
-        router.push(routes.signIn);
+        signOut();
         return;
       }
 

@@ -5,6 +5,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const store = useAppStore();
   const { fetchTutorials } = useTutorial();
 
+  // we can only do this for the approute?
   const tutorials = await fetchTutorials();
   if (!tutorials) return;
 
