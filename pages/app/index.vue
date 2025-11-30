@@ -183,7 +183,9 @@
 
 <style lang="scss" scoped>
   .wrapper {
-    overflow-x: hidden;
+    @media (min-width: 616px) {
+      overflow-x: hidden;
+    }
   }
 
   .puzzles {

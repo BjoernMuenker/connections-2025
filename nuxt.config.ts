@@ -44,7 +44,7 @@ export default defineNuxtConfig({
           property: 'og:description',
           content: `Bilde bis Heiligabend jeden Tag 4 Gruppen aus je 4 Wörtern.`,
         },
-        { hid: 'og:image', property: 'og:image', content: 'ttps://24.bjoernmuenker.de/meta/open-graph-image.jpg' },
+        { hid: 'og:image', property: 'og:image', content: 'https://hohoho.bjoernmuenker.de/meta/open-graph-image.jpg' },
         { hid: 'og:image:width', property: 'og:image:width', content: '1200' },
         { hid: 'og:image:height', property: 'og:image:height', content: '630' },
         { hid: 'twitter:title', name: 'twitter:title', content: 'Dein Rätsel-Adventskalender' },
@@ -54,7 +54,7 @@ export default defineNuxtConfig({
           name: 'twitter:description',
           content: `Bilde bis Heiligabend jeden Tag 4 Gruppen aus je 4 Wörtern.`,
         },
-        { hid: 'twitter:image', name: 'twitter:image', content: 'https://24.bjoernmuenker.de/meta/twitter-image.jpg' },
+        { hid: 'twitter:image', name: 'twitter:image', content: 'https://hohoho.bjoernmuenker.de/meta/twitter-image.jpg' },
       ],
       link: [
         {
