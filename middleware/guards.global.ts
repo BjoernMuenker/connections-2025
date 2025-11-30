@@ -33,7 +33,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
     const user = useSupabaseUser();
 
     if (!user.value) {
-      return navigateTo(routes.signIn);
+      if (!(await useSupabaseClient().auth.getUser())) {
+        return navigateTo(routes.signIn);
+      }
     }
   }
 

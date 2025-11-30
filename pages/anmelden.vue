@@ -17,10 +17,9 @@
     errorMessage.value = '';
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
+      const { data, error } = await supabase.auth.signInWithPassword({ email: email.value, password: password.value });
       if (error) throw error;
       redirecting.value = true;
-      await sleep(100);
       navigateTo(routes.app);
     } catch (error: any) {
       errorMessage.value = useAuth().getErrorMessage(error.code);
@@ -30,6 +29,7 @@
 
 <template>
   <div class="wrapper">
+    user: {{ user }}
     <FormKit type="form" @submit="handleLogin" v-slot="{ state: { loading } }">
       <div class="header">
         <h1>Wieder da?</h1>
