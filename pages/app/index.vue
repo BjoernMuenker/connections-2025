@@ -74,7 +74,7 @@
             [],
         },
         ...(savegame && { won: savegame?.data.won && savegame.data.remainingMistakes !== 0 }),
-        lost: savegame?.data.solved.length === 4 && !savegame.data.won, // TODO: should this be part of the savegame?
+        lost: savegame?.data.solved.length === 4 && !savegame.data.won,
         locked: !serverTime.value || serverTime.value < puzzle.unlocksAt,
       };
     });
@@ -137,6 +137,7 @@
     <!-- {{ useDebug().getCompletedPuzzleCount() }}
     {{ useDebug().getMissingItemsCount() }}
     {{ useDebug().getDuplicatedItemGroups() }} -->
+    {{ serverTime }}
     <div class="puzzles" ref="sliderRef">
       <div class="slide" v-for="(puzzle, index) in puzzles" :key="puzzle.id" :class="{ active: activeSlideIndex === index }">
         <button
