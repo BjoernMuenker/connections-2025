@@ -15,7 +15,7 @@ export function useAuth() {
   async function signOut() {
     await supabase.auth.signOut();
     navigateTo(routes.signIn);
-    store.tutorials = [];
+    store.tutorials = undefined;
     store.offCanvas = undefined;
     store.offCanvasVisible = false;
   }

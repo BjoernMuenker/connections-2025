@@ -1,6 +1,5 @@
 import { scoreActions } from '~/content/scoreActions';
 import type { OffCanvas } from '~/types/OffCanvas';
-import type { OffCanvasComponent } from '~/types/OffCanvasComponent';
 import type { ScoreActionId } from '~/types/ScoreActionId';
 import type { ToastNotification } from '~/types/ToastNotification';
 import type { TutorialId } from '~/types/TutorialId';
@@ -16,7 +15,7 @@ export const useAppStore = defineStore(
     const offCanvasVisible = ref(false);
     const offCanvas = ref<OffCanvas>();
     const lastPlayedPuzzleId = ref<string>();
-    const tutorials = ref<TutorialId[]>([]);
+    const tutorials = ref<TutorialId[] | undefined>(undefined);
 
     function pushToastNotification(text: string) {
       toastNotifications.value.push({ id: generateUUID(), text, type: 'info' });

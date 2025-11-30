@@ -8,13 +8,19 @@ export function useTutorial() {
   const user = useSupabaseUser();
 
   async function showTutorial(id: TutorialId) {
+    if (!store.tutorials) {
+      const tutorials = await fetchTutorials();
+      if (!tutorials) return;
+      store.tutorials = tutorials;
+    }
+
     if (store.offCanvasVisible || !user.value || store.tutorials?.includes(id)) return;
 
     await sleep(500);
 
     store.openOffCanvas({ heading: tutorialTitles[id], component: 'Tutorial', componentProps: { id } });
 
-    const newArray = Array.from(new Set([...store.tutorials, id]));
+    const newArray = Array.from(new Set([...(store.tutorials ?? []), id]));
 
     const { data, error } = await client
       .from('profiles')

@@ -4,7 +4,6 @@
   import MessageBox from '~/components/MessageBox.vue';
 
   const supabase = useSupabaseClient();
-  const user = useSupabaseUser();
   const { routes } = useRoutes();
 
   const email = ref('');
@@ -29,7 +28,6 @@
 
 <template>
   <div class="wrapper">
-    user: {{ user }}
     <FormKit type="form" @submit="handleLogin" v-slot="{ state: { loading } }">
       <div class="header">
         <h1>Wieder da?</h1>

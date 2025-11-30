@@ -3,13 +3,6 @@ import { useAppStore } from '~/store/appStore';
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   const store = useAppStore();
-  const { fetchTutorials } = useTutorial();
-
-  // we can only do this for the approute?
-  const tutorials = await fetchTutorials();
-  if (!tutorials) return;
-
-  store.tutorials = tutorials;
 
   /* START DEBUG */
   const attachGlobalEventListeners = () => {
