@@ -12,9 +12,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
     }
   }
 
-  if (to.path === routes.signIn && user.value) {
-    return navigateTo(routes.app);
-  }
+  // skip for now
+  // if (to.path === routes.signIn && user.value) {
+  //   return navigateTo(routes.app);
+  // }
 
   if (!isAppRoute(to.path)) {
     return;
