@@ -63,6 +63,8 @@
   });
 
   const puzzles = computed(() => {
+    if (!serverTime.value) return [];
+
     return Object.values(puzzlesData).map((puzzle) => {
       const savegame = savegames.value?.find((entry) => entry.puzzleId === puzzle.id);
 
@@ -75,7 +77,7 @@
         },
         ...(savegame && { won: savegame?.data.won && savegame.data.remainingMistakes !== 0 }),
         lost: savegame?.data.solved.length === 4 && !savegame.data.won,
-        locked: (serverTime.value ?? 0) < puzzle.unlocksAt,
+        locked: serverTime.value! < puzzle.unlocksAt,
       };
     });
   });
@@ -138,7 +140,7 @@
     {{ useDebug().getMissingItemsCount() }}
     {{ useDebug().getDuplicatedItemGroups() }} -->
     serverTime: {{ new Date(serverTime) }} / {{ new Date(puzzles[0].unlocksAt) }}
-    <div class="puzzles" ref="sliderRef">
+    <div v-if="puzzles" class="puzzles" ref="sliderRef">
       <div class="slide" v-for="(puzzle, index) in puzzles" :key="puzzle.id" :class="{ active: activeSlideIndex === index }">
         <button
           class="puzzle"
