@@ -3,9 +3,9 @@ import { puzzles } from '~/content/puzzles';
 export default defineNuxtRouteMiddleware(async (to) => {
   const { routes, isAppRoute } = useRoutes();
   const { getServerTime } = useServerTime();
-  const user = useSupabaseUser();
+  const isDev = process.env.NODE_ENV === 'development';
 
-  if (to.path === routes.signUp) {
+  if (to.path === routes.signUp && !isDev) {
     const serverTime = await getServerTime();
     if (!serverTime || serverTime < new Date('2025-12-01T00:00:00').getTime()) {
       return navigateTo(routes.signUpGuard);

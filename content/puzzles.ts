@@ -6,20 +6,20 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '1',
     unlocksAt: isDev ? new Date('2025-11-01T00:00:00').getTime() : new Date('2025-12-01T00:00:00').getTime(),
     groups: [
-      { caption: 'Absperrungen', items: ['Zaun', 'Kette', 'Mauer', 'Gitter'] },
-      { caption: 'Typische Endungen von Straßennamen', items: ['Platz', 'Allee', 'Weg', 'Straße'] },
-      { caption: 'Hollywood-Blockbuster', items: ['Avatar', 'Titanic', 'Barbie', 'Minions'] }, // eher meh
-      { caption: 'Autovermietung mit einem fehlenden Buchstaben', items: ['Herz', 'Six', 'Vis', 'Mies'] },
+      { caption: 'Nicht unbedenklich', items: ['Heikel', 'Riskant', 'Delikat', 'Wacklig'] },
+      { caption: 'Olympia-Disziplinen 2026', items: ['Bob', 'Golf', 'Boxen', 'Reiten'] },
+      { caption: 'Bestandteile eines Schneemanns', items: ['Topf', 'Möhre', 'Schal', 'Schnee'] },
+      { caption: 'Buchstaben-Homophone', items: ['Zeh', 'Tee', 'Er', 'Es'] },
     ],
   },
   '2': {
     id: '2',
     unlocksAt: isDev ? new Date('2025-11-02T00:00:00').getTime() : new Date('2025-12-02T00:00:00').getTime(),
     groups: [
-      { caption: 'Nicht unbedenklich', items: ['Heikel', 'Riskant', 'Delikat', 'Wacklig'] },
-      { caption: 'Olympia-Disziplinen 2026', items: ['Bob', 'Golf', 'Boxen', 'Reiten'] },
-      { caption: 'Buchstaben-Homophone', items: ['Zeh', 'Tee', 'Er', 'Es'] },
-      { caption: 'Bestandteile eins Buchs', items: ['Rücken', 'Deckel', 'Vorsatz', 'Blatt'] },
+      { caption: 'Hollywood-Blockbuster', items: ['Avatar', 'Titanic', 'Barbie', 'Minions'] },
+      { caption: 'Typische Endungen von Straßennamen', items: ['Platz', 'Allee', 'Weg', 'Straße'] },
+      { caption: 'Absperrungen', items: ['Zaun', 'Kette', 'Mauer', 'Gitter'] },
+      { caption: 'Autovermieter mit einem fehlenden Buchstaben', items: ['Herz', 'Six', 'Vis', 'Mies'] },
     ],
   },
   '3': {
@@ -36,9 +36,9 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '4',
     unlocksAt: isDev ? new Date('2025-11-04T00:00:00').getTime() : new Date('2025-12-04T00:00:00').getTime(),
     groups: [
-      { caption: 'Deutsche Magazine', items: ['Spiegel', 'Geo', 'Focus', 'Gala'] },
-      { caption: 'Nagel___', items: ['Lack', 'Neu', 'Brett', 'Schere'] },
+      { caption: 'Deutsche Zeitschriften', items: ['Freundin', 'Geo', 'Chip', 'Gala'] },
       { caption: 'Diäten', items: ['Glyx', 'Paleo', 'Dash', 'Keto'] },
+      { caption: 'Nagel___', items: ['Lack', 'Neu', 'Brett', 'Hai'] },
       { caption: 'Kann "stechen"', items: ['Mücke', 'Kaktus', 'Sonne', 'Trumpf'] },
     ],
   },
@@ -76,9 +76,9 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '8',
     unlocksAt: isDev ? new Date('2025-11-08T00:00:00').getTime() : new Date('2025-12-08T00:00:00').getTime(),
     groups: [
-      { caption: 'Nobelpreis-Disziplinen', items: ['Frieden', 'Literatur', 'Physik', 'Medizin'] },
+      { caption: 'Nobelpreis-Kategorien', items: ['Frieden', 'Literatur', 'Physik', 'Medizin'] },
       { caption: 'Kryptowährungen', items: ['Tether', 'Bitcoin', 'Ethereum', 'Ripple'] },
-      { caption: 'Nominierte Jugendwörter 2025', items: ['Lowkey', 'Goonen', 'Tot', 'Rede'] },
+      { caption: 'Nominierte Jugendwörter 2025', items: ['Lowkey', 'Tuff', 'Tot', 'Rede'] },
       { caption: 'Erdzeitalter', items: ['Karbon', 'Tertiär', 'Jura', 'Kreide'] },
     ],
   },
@@ -108,8 +108,8 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     groups: [
       { caption: 'Hülle', items: ['Schale', 'Pelle', 'Gehäuse', 'Mantel'] },
       { caption: 'Wichtige Erfindungen', items: ['Rad', 'Buchdruck', 'Impfung', 'Auto'] },
-      { caption: '12 Stück', items: ['Monate', 'Halbtöne', 'Dutzend', 'Apostel'] },
       { caption: 'Titelgebende Opern-Protagonistinnen', items: ['Carmen', 'Aida', 'Norma', 'Tosca'] },
+      { caption: '12 Stück', items: ['Monate', 'Halbtöne', 'Dutzend', 'Apostel'] },
     ],
   },
   '12': {
@@ -118,18 +118,18 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     groups: [
       { caption: 'Mythologische Fabelwesen', items: ['Hydra', 'Drache', 'Sirene', 'Zyklop'] },
       { caption: 'Notizbuch-Lineaturen', items: ['Blanko', 'Kästchen', 'Linien', 'Punkte'] },
-      { caption: 'Arten von Uhren', items: ['Sand', 'Sonne', 'Atom', 'Stern'] }, // könnte mit Beläge kollidieren
-      { caption: 'Beläge', items: ['Moos', 'Käse', 'Plaque', 'Asphalt'] },
+      { caption: 'Arten von Uhren', items: ['Sand', 'Sonne', 'Atom', 'Stern'] },
+      { caption: 'Berühmte Skulpturen', items: ['David', 'Venus', 'Nofretete', 'Denker'] },
     ],
   },
   '13': {
     id: '13',
     unlocksAt: isDev ? new Date('2025-11-13T00:00:00').getTime() : new Date('2025-12-13T00:00:00').getTime(),
     groups: [
-      { caption: 'Stille Gewässer', items: ['Teich', 'Pfütze', 'Weiher', 'Tümpel'] },
-      { caption: 'Waschmaschinen-Programme', items: ['Wolle', 'Fein', 'Eco', 'Bunt'] },
-      { caption: 'Diagramm-Arten', items: ['Säule', 'Linie', 'Balken', 'Kreis'] },
-      { caption: 'Berühmte Skulpturen', items: ['David', 'Venus', 'Nofretete', 'Denker'] },
+      { caption: 'Ausrufe des Erstaunens', items: ['Ah', 'Oh', 'Ui', 'Uh'] },
+      { caption: 'Zustimmung', items: ['Ja', 'Ok', 'Jo', 'Si'] },
+      { caption: 'Tonsilben', items: ['Do', 'Re', 'Mi', 'Fa'] },
+      { caption: 'Temporale Präpositionen', items: ['Ab', 'In', 'Um', 'An'] },
     ],
   },
   '14': {
@@ -146,20 +146,20 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '15',
     unlocksAt: isDev ? new Date('2025-11-15T00:00:00').getTime() : new Date('2025-12-15T00:00:00').getTime(),
     groups: [
-      { caption: 'Dips', items: ['Aioli', 'Salsa', 'Mojo', 'Hummus'] },
-      { caption: 'Vorschrift', items: ['Codex', 'Gesetz', 'Erlass', 'Gebot'] },
-      { caption: 'Messinstrumente', items: ['Uhr', 'Waage', 'Kompass', 'Lineal'] },
-      { caption: 'Versteckte Farben', items: ['Bügelbrett', 'Gründer', 'Ablauf', 'Violetta'] },
+      { caption: 'Stille Gewässer', items: ['Teich', 'Pfütze', 'Weiher', 'Tümpel'] },
+      { caption: 'Waschmaschinen-Programme', items: ['Wolle', 'Fein', 'Eco', 'Bunt'] },
+      { caption: 'Diagramm-Arten', items: ['Säule', 'Linie', 'Balken', 'Kreis'] },
+      { caption: 'Beläge', items: ['Moos', 'Käse', 'Plaque', 'Asphalt'] },
     ],
   },
   '16': {
     id: '16',
     unlocksAt: isDev ? new Date('2025-11-16T00:00:00').getTime() : new Date('2025-12-16T00:00:00').getTime(),
     groups: [
-      { caption: 'Ausrufe', items: ['Ah', 'Oh', 'Au', 'Uh'] },
-      { caption: 'Zustimmung', items: ['Ja', 'Ok', 'Jo', 'Si'] },
-      { caption: 'Tonsilben', items: ['Do', 'Re', 'Mi', 'Fa'] },
-      { caption: 'Temporale Präpositionen', items: ['Ab', 'In', 'Um', 'An'] },
+      { caption: 'Dips', items: ['Aioli', 'Salsa', 'Mojo', 'Hummus'] },
+      { caption: 'Vorschrift', items: ['Codex', 'Gesetz', 'Erlass', 'Gebot'] },
+      { caption: 'Messinstrumente', items: ['Uhr', 'Waage', 'Kompass', 'Lineal'] },
+      { caption: 'Versteckte Farben', items: ['Bügelbrett', 'Gründer', 'Ablauf', 'Violetta'] },
     ],
   },
   '17': {
@@ -178,7 +178,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     groups: [
       { caption: 'Gliederungselemente von Gesetzen', items: ['Paragraph', 'Artikel', 'Absatz', 'Präambel'] },
       { caption: 'Tierkreiszeichen', items: ['Schütze', 'Waage', 'Fische', 'Krebs'] },
-      { caption: 'Nussarten im Studentfutter', items: ['Hasel', 'Para', 'Cashew', 'Wal'] },
+      { caption: 'Nussarten im Studentenfutter', items: ['Hasel', 'Para', 'Cashew', 'Wal'] },
       { caption: 'Worte mit 4 aufeinander folgenden Vokalen', items: ['Queue', 'Sequoia', 'Seeaal', 'Louie'] },
     ],
   },
