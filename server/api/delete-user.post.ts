@@ -1,7 +1,6 @@
 import { serverSupabaseClient, serverSupabaseServiceRole } from '#supabase/server';
 
 export default eventHandler(async (event) => {
-  console.log('delete-user');
   const serviceRoleClient = await serverSupabaseServiceRole(event);
   const client = await serverSupabaseClient(event);
 

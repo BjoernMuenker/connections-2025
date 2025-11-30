@@ -16,7 +16,6 @@
   const successMessage = ref('');
 
   async function resetPassword(formData: { password: string; confirmPassword: string }) {
-    console.log(formData);
     errorMessage.value = '';
     successMessage.value = '';
 

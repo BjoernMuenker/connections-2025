@@ -182,14 +182,11 @@
 </template>
 
 <style lang="scss" scoped>
-  .wrapper {
-    @media (min-width: 616px) {
-      overflow-x: hidden;
-    }
-  }
-
   .puzzles {
     display: flex;
+    overflow-x: hidden;
+    margin-left: -#{spacing('m')};
+    margin-right: -#{spacing('m')};
   }
 
   .slide:not(.active) {

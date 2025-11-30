@@ -171,8 +171,6 @@ export const usePuzzle = (puzzleId?: string) => {
     const completedAt = Date.now();
     const loadingTimeMs = completedAt - startedAt;
 
-    console.log('loaded for', loadingTimeMs, 'ms');
-
     if (loadingTimeMs < 1000) {
       await sleep(1000 - loadingTimeMs);
     }
@@ -210,8 +208,6 @@ export const usePuzzle = (puzzleId?: string) => {
     const scoreIncrement = sumArray(Object.values(scores).map((entry) => entry.total));
 
     if (scoreIncrement === 0) return;
-
-    console.log('update score');
 
     const { data: dataB, error: errorB } = await client.rpc('increment_profile_score', {
       p_user_id: user.value.sub,
@@ -286,8 +282,6 @@ export const usePuzzle = (puzzleId?: string) => {
     deselectAllItems();
     resetHeatmap();
 
-    console.warn(countOccurrences(guesses));
-
     const normalizeCounts = (counts: Record<string, number>): Record<string, number> => {
       const values = Object.values(counts);
       const min = Math.min(...values);
@@ -301,18 +295,6 @@ export const usePuzzle = (puzzleId?: string) => {
     };
 
     const normalized = normalizeCounts(countOccurrences(guesses));
-
-    // const normalized = {
-    //   a1: 0.3,
-    //   b2: 1,
-    //   d2: 0.5,
-    //   d3: 0.4,
-    //   d4: 0.5,
-    //   b3: 0.1,
-    //   c3: 0.2,
-    // };
-
-    console.warn(normalized);
 
     const filteredRecords = Object.entries(normalized).filter(([tileId]) => !puzzle.value?.solved.includes(tileId.slice(0, 1) as PuzzleGroupId));
     if (filteredRecords.length === 0) {
