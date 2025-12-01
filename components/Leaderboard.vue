@@ -61,7 +61,6 @@
         width: 12px;
         height: 100%;
         content: '';
-        z-index: 1;
       }
 
       &:first-of-type::after {
