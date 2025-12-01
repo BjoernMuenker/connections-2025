@@ -139,7 +139,6 @@
     <!-- {{ useDebug().getCompletedPuzzleCount() }}
     {{ useDebug().getMissingItemsCount() }}
     {{ useDebug().getDuplicatedItemGroups() }} -->
-    serverTime: {{ new Date(serverTime) }} / {{ new Date(puzzles[0].unlocksAt) }}
     <div v-if="puzzles" class="puzzles" ref="sliderRef">
       <div class="slide" v-for="(puzzle, index) in puzzles" :key="puzzle.id" :class="{ active: activeSlideIndex === index }">
         <button

@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV === 'development';
 export const puzzles: { [key: string]: PuzzleConfig } = {
   '1': {
     id: '1',
-    unlocksAt: isDev ? Date.UTC(2025, 10, 1, 0, 0, 0) : Date.UTC(2025, 11, 1, 0, 0, 0),
+    unlocksAt: isDev ? new Date('2025-11-01T00:00:00').getTime() : new Date('2025-12-01T00:00:00').getTime(),
     groups: [
       { caption: 'Nicht unbedenklich', items: ['Heikel', 'Riskant', 'Delikat', 'Wacklig'] },
       { caption: 'Olympia-Disziplinen 2026', items: ['Bob', 'Golf', 'Boxen', 'Reiten'] },
