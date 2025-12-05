@@ -21,7 +21,8 @@ export const usePuzzle = (puzzleId?: string) => {
   const { getSavegames } = useSavegames();
   const { getScoreDiff } = useScore();
 
-  const loading = ref(false);
+  const loadingState = ref<'idle' | 'pending' | 'success' | 'error'>('idle');
+  const { showLoadingIndicator } = useLoadingIndicator(loadingState);
   const communityView = ref(false);
   const puzzle = ref<PuzzleState>();
   const showMistakesAndCommunityView = ref(true);
@@ -119,12 +120,12 @@ export const usePuzzle = (puzzleId?: string) => {
   }
 
   async function load(puzzleId: string) {
-    const loadingStarted = Date.now();
-    loading.value = true;
+    // const loadingStarted = Date.now();
+    loadingState.value = 'pending';
     const _puzzle = initPuzzleById(puzzleId);
 
     if (!_puzzle) {
-      onLoadComplete(loadingStarted);
+      onLoadComplete();
       return;
     }
 
@@ -138,7 +139,7 @@ export const usePuzzle = (puzzleId?: string) => {
 
     if (error || !data || data.length === 0) {
       puzzle.value = _puzzle;
-      onLoadComplete(loadingStarted);
+      onLoadComplete();
       return;
     }
 
@@ -156,10 +157,10 @@ export const usePuzzle = (puzzleId?: string) => {
     };
 
     solvedGroups.value = puzzle.value?.solved.map((id) => getGroupById(id)!);
-    onLoadComplete(loadingStarted);
+    onLoadComplete();
   }
 
-  async function onLoadComplete(startedAt: number) {
+  async function onLoadComplete() {
     showMistakesAndCommunityView.value = puzzle.value?.solved.length !== 4;
 
     const savegame = createSavegame();
@@ -168,14 +169,7 @@ export const usePuzzle = (puzzleId?: string) => {
       lastPersistedState = savegame;
     }
 
-    const completedAt = Date.now();
-    const loadingTimeMs = completedAt - startedAt;
-
-    if (loadingTimeMs < 1000) {
-      await sleep(1000 - loadingTimeMs);
-    }
-
-    loading.value = false;
+    loadingState.value = 'success';
 
     showTutorial('firstPuzzleStarted');
   }
@@ -365,7 +359,7 @@ export const usePuzzle = (puzzleId?: string) => {
     isGroupSolvedByUser,
     lastPersistedState,
     load,
-    loading,
+    showLoadingIndicator,
     maxItemsSelected,
     pushScoreNotifications,
     puzzle,

@@ -1,7 +1,7 @@
 export const useServerTime = () => {
   async function getServerTime(): Promise<number | undefined> {
-    const { data } = await useFetch<{ now: number }>('/api/time');
-    return data.value?.now;
+    const result = await $fetch<{ now: number }>('/api/time');
+    return result.now;
   }
 
   function isEqualOrLaterThan(start: Date | number, end: Date | number) {

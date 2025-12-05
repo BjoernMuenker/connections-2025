@@ -43,7 +43,7 @@
     display: flex;
     flex-direction: column;
     gap: spacing('m');
-    margin-bottom: spacing('xl');
+    margin-bottom: spacing('m');
 
     .score {
       margin-top: spacing('xxs');

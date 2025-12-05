@@ -86,10 +86,10 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '9',
     unlocksAt: isDev ? new Date('2025-11-09T00:00:00').getTime() : new Date('2025-12-09T00:00:00').getTime(),
     groups: [
-      { caption: 'Betrunken', items: ['Voll', 'Blau', 'Hacke', 'Dicht'] },
-      { caption: 'Bestandteile eines Dreiecks', items: ['Ecke', 'Schenkel', 'Winkel', 'Seite'] },
-      { caption: 'Kartoffel-Erzeugnisse', items: ['Wodka', 'Stärke', 'Stempel', 'Pommes'] },
-      { caption: 'Symbole auf Telefon-Tasten', items: ['Stern', 'Raute', 'Plus', 'Hörer'] },
+      { caption: 'Hülle', items: ['Schale', 'Pelle', 'Gehäuse', 'Mantel'] },
+      { caption: 'Wichtige Erfindungen', items: ['Rad', 'Buchdruck', 'Impfung', 'Auto'] },
+      { caption: 'Titelgebende Opern-Protagonistinnen', items: ['Carmen', 'Aida', 'Norma', 'Tosca'] },
+      { caption: '12 Stück', items: ['Monate', 'Halbtöne', 'Dutzend', 'Apostel'] },
     ],
   },
   '10': {
@@ -106,10 +106,10 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     id: '11',
     unlocksAt: isDev ? new Date('2025-11-11T00:00:00').getTime() : new Date('2025-12-11T00:00:00').getTime(),
     groups: [
-      { caption: 'Hülle', items: ['Schale', 'Pelle', 'Gehäuse', 'Mantel'] },
-      { caption: 'Wichtige Erfindungen', items: ['Rad', 'Buchdruck', 'Impfung', 'Auto'] },
-      { caption: 'Titelgebende Opern-Protagonistinnen', items: ['Carmen', 'Aida', 'Norma', 'Tosca'] },
-      { caption: '12 Stück', items: ['Monate', 'Halbtöne', 'Dutzend', 'Apostel'] },
+      { caption: 'Betrunken', items: ['Voll', 'Blau', 'Hacke', 'Dicht'] },
+      { caption: 'Bestandteile eines Dreiecks', items: ['Ecke', 'Schenkel', 'Winkel', 'Seite'] },
+      { caption: 'Kartoffel-Erzeugnisse', items: ['Wodka', 'Stärke', 'Stempel', 'Pommes'] },
+      { caption: 'Symbole auf Telefon-Tasten', items: ['Stern', 'Raute', 'Plus', 'Hörer'] },
     ],
   },
   '12': {
@@ -208,7 +208,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: isDev ? new Date('2025-11-21T00:00:00').getTime() : new Date('2025-12-21T00:00:00').getTime(),
     groups: [
       { caption: 'Die Bremer Stadtmusikanten', items: ['🫏', '🐔', '🐈', '🐶'] },
-      { caption: 'Rotkäppchen', items: ['🔴', '🧢', '👧', '🐺'] },
+      { caption: 'Rotkäppchen', items: ['🔴', '🧢', '👵', '🐺'] },
       { caption: 'Hänsel und Gretel', items: ['👫', '🏡', '🧙‍♀️', '🔥'] },
       { caption: 'Dornröschen', items: ['👸', '🌹', '🪡', '💤'] },
     ],
@@ -220,7 +220,7 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
       { caption: 'Naturkatastrophen', items: ['Dürre', 'Erdbeben', 'Sturm', 'Lawine'] },
       { caption: '"Notrufe"', items: ['112', 'SOS', 'Mayday', 'Hilfe!'] },
       { caption: 'Themen von Verschwörungstheorien', items: ['9/11', 'Area 51', 'Chemtrails', 'Corona'] },
-      { caption: '___Geist', items: ['Zeit', 'Frei', 'Team', 'Polter'] },
+      { caption: '___Geist', items: ['Zeit', 'Frei', 'Team', 'Plage'] },
     ],
   },
   '23': {

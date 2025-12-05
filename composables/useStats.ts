@@ -1,6 +1,12 @@
+import { groupNames } from '~/content/groupNames';
+import type { PuzzleGroupId } from '~/types/PuzzleGroupId';
+import type { PuzzleGroupItemId } from '~/types/PuzzleGroupItemId';
+import type { PuzzlePersistedState } from '~/types/PuzzlePersistedState';
+
 export const useStats = () => {
   const user = useSupabaseUser();
   const client = useSupabaseClient();
+  const { getColorByGroupId, getGroupsSolvedByUser } = usePuzzle();
 
   async function getScores(options?: { exclude: string[] }) {
     let query = client.from('profiles').select('username, score').order('score', { ascending: false });
@@ -69,5 +75,48 @@ export const useStats = () => {
     }
   }
 
-  return { getScores, getScore, getGlobalScore };
+  function getMistakesPerPuzzle(data: PuzzlePersistedState[]) {
+    const aggregated = data.reduce<Record<string, number>>((acc, item) => {
+      if (item.guesses.length === 0) return acc;
+      acc[item.id] = (acc[item.id] ?? 0) + (4 - item.remainingMistakes);
+      return acc;
+    }, {});
+
+    return aggregated;
+  }
+
+  function getSolveOrder(states: PuzzlePersistedState[], position: 'first' | 'last') {
+    const counts: { [key in PuzzleGroupId]: number } = {
+      a: 0,
+      b: 0,
+      c: 0,
+      d: 0,
+    };
+
+    for (const state of states) {
+      const solvedGroups = getGroupsSolvedByUser(state);
+      if (solvedGroups.length === 0 || (position === 'last' && state.solved.length !== 4)) continue;
+      const index = position === 'first' ? 0 : solvedGroups.length - 1;
+      counts[solvedGroups[index]]++;
+    }
+
+    return Object.entries(counts).map(([key, value]) => {
+      return {
+        id: key,
+        caption: groupNames[key as PuzzleGroupId],
+        color: getColorByGroupId(key as PuzzleGroupId),
+        amount: value,
+      };
+    });
+  }
+
+  function getGuessesOccurrences(states: PuzzlePersistedState[]) {
+    const guesses = states.map((state) => state.guesses.map((guess) => guess.join('-'))).flat();
+    const occurenences = _countOccurrences(guesses);
+    return occurenences.map((entry) => {
+      return { ...entry, value: entry.value.split('-') };
+    }) as { value: PuzzleGroupItemId[]; count: number }[];
+  }
+
+  return { getScores, getScore, getGlobalScore, getGuessesOccurrences, getMistakesPerPuzzle, getSolveOrder };
 };

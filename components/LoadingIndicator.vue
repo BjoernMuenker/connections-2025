@@ -55,16 +55,27 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    width: 34px;
-    height: 34px;
+    width: 26px;
+    height: 26px;
+
+    @include breakpoint('medium') {
+      width: 34px;
+      height: 34px;
+    }
   }
 
   .tile {
     > div {
-      width: 16px;
-      height: 16px;
-      border-radius: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
       margin: 2px;
+
+      @include breakpoint('medium') {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+      }
     }
   }
 </style>

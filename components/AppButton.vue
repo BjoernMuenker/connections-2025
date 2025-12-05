@@ -6,17 +6,19 @@
       disabled?: boolean;
       hierarchy?: 'primary' | 'secondary';
       color?: 'grey-600' | 'red-300';
+      size?: 'default' | 'small';
     }>(),
     {
       tag: 'button',
       hierarchy: 'primary',
       color: 'grey-600',
+      size: 'default',
     }
   );
 </script>
 
 <template>
-  <component :is="tag" :disabled="loading || disabled" :class="[hierarchy, color, { disabled: disabled }]">
+  <component :is="tag" :disabled="loading || disabled" :class="[hierarchy, color, size, { disabled: disabled }]">
     <span v-if="loading">lädt...</span>
     <slot v-else />
   </component>
@@ -26,13 +28,13 @@
   button,
   a {
     font-size: 18px;
-    padding: spacing('s') spacing('s');
+    padding: spacing('s');
     border-radius: border-radius('default');
     border-width: 2px;
     border-style: solid;
     text-align: center;
     white-space: nowrap;
-    transition: transform 0.3s, background-color 0.3s, border 0.3s;
+    transition: color 0.3s, transform 0.3s, background-color 0.3s, border 0.3s;
     @include var-font-weight(500);
 
     @include breakpoint('medium') {
@@ -84,6 +86,15 @@
     &:disabled,
     &.disabled {
       cursor: not-allowed;
+    }
+
+    &.small {
+      padding: spacing('xs') spacing('s');
+      font-size: 15px;
+
+      @include breakpoint('medium') {
+        font-size: 17px;
+      }
     }
   }
 

@@ -21,7 +21,7 @@
     }
 
     if (route.path === routes.app) {
-      return 'Hi, ' + (user.value?.user_metadata.display_name ?? 'Nutzer');
+      return 'Hi, ' + (user.value?.user_metadata.display_name ?? 'Person');
     }
 
     return getTitle();
@@ -195,20 +195,6 @@
     .toast-notification {
       pointer-events: all;
     }
-  }
-
-  .slide-fade-enter-active {
-    transition: all 0.3s cubic-bezier(0.17, 0.84, 0.44, 1);
-  }
-
-  .slide-fade-leave-active {
-    transition: all 0.3s cubic-bezier(0.17, 0.84, 0.44, 1);
-  }
-
-  .slide-fade-enter-from,
-  .slide-fade-leave-to {
-    transform: translateX(-8px);
-    opacity: 0;
   }
 
   /* wrapper prevents layout jumping */

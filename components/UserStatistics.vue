@@ -66,14 +66,17 @@
 
     const mistakesPerPuzzle = getMistakesPerPuzzle(props.states);
 
-    const totalMistakes = sumArray(Object.values(mistakesPerPuzzle));
+    const completedGames = props.states.filter((states) => states.solved.length === 4).length;
+    const totalMistakes = sumArray(props.states.map((state) => 4 - state.remainingMistakes));
+    const totalTurns = sumArray(props.states.filter((states) => states.solved.length === 4).map((state) => state.guesses.length));
+    const averageTurnsPerUser = totalTurns / completedGames;
 
     const averageMistakesPerDay = props.states.length === 0 ? 0 : totalMistakes / props.states.length;
     const daysWithoutMistake = Object.values(mistakesPerPuzzle).filter((value) => value === 0).length;
 
-    const [dayWithMostMistakes, mostMistakesPerDay] = Object.entries(mistakesPerPuzzle).sort(
-      (a, b) => b[1] - a[1] || Number(b[0]) - Number(a[0])
-    )?.[0] ?? [undefined, 0];
+    const [dayWithMostMistakes, mostMistakesPerDay] = Object.entries(mistakesPerPuzzle)
+      .filter(([puzzleId, amount]) => amount !== 0)
+      .sort((a, b) => b[1] - a[1] || Number(b[0]) - Number(a[0]))?.[0] ?? [undefined, 0];
 
     const [dayWithLeastMistakes, leastMistakesPerDay] = Object.entries(mistakesPerPuzzle).sort(
       (a, b) => a[1] - b[1] || Number(b[0]) - Number(a[0])
@@ -87,13 +90,13 @@
       },
       {
         key: 'averageMistakesPerDay',
-        caption: '⌀ Fehler / Tag',
+        caption: props.scope === 'player' ? '⌀ Fehler / Tag' : '⌀ Fehler / Tag und Person',
         value: averageMistakesPerDay,
       },
       {
         key: 'dayWithMostMistake',
         caption: 'Wenigste Fehler',
-        value: dayWithMostMistakes ? `${dayWithLeastMistakes}.12. (${leastMistakesPerDay})` : 'n/a',
+        value: dayWithLeastMistakes ? `${dayWithLeastMistakes}.12. (${leastMistakesPerDay})` : 'n/a',
       },
       {
         key: 'dayWithLeastMistake',
@@ -104,6 +107,16 @@
         key: 'daysWithoutMistake',
         caption: 'Fehlerfreie Tage',
         value: daysWithoutMistake,
+      },
+      {
+        key: 'totalTurns',
+        caption: 'Spielzüge ingesamt',
+        value: totalTurns,
+      },
+      {
+        key: 'averageTurnsPerUser',
+        caption: props.scope === 'player' ? '⌀ Spielzüge / Tag' : '⌀ Spielzüge / Tag und Person',
+        value: averageTurnsPerUser,
       },
     ];
   });
@@ -116,7 +129,7 @@
         <UserProgress :states="states" :scope="scope" />
       </StatisticItem>
       <UserScore v-bind="score" />
-      <StatisticItem v-if="scope === 'global'" caption="⌀ Score / Nutzer" :value="averageScorePerUser" />
+      <StatisticItem v-if="scope === 'global'" caption="⌀ Score / Person" :value="averageScorePerUser" />
       <UserRank v-if="scope === 'player' && score.rank" :rank="score.rank" :totalRanks="score.totalRanks" />
       <StatisticItem caption="Zuerst gelöst" class="bar-chart">
         <StackedBarChart :data="solvedFirst" />
@@ -136,13 +149,7 @@
     gap: spacing('s');
 
     > div {
-      flex: 1 1;
-      flex-shrink: 0;
-      min-width: 200px;
-
-      &.bar-chart {
-        min-width: 100%;
-      }
+      width: 100%;
     }
   }
 </style>

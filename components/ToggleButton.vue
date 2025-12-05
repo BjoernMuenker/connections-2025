@@ -7,6 +7,7 @@
   }
 
   const props = defineProps<{ modelValue: any; items: ToggleButtonItem[]; disabled?: boolean }>();
+  const highlightRef = ref<HTMLElement>();
 
   const { $gsap } = useNuxtApp();
 
@@ -33,6 +34,8 @@
   }
 
   function updateSlider(duration = 0.5) {
+    if (!highlightRef.value) return;
+
     nextTick(() => {
       const index = props.items.findIndex((i) => i.data === props.modelValue);
       const btn = btnRefs.value[index];
@@ -41,7 +44,7 @@
       const { offsetLeft, offsetWidth } = btn;
       const ease = 'power4.out';
 
-      $gsap.to('.highlight', {
+      $gsap.to(highlightRef.value!, {
         left: offsetLeft + 'px',
         width: offsetWidth + 'px',
         ease,
@@ -70,8 +73,15 @@
 
 <template>
   <div ref="rootRef" class="toggle-button">
-    <div class="highlight"></div>
-    <button v-for="(item, index) in items" :key="index" :class="{ selected: modelValue === item.data }" @click="onSelect(item)" ref="btnRefs">
+    <div class="highlight" ref="highlightRef"></div>
+    <button
+      v-for="(item, index) in items"
+      :key="index"
+      ref="btnRefs"
+      :class="{ selected: modelValue === item.data }"
+      :disabled="disabled"
+      @click="onSelect(item)"
+    >
       {{ item.caption }}
     </button>
   </div>

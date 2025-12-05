@@ -19,19 +19,37 @@ export function countOccurrences(arr: string[]): Record<string, number> {
   }, {});
 }
 
+export function _countOccurrences(arr: string[]): { value: string; count: number }[] {
+  const counts = arr.reduce<Record<string, number>>((acc, item) => {
+    acc[item] = (acc[item] || 0) + 1;
+    return acc;
+  }, {});
+
+  return Object.entries(counts)
+    .map(([value, count]) => ({ value, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
 export function groupArrayByKey(array: any[], key: string) {
   return array.reduce((hash, obj) => ({ ...hash, [obj[key]]: (hash[obj[key]] || []).concat(obj) }), {});
 }
 
-export function getDistanceFromLatLonInKm(lat1: number, lon1: number, lat2: number, lon2: number) {
-  var R = 6371; // Radius of the earth in km
-  var dLat = deg2rad(lat2 - lat1); // deg2rad below
-  var dLon = deg2rad(lon2 - lon1);
-  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  var d = R * c; // Distance in km
-  return d;
-}
+export const hexToRgb = (hex: string) => {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+  if (!result) return { r: 0, b: 0, g: 0 };
+
+  return {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16),
+  };
+};
+
+export const hexToRgbString = (hex: string) => {
+  const { r, g, b } = hexToRgb(hex);
+  return `rgb(${r}, ${g}, ${b})`;
+};
 
 export async function preloadImages(urls: string[]) {
   try {
@@ -254,7 +272,7 @@ export function clamp(min: number, max: number, valueToClamp: number) {
 }
 
 export function formatNumber(number: number) {
-  return new Intl.NumberFormat('de-DE').format(number);
+  return new Intl.NumberFormat('de-DE', { maximumFractionDigits: 2 }).format(number);
 }
 
 export function getKeyByValue<T extends Record<string, any>>(obj: T, value: T[keyof T]): keyof T | undefined {

@@ -24,7 +24,7 @@
       <template v-if="dataWithNonZeroValues.length === 0">keine Daten</template>
       <template v-else>
         <span v-for="(item, index) in dataWithNonZeroValues">
-          {{ item.amount }}&nbsp;{{ item.caption }}<template v-if="index !== dataWithNonZeroValues.length - 1">, </template>
+          {{ formatNumber(item.amount) }}&nbsp;{{ item.caption }}<template v-if="index !== dataWithNonZeroValues.length - 1">, </template>
         </span>
       </template>
     </div>

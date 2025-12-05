@@ -23,12 +23,12 @@
     getGroupById,
     getGroupByItemId,
     getItemIndexById,
-    loading,
     maxItemsSelected,
     pushScoreNotifications,
     puzzle,
     reset,
     save,
+    showLoadingIndicator,
     showMistakesAndCommunityView,
     solvedGroups,
     updateHeatmap,
@@ -303,62 +303,55 @@
 
 <template>
   <ClientOnly>
-    <div v-if="loading" class="loading-wrapper">
-      <LoadingIndicator />
-    </div>
-    <div v-else-if="puzzle" class="puzzle">
-      <div class="board">
-        <PuzzleGroupComponent v-for="group in solvedGroups" :group="group" :key="group.id" class="animation-target" :font="puzzle.font" />
-        <PuzzleTile
-          v-for="item in puzzle.items"
-          :key="item.id"
-          v-model="puzzle.selected"
-          :input-value="item.id"
-          :id="item.id"
-          :caption="item.caption"
-          :disabled="(maxItemsSelected && !puzzle.selected.includes(item.id)) || animationRunning"
-          class="animation-target"
-          :class="`font-${puzzle.font.toLowerCase()}`"
-        />
+    <LoadingIndicator v-if="showLoadingIndicator" />
+    <Transition name="slide-fade-y">
+      <div v-if="!showLoadingIndicator && puzzle" class="puzzle">
+        <div class="board">
+          <PuzzleGroupComponent v-for="group in solvedGroups" :group="group" :key="group.id" class="animation-target" :font="puzzle.font" />
+          <PuzzleTile
+            v-for="item in puzzle.items"
+            :key="item.id"
+            v-model="puzzle.selected"
+            :input-value="item.id"
+            :id="item.id"
+            :caption="item.caption"
+            :disabled="(maxItemsSelected && !puzzle.selected.includes(item.id)) || animationRunning"
+            class="animation-target"
+            :class="`font-${puzzle.font.toLowerCase()}`"
+          />
+        </div>
+        <div class="ui-wrapper">
+          <template v-if="showMistakesAndCommunityView">
+            <PuzzleMistakes :remaining-mistakes="puzzle.remainingMistakes" class="animation-target" />
+            <SwitchToggle v-if="showMistakesAndCommunityView" v-model="communityView" :disabled="animationRunning" id="show-community-turns">
+              Community-Sicht
+            </SwitchToggle>
+          </template>
+          <AppButton
+            :disabled="(!maxItemsSelected && puzzle.solved.length !== 4) || animationRunning"
+            @click="onPrimaryButtonClick"
+            class="animation-target"
+          >
+            {{ puzzle.solved.length !== 4 ? 'Absenden' : 'Statistik anzeigen' }}
+          </AppButton>
+          <!-- START DEBUG -->
+          <AppButton v-if="store.debug" hierarchy="secondary" :disabled="animationRunning" @click="reset" class="animation-target">
+            Zurücksetzen
+          </AppButton>
+          <!-- END DEBUG -->
+        </div>
+        <div class="button-container"></div>
       </div>
-      <div class="ui-wrapper">
-        <template v-if="showMistakesAndCommunityView">
-          <PuzzleMistakes :remaining-mistakes="puzzle.remainingMistakes" class="animation-target" />
-          <SwitchToggle v-if="showMistakesAndCommunityView" v-model="communityView" :disabled="animationRunning" id="show-community-turns">
-            Community-Sicht
-          </SwitchToggle>
-        </template>
-        <AppButton
-          :disabled="(!maxItemsSelected && puzzle.solved.length !== 4) || animationRunning"
-          @click="onPrimaryButtonClick"
-          class="animation-target"
-        >
-          {{ puzzle.solved.length !== 4 ? 'Absenden' : 'Statistik anzeigen' }}
-        </AppButton>
-        <!-- START DEBUG -->
-        <AppButton v-if="store.debug" hierarchy="secondary" :disabled="animationRunning" @click="reset" class="animation-target">
-          Zurücksetzen
-        </AppButton>
-        <!-- END DEBUG -->
-      </div>
-      <div class="button-container"></div>
-    </div>
+    </Transition>
   </ClientOnly>
 </template>
 
 <style lang="scss" scoped>
-  .loading-wrapper {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vw - #{spacing('m') * 2});
-
-    @media all and (min-width: 769px) {
-      margin: 0 auto;
-      width: calc(3 * 8px + 4 * 140px);
-      height: calc(3 * 8px + 4 * 140px);
-    }
+  .loading-indicator {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, calc(-50% + 16px));
   }
 
   .puzzle {

@@ -3,6 +3,7 @@ import { puzzles } from '~/content/puzzles';
 export default defineNuxtRouteMiddleware(async (to) => {
   const { routes, isAppRoute } = useRoutes();
   const { getServerTime } = useServerTime();
+  const { getSavegames } = useSavegames();
   const isDev = process.env.NODE_ENV === 'development';
 
   // skip for now
@@ -42,9 +43,18 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return navigateTo(routes.app);
   }
 
-  const serverTime = await getServerTime();
+  if (import.meta.server) {
+    const serverTime = await getServerTime();
 
-  if (!serverTime || serverTime < puzzle.unlocksAt) {
-    return navigateTo(routes.app);
+    if (!serverTime || serverTime < puzzle.unlocksAt) {
+      return navigateTo(routes.app);
+    }
+
+    if (to.name === 'app-day-statistik' && !isDev) {
+      const savegame = await getSavegames({ userId: useSupabaseUser().value?.sub, puzzleId: puzzle.id });
+      if (!savegame || savegame.length === 0 || savegame[0].data.solved.length !== 4) {
+        return navigateTo(routes.app);
+      }
+    }
   }
 });

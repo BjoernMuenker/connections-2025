@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import { usePuzzle } from '#imports';
   import KeenSlider, { type KeenSliderInstance } from 'keen-slider';
+  import AppButton from '~/components/AppButton.vue';
+  import LoadingIndicator from '~/components/LoadingIndicator.vue';
   import UserProgress from '~/components/UserProgress.vue';
   import UserRank from '~/components/UserRank.vue';
   import UserScore from '~/components/UserScore.vue';
@@ -22,19 +24,32 @@
     layout: 'app',
   });
 
-  const { data: serverTime } = useAsyncData('serverTime', () => getServerTime());
-  const { data: scores } = useAsyncData('score', () => getScore(user.value?.user_metadata.display_name ?? ''));
-  const { data: savegames } = useAsyncData('savegames', async () => {
-    const savegames = await getSavegames({ userId: user.value?.sub ?? '', sortBy: 'updated_at' });
-    if (!savegames || savegames.length === 0) return [];
+  const {
+    data: fetchedData,
+    status,
+    refresh,
+  } = useAsyncData('app/index', async () => {
+    const [serverTime, scores, savegames] = await Promise.all([
+      getServerTime(),
+      getScore(user.value?.user_metadata.display_name ?? ''),
+      getSavegames({ userId: user.value?.sub ?? '', sortBy: 'updated_at' }),
+    ]);
 
-    if (!store.lastPlayedPuzzleId) {
-      store.lastPlayedPuzzleId = savegames[0].puzzleId;
+    if (savegames && savegames.length > 0) {
+      if (!store.lastPlayedPuzzleId) {
+        store.lastPlayedPuzzleId = savegames[0].puzzleId;
+      }
     }
 
-    slider.value?.moveToIdx(Number(store.lastPlayedPuzzleId ?? '1') - 1, false, { duration: 0 });
-    return savegames;
+    return { serverTime, scores, savegames };
   });
+
+  const serverTime = computed(() => fetchedData.value?.serverTime);
+  const scores = computed(() => fetchedData.value?.scores);
+  const savegames = computed(() => fetchedData.value?.savegames ?? []);
+
+  const showDelay = ref(250);
+  const { showLoadingIndicator } = useLoadingIndicator(status, { showDelay });
 
   const sliderRef = ref<HTMLElement | null>(null);
   const slider = ref<KeenSliderInstance | null>(null);
@@ -110,13 +125,18 @@
     router.push(`/app/${puzzle.id}`);
   }
 
-  onMounted(() => {
+  async function initSlider() {
+    await nextTick();
+
     if (!sliderRef.value) return;
 
     slider.value = new KeenSlider(sliderRef.value, {
       selector: '.slide',
       mode: 'free-snap',
       initial: Number(store.lastPlayedPuzzleId ?? '1') - 1,
+      created(slider) {
+        activeSlideIndex.value = slider.track.details.rel;
+      },
       slideChanged(slider) {
         activeSlideIndex.value = slider.track.details.rel;
       },
@@ -125,63 +145,95 @@
         perView: 'auto',
       },
     });
+  }
 
-    activeSlideIndex.value = slider.value.track.details.rel;
+  function forceRefresh() {
+    showDelay.value = 0;
+    refresh();
+  }
 
+  onMounted(() => {
+    initSlider();
     showTutorial('firstLogin');
+    useDocumentVisibility(() => forceRefresh());
   });
 </script>
 
 <template>
   <div class="wrapper">
-    <!-- {{ useDebug().getCompletedPuzzleCount() }}
-    {{ useDebug().getMissingItemsCount() }}
-    {{ useDebug().getDuplicatedItemGroups() }} -->
-    <div class="puzzles" ref="sliderRef">
-      <div class="slide" v-for="(puzzle, index) in puzzles" :key="puzzle.id" :class="{ active: activeSlideIndex === index }">
-        <button
-          class="puzzle"
-          @click="onPuzzleClick(puzzle)"
-          :class="{
-            today: currentDay?.toString() === puzzle.id,
-            won: puzzle.won,
-            lost: puzzle.lost,
-            locked: puzzle.locked,
-          }"
-        >
-          <span class="id">{{ puzzle.id }}</span>
-          <span class="solved">
-            <span
-              v-for="index in 4"
-              :key="index"
-              class="group"
-              :class="[puzzle.solved[index - 1] ? `background-${getColorByGroupId(puzzle.solved[index - 1])}` : '']"
-            ></span>
-          </span>
-        </button>
+    <LoadingIndicator v-if="showLoadingIndicator" />
+    <Transition name="slide-fade-y" @before-enter="initSlider">
+      <div v-if="!showLoadingIndicator">
+        <!-- 
+        {{ useDebug().getCompletedPuzzleCount() }}
+        {{ useDebug().getMissingItemsCount() }}
+        {{ useDebug().getDuplicatedItemGroups() }} 
+         -->
+        <div class="puzzles" ref="sliderRef">
+          <div class="slide" v-for="(puzzle, index) in puzzles" :key="puzzle.id" :class="{ active: activeSlideIndex === index }">
+            <button
+              class="puzzle"
+              @click="onPuzzleClick(puzzle)"
+              :class="{
+                today: currentDay?.toString() === puzzle.id,
+                won: puzzle.won,
+                lost: puzzle.lost,
+                locked: puzzle.locked,
+              }"
+            >
+              <span class="id">{{ puzzle.id }}</span>
+              <span class="solved">
+                <span
+                  v-for="index in 4"
+                  :key="index"
+                  class="group"
+                  :class="[puzzle.solved[index - 1] ? `background-${getColorByGroupId(puzzle.solved[index - 1])}` : '']"
+                ></span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="heading">
+            <div class="heading-large">Dein Fortschritt</div>
+            <NuxtLink :to="routes.statistics" v-slot="{ href, navigate }" custom>
+              <AppButton hierarchy="secondary" size="small" tag="a" :href="href" class="statistics-link" @click="navigate">
+                Statistik
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </AppButton>
+            </NuxtLink>
+          </div>
+          <UserProgress v-if="savegames" :states="savegames.map((savegame) => savegame.data)" :show-pending="true" />
+          <div class="items">
+            <UserScore v-if="scores" v-bind="scores" @click="router.push(routes.score)" />
+            <UserRank v-if="scores" v-bind="scores" @click="router.push(routes.leaderboard)" />
+          </div>
+          <AppButton hierarchy="secondary" size="small" @click="forceRefresh" :disabled="showLoadingIndicator">Aktualisieren</AppButton>
+        </div>
       </div>
-    </div>
-    <div class="stats">
-      <div class="heading">
-        <div class="heading-large">Dein Fortschritt</div>
-        <NuxtLink :to="routes.statistics" class="statistics-link">
-          Statistik
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M5 12h14" />
-            <path d="m12 5 7 7-7 7" />
-          </svg>
-        </NuxtLink>
-      </div>
-      <UserProgress v-if="savegames" :states="savegames.map((savegame) => savegame.data)" :show-pending="true" />
-      <div class="items">
-        <UserScore v-if="scores" v-bind="scores" @click="router.push(routes.score)" />
-        <UserRank v-if="scores" v-bind="scores" @click="router.push(routes.leaderboard)" />
-      </div>
-    </div>
+    </Transition>
   </div>
 </template>
 
 <style lang="scss" scoped>
+  .loading-indicator {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, calc(-50% + 16px));
+  }
+
   .puzzles {
     display: flex;
     overflow-x: hidden;
@@ -273,29 +325,16 @@
     .heading {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
+      gap: spacing('m');
+      margin-bottom: spacing('m');
     }
 
     .statistics-link {
       display: flex;
       align-items: center;
       gap: spacing('xxs');
-      font-size: 18px;
-      @include var-font-weight(600);
-
-      @include breakpoint('medium') {
-        font-size: 20px;
-      }
-
-      @include hover-only {
-        &:hover {
-          color: color('blue-300');
-        }
-      }
-    }
-
-    .heading-large {
-      margin-bottom: spacing('m');
+      padding-right: spacing('xs');
     }
   }
 
@@ -315,9 +354,17 @@
   .items {
     display: flex;
     gap: spacing('m');
+    margin-bottom: spacing('l');
 
     > div {
       flex: 1;
     }
+  }
+
+  .buttons {
+    display: flex;
+    gap: spacing('s');
+    justify-content: flex-end;
+    margin-top: spacing('l');
   }
 </style>
