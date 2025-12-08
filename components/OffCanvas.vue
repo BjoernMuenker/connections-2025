@@ -4,7 +4,7 @@
   import type { OffCanvasComponent } from '~/types/OffCanvasComponent';
 
   const { $gsap } = useNuxtApp();
-  const props = defineProps<OffCanvas>();
+  const props = withDefaults(defineProps<OffCanvas>(), { closeButton: true });
   const store = useAppStore();
 
   const emit = defineEmits<{
@@ -36,6 +36,10 @@
     componentName = props.component;
 
     switch (props.component) {
+      case 'AppUpdate':
+        dynamicComponent = defineAsyncComponent(() => import('./AppUpdate.vue'));
+        break;
+
       case 'Tutorial':
         dynamicComponent = defineAsyncComponent(() => import('./Tutorial.vue'));
         break;
@@ -70,7 +74,7 @@
       <div class="heading-xlarge">{{ heading }}</div>
     </div>
     <div class="off-canvas-inner">
-      <button class="close-button" @click="store.closeOffCanvas">×</button>
+      <button v-if="closeButton" class="close-button" @click="store.closeOffCanvas">×</button>
       <div class="scroll-area">
         <template v-if="component">
           <component :is="dynamicComponent" @vue:mounted="onComponentMounted" v-bind="props.componentProps" />

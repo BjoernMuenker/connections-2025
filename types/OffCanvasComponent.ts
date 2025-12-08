@@ -1,1 +1,1 @@
-export type OffCanvasComponent = 'UserMenu' | 'Tutorial';
+export type OffCanvasComponent = 'AppUpdate' | 'UserMenu' | 'Tutorial';
