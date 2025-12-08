@@ -6,7 +6,6 @@ export function useVersionCheck(interval = 60000) {
   const store = useAppStore();
 
   const check = async () => {
-    console.log('checking version');
     try {
       const res = await fetch('/version.json', {
         cache: 'no-cache',
