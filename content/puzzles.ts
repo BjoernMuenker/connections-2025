@@ -87,8 +87,8 @@ export const puzzles: { [key: string]: PuzzleConfig } = {
     unlocksAt: isDev ? new Date('2025-11-09T00:00:00').getTime() : new Date('2025-12-09T00:00:00').getTime(),
     groups: [
       { caption: 'Hülle', items: ['Schale', 'Pelle', 'Gehäuse', 'Mantel'] },
-      { caption: 'Wichtige Erfindungen', items: ['Rad', 'Buchdruck', 'Impfung', 'Auto'] },
       { caption: 'Titelgebende Opern-Protagonistinnen', items: ['Carmen', 'Aida', 'Norma', 'Tosca'] },
+      { caption: 'Wichtige Erfindungen', items: ['Rad', 'Buchdruck', 'Impfung', 'Auto'] },
       { caption: '12 Stück', items: ['Monate', 'Halbtöne', 'Dutzend', 'Apostel'] },
     ],
   },
