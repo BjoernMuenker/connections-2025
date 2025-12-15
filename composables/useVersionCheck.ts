@@ -18,7 +18,6 @@ export function useVersionCheck(interval = 60000) {
       } else if (json.version !== currentVersion.value) {
         if (store.offCanvasVisible) return;
         store.openOffCanvas({ component: 'AppUpdate', closeButton: false });
-        currentVersion.value = json.version;
       }
     } catch (e) {
       console.warn('Version check failed:', e);
