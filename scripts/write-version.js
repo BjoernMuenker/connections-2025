@@ -10,5 +10,3 @@ const version = {
 };
 
 writeFileSync('./public/version.json', JSON.stringify(version, null, 2));
-
-console.log('Generated version.json:', version);
