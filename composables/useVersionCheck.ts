@@ -4,8 +4,14 @@ import { useAppStore } from '~/store/appStore';
 export function useVersionCheck(interval = 60000) {
   const currentVersion = ref<string | null>(null);
   const store = useAppStore();
+  const route = useRoute();
+  const { isAppRoute } = useRoutes();
 
   const check = async () => {
+    if (!isAppRoute(route.path)) {
+      return;
+    }
+
     try {
       const res = await fetch('/version.json', {
         cache: 'no-cache',
