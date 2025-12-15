@@ -56,7 +56,6 @@
   const items = computed(() => {
     function getMistakesPerPuzzle(data: PuzzlePersistedState[]) {
       const aggregated = data.reduce<Record<string, number>>((acc, item) => {
-        if (item.guesses.length === 0) return acc;
         acc[item.id] = (acc[item.id] ?? 0) + (4 - item.remainingMistakes);
         return acc;
       }, {});

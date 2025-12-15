@@ -123,7 +123,13 @@
       await solveGroup(totalMatch[0].id);
       animationRunning.value = false;
       updateHeatmap();
-      showTutorial(won ? 'firstPuzzleWon' : 'firstGroup');
+
+      if (won && puzzle.value.id === '24') {
+        await showTutorial('lastPuzzleCompleted');
+      }
+
+      await showTutorial(won ? 'firstPuzzleWon' : 'firstGroup');
+
       return;
     }
 
@@ -143,7 +149,7 @@
         await solveGroup(groupId);
       }
 
-      showTutorial('firstPuzzleLost');
+      await showTutorial('firstPuzzleLost');
       animationRunning.value = false;
       return;
     }
@@ -159,8 +165,7 @@
     await animateSelectedItems();
     await animateSelectedItemsFail();
     updateHeatmap();
-    showTutorial('firstMistake');
-
+    await showTutorial('firstMistake');
     animationRunning.value = false;
   }
 

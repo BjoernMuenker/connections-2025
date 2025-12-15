@@ -20,7 +20,12 @@
 
   function close() {
     emit('onClose');
-    $gsap.to('.off-canvas', { translateY: '100%', duration: 0.5, ease: 'power4.out' });
+    $gsap.to('.off-canvas', {
+      translateY: '100%',
+      duration: 0.5,
+      ease: 'power4.out',
+      onComplete: () => document.querySelector('.off-canvas-inner')?.scrollTo(0, 0),
+    });
     $gsap.to('.non-off-canvas', { scale: 1, duration: 0.5, ease: 'power4.out' });
   }
 

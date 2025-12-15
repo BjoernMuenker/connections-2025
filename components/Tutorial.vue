@@ -2,14 +2,14 @@
   import type { TutorialId } from '~/types/TutorialId';
   import AppButton from './AppButton.vue';
   import { useAppStore } from '~/store/appStore';
-  import { scoreActions } from '~/content/scoreActions';
-  import TutorialFirstLogin from './TutorialFirstLogin.vue';
-  import TutorialFirstPuzzleLost from './TutorialFirstPuzzleLost.vue';
-  import TutorialFirstPuzzleWon from './TutorialFirstPuzzleWon.vue';
   import TutorialCommunityView from './TutorialCommunityView.vue';
-  import TutorialFirstMistake from './TutorialFirstMistake.vue';
-  import TutorialFirstPuzzleStarted from './TutorialFirstPuzzleStarted.vue';
   import TutorialFirstGroup from './TutorialFirstGroup.vue';
+  import TutorialFirstLogin from './TutorialFirstLogin.vue';
+  import TutorialFirstMistake from './TutorialFirstMistake.vue';
+  import TutorialFirstPuzzleLost from './TutorialFirstPuzzleLost.vue';
+  import TutorialFirstPuzzleStarted from './TutorialFirstPuzzleStarted.vue';
+  import TutorialFirstPuzzleWon from './TutorialFirstPuzzleWon.vue';
+  import TutorialLastPuzzleCompleted from './TutorialLastPuzzleCompleted.vue';
 
   const props = defineProps<{ id: TutorialId }>();
   const store = useAppStore();
@@ -21,13 +21,14 @@
 
 <template>
   <div class="wrapper">
-    <TutorialFirstLogin v-if="id === 'firstLogin'" />
-    <TutorialFirstPuzzleStarted v-if="id === 'firstPuzzleStarted'" />
     <TutorialCommunityView v-if="id === 'communityView'" />
+    <TutorialFirstGroup v-if="id === 'firstGroup'" />
+    <TutorialFirstLogin v-if="id === 'firstLogin'" />
     <TutorialFirstMistake v-if="id === 'firstMistake'" />
     <TutorialFirstPuzzleLost v-if="id === 'firstPuzzleLost'" />
+    <TutorialFirstPuzzleStarted v-if="id === 'firstPuzzleStarted'" />
     <TutorialFirstPuzzleWon v-if="id === 'firstPuzzleWon'" />
-    <TutorialFirstGroup v-if="id === 'firstGroup'" />
+    <TutorialLastPuzzleCompleted v-if="id === 'lastPuzzleCompleted'" />
 
     <template v-if="id === 'firstLogin'">
       <AppButton @click="closeOffCanvas">Auf geht's</AppButton>

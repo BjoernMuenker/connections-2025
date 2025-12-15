@@ -13,9 +13,3 @@
     </ul>
   </RichText>
 </template>
-
-<style lang="scss">
-  p + p {
-    margin-top: spacing('m');
-  }
-</style>

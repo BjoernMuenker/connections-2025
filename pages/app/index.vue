@@ -152,9 +152,9 @@
     refresh();
   }
 
-  onMounted(() => {
+  onMounted(async () => {
     initSlider();
-    showTutorial('firstLogin');
+    await showTutorial('firstLogin');
     useDocumentVisibility(() => forceRefresh());
   });
 </script>

@@ -120,7 +120,6 @@ export const usePuzzle = (puzzleId?: string) => {
   }
 
   async function load(puzzleId: string) {
-    // const loadingStarted = Date.now();
     loadingState.value = 'pending';
     const _puzzle = initPuzzleById(puzzleId);
 
@@ -131,26 +130,22 @@ export const usePuzzle = (puzzleId?: string) => {
 
     store.lastPlayedPuzzleId = _puzzle.id;
 
-    const { data, error } = await client
-      .from('savegames')
-      .select('*')
-      .eq('user_id', user.value?.sub ?? '')
-      .eq('puzzle_id', puzzleId);
+    const savegames = await getSavegames({ userId: user.value?.sub ?? '', puzzleId: _puzzle.id });
 
-    if (error || !data || data.length === 0) {
+    if (savegames.length === 0) {
       puzzle.value = _puzzle;
       onLoadComplete();
       return;
     }
 
-    const savegame = data[0].data as unknown as PuzzlePersistedState;
+    const persistedState = savegames[0].data;
 
     puzzle.value = {
       ..._puzzle,
-      ...savegame,
+      ...persistedState,
       items: shuffleArray(
         _puzzle.groups
-          .filter((group) => !savegame.solved.includes(group.id))
+          .filter((group) => !persistedState.solved.includes(group.id))
           .map((group) => group.items)
           .flat()
       ),
